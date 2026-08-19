@@ -1,0 +1,1188 @@
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import type {
+  Project,
+  ProjectTemplate,
+  ProjectStatus,
+  ProjectRun,
+  ProjectActivity,
+  ProjectFile,
+  Collection,
+  CodingLevel,
+  LevelChallenge,
+} from "./types";
+import type { BlockNode, BlockEdge } from "../state/editorStore";
+import { CODING_LEVELS } from "../learning/levelsData";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Built-in Starter Templates
+// ─────────────────────────────────────────────────────────────────────────────
+
+export const PROJECT_TEMPLATES: ProjectTemplate[] = [
+  {
+    id: "empty",
+    name: "Blank Canvas",
+    description: "Start with a clean canvas (Start and End blocks) and build your program from scratch.",
+    language: "python",
+    icon: "FileCode",
+    badge: "BLANK",
+    starterNodes: [
+      {
+        id: "start-1",
+        type: "startBlock",
+        position: { x: 260, y: 60 },
+        data: { blockType: "start", label: "Start", category: "program", color: "#555555", icon: "Play", values: {} },
+        deletable: false,
+      },
+      {
+        id: "end-1",
+        type: "endBlock",
+        position: { x: 260, y: 260 },
+        data: { blockType: "end", label: "End", category: "program", color: "#555555", icon: "Square", values: {} },
+        deletable: false,
+      },
+    ],
+    starterEdges: [
+      {
+        id: "edge-start-end",
+        source: "start-1",
+        target: "end-1",
+      },
+    ],
+  },
+  {
+    id: "guessing-game",
+    name: "Number Guessing Game",
+    description: "A fun interactive game where the computer picks a secret number and player guesses it with hints.",
+    language: "python",
+    icon: "Target",
+    badge: "LOGIC",
+    starterNodes: [
+      {
+        id: "start-1",
+        type: "startBlock",
+        position: { x: 260, y: 60 },
+        data: { blockType: "start", label: "Start", category: "program", color: "#555555", icon: "Play", values: {} },
+        deletable: false,
+      },
+      {
+        id: "set-secret",
+        type: "statementBlock",
+        position: { x: 260, y: 160 },
+        data: {
+          blockType: "set_variable",
+          label: "Set Secret Number",
+          category: "variables",
+          color: "#356A9A",
+          icon: "Variable",
+          values: { varName: "secret", value: "42" },
+        },
+      },
+      {
+        id: "ask-guess",
+        type: "statementBlock",
+        position: { x: 260, y: 260 },
+        data: {
+          blockType: "ask_input",
+          label: "Ask for Guess",
+          category: "input",
+          color: "#171717",
+          icon: "HelpCircle",
+          values: { prompt: "Guess my number (1-100):", varName: "guess" },
+        },
+      },
+      {
+        id: "check-guess",
+        type: "conditionBlock",
+        position: { x: 260, y: 370 },
+        data: {
+          blockType: "if_else",
+          label: "Check Match",
+          category: "conditions",
+          color: "#F26A3D",
+          icon: "GitBranch",
+          values: { left: "guess", op: "==", right: "secret" },
+        },
+      },
+      {
+        id: "print-win",
+        type: "statementBlock",
+        position: { x: 120, y: 500 },
+        data: {
+          blockType: "print",
+          label: "Victory Message",
+          category: "output",
+          color: "#171717",
+          icon: "CheckCircle2",
+          values: { message: "🎉 Wow! You guessed it!" },
+        },
+      },
+      {
+        id: "print-try-again",
+        type: "statementBlock",
+        position: { x: 400, y: 500 },
+        data: {
+          blockType: "print",
+          label: "Try Again",
+          category: "output",
+          color: "#171717",
+          icon: "AlertCircle",
+          values: { message: "Not quite, try again!" },
+        },
+      },
+      {
+        id: "end-1",
+        type: "endBlock",
+        position: { x: 260, y: 640 },
+        data: { blockType: "end", label: "End", category: "program", color: "#555555", icon: "Square", values: {} },
+        deletable: false,
+      },
+    ],
+    starterEdges: [
+      { id: "e1", source: "start-1", target: "set-secret" },
+      { id: "e2", source: "set-secret", target: "ask-guess" },
+      { id: "e3", source: "ask-guess", target: "check-guess" },
+      { id: "e4", source: "check-guess", sourceHandle: "true", target: "print-win" },
+      { id: "e5", source: "check-guess", sourceHandle: "false", target: "print-try-again" },
+      { id: "e6", source: "print-win", target: "end-1" },
+      { id: "e7", source: "print-try-again", target: "end-1" },
+    ],
+  },
+  {
+    id: "calculator",
+    name: "Interactive Math Tool",
+    description: "Accepts two numbers, performs operations, and formats the output cleanly.",
+    language: "python",
+    icon: "Calculator",
+    badge: "MATH",
+    starterNodes: [
+      {
+        id: "start-1",
+        type: "startBlock",
+        position: { x: 260, y: 60 },
+        data: { blockType: "start", label: "Start", category: "program", color: "#555555", icon: "Play", values: {} },
+        deletable: false,
+      },
+      {
+        id: "input-a",
+        type: "statementBlock",
+        position: { x: 260, y: 160 },
+        data: {
+          blockType: "ask_input",
+          label: "First Number",
+          category: "input",
+          color: "#171717",
+          icon: "HelpCircle",
+          values: { prompt: "Enter first number:", varName: "num1" },
+        },
+      },
+      {
+        id: "input-b",
+        type: "statementBlock",
+        position: { x: 260, y: 260 },
+        data: {
+          blockType: "ask_input",
+          label: "Second Number",
+          category: "input",
+          color: "#171717",
+          icon: "HelpCircle",
+          values: { prompt: "Enter second number:", varName: "num2" },
+        },
+      },
+      {
+        id: "calc-sum",
+        type: "statementBlock",
+        position: { x: 260, y: 360 },
+        data: {
+          blockType: "calculate",
+          label: "Add Numbers",
+          category: "math",
+          color: "#287A52",
+          icon: "Calculator",
+          values: { varName: "total", left: "num1", op: "+", right: "num2" },
+        },
+      },
+      {
+        id: "print-res",
+        type: "statementBlock",
+        position: { x: 260, y: 460 },
+        data: {
+          blockType: "print",
+          label: "Show Sum",
+          category: "output",
+          color: "#171717",
+          icon: "Terminal",
+          values: { message: "The sum is: " + "total" },
+        },
+      },
+      {
+        id: "end-1",
+        type: "endBlock",
+        position: { x: 260, y: 560 },
+        data: { blockType: "end", label: "End", category: "program", color: "#555555", icon: "Square", values: {} },
+        deletable: false,
+      },
+    ],
+    starterEdges: [
+      { id: "e1", source: "start-1", target: "input-a" },
+      { id: "e2", source: "input-a", target: "input-b" },
+      { id: "e3", source: "input-b", target: "calc-sum" },
+      { id: "e4", source: "calc-sum", target: "print-res" },
+      { id: "e5", source: "print-res", target: "end-1" },
+    ],
+  },
+];
+
+// Helper to instantiate a Project from template
+export function createProjectFromTemplate(
+  templateId: string,
+  name?: string,
+  description?: string
+): Project {
+  const template = PROJECT_TEMPLATES.find((t) => t.id === templateId) || PROJECT_TEMPLATES[0];
+  const now = new Date().toISOString();
+  const id = `proj_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+
+  return {
+    id,
+    name: name || template.name,
+    description: description || template.description,
+    language: template.language,
+    templateId: template.id,
+    createdAt: now,
+    updatedAt: now,
+    lastEditedAt: now,
+    status: "active",
+    progress: 0,
+    visualProgram: {
+      nodes: JSON.parse(JSON.stringify(template.starterNodes)),
+      edges: JSON.parse(JSON.stringify(template.starterEdges)),
+    },
+    files: [
+      {
+        id: `file_${Date.now()}_1`,
+        path: "main.py",
+        name: "main.py",
+        content: '# Generated by TeachFlow Visual Editor\nprint("Program Initialized")\n',
+        language: "python",
+        isMain: true,
+        updatedAt: now,
+      },
+    ],
+    runs: [],
+    activity: [
+      {
+        id: `act_${Date.now()}_1`,
+        type: "created",
+        description: `Project initialized from ${template.name}`,
+        timestamp: now,
+      },
+    ],
+    settings: {
+      autoSave: true,
+      formatOnSave: true,
+      visibility: "private",
+    },
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Offline Action Queue Types & Replay Execution
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface QueuedSyncAction {
+  id: string;
+  type:
+    | "create_project"
+    | "save_visual_program"
+    | "update_project"
+    | "delete_project"
+    | "create_collection"
+    | "update_collection"
+    | "delete_collection"
+    | "toggle_collection"
+    | "complete_challenge";
+  payload: any;
+  timestamp: number;
+}
+
+async function executeSyncAction(action: QueuedSyncAction): Promise<boolean> {
+  try {
+    if (typeof navigator !== "undefined" && !navigator.onLine) {
+      return false;
+    }
+
+    let res: Response | null = null;
+    switch (action.type) {
+      case "create_project":
+        res = await fetch("/api/projects", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(action.payload),
+        });
+        break;
+
+      case "save_visual_program":
+        res = await fetch(`/api/projects/${action.payload.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(action.payload),
+        });
+        break;
+
+      case "update_project":
+        res = await fetch(`/api/projects/${action.payload.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(action.payload.updates),
+        });
+        break;
+
+      case "delete_project":
+        res = await fetch(`/api/projects/${action.payload.id}`, {
+          method: "DELETE",
+        });
+        break;
+
+      case "create_collection":
+        res = await fetch("/api/collections", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(action.payload),
+        });
+        break;
+
+      case "update_collection":
+        res = await fetch("/api/collections", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(action.payload),
+        });
+        break;
+
+      case "delete_collection":
+        res = await fetch(`/api/collections?id=${action.payload.id}`, {
+          method: "DELETE",
+        });
+        break;
+
+      case "toggle_collection":
+        res = await fetch("/api/collections", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "toggle_project", ...action.payload }),
+        });
+        break;
+
+      case "complete_challenge":
+        res = await fetch("/api/challenges", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ challengeId: action.payload.challengeId }),
+        });
+        break;
+    }
+
+    return res ? res.ok : true;
+  } catch (err) {
+    return false;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Projects & Learning Zustand Store with Offline Mode & Background Auto-Sync
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface ProjectsState {
+  projects: Project[];
+  activeProjectId: string | null;
+  saveStatus: "saved" | "saving" | "unsaved";
+  searchQuery: string;
+  statusFilter: "all" | ProjectStatus;
+  selectedCollectionId: string | null;
+
+  // Offline-First & Network State
+  isOnline: boolean;
+  syncState: "synced" | "syncing" | "offline" | "error";
+  offlineQueue: QueuedSyncAction[];
+  hydrateFromDatabase: () => Promise<void>;
+  flushOfflineQueue: () => Promise<void>;
+  setOnlineStatus: (isOnline: boolean) => void;
+
+  // Collections
+  collections: Collection[];
+  createCollection: (name: string, description?: string, icon?: string, color?: string) => Collection;
+  deleteCollection: (id: string) => void;
+  updateCollection: (id: string, updates: Partial<Collection>) => void;
+  toggleProjectInCollection: (collectionId: string, projectId: string) => void;
+  setSelectedCollectionId: (id: string | null) => void;
+
+  // Coding Levels & Challenges Progression
+  completedChallengeIds: string[];
+  completeChallenge: (challengeId: string) => void;
+  startLevelChallenge: (levelId: string, challengeId: string) => Project;
+  isLevelUnlocked: (levelNumber: number) => boolean;
+  isLevelMastered: (levelId: string) => boolean;
+  getLevelMasteryPercent: (levelId: string) => number;
+  getTotalEarnedPoints: () => number;
+  
+  // Projects Actions
+  createProject: (templateId: string, name?: string, description?: string) => Project;
+  getProject: (id: string) => Project | undefined;
+  updateProject: (id: string, updates: Partial<Project>) => void;
+  saveVisualProgram: (id: string, nodes: BlockNode[], edges: BlockEdge[], generatedCode?: string) => void;
+  duplicateProject: (id: string) => Project | null;
+  archiveProject: (id: string) => void;
+  restoreProject: (id: string) => void;
+  deleteProject: (id: string) => void;
+  recordRun: (id: string, run: Omit<ProjectRun, "id" | "timestamp" | "runNumber">) => void;
+  recordActivity: (id: string, type: ProjectActivity["type"], description: string) => void;
+  updateFileContent: (projectId: string, fileId: string, content: string) => void;
+  addFile: (projectId: string, path: string, content?: string) => void;
+  deleteFile: (projectId: string, fileId: string) => void;
+  setSaveStatus: (status: "saved" | "saving" | "unsaved") => void;
+  setSearchQuery: (query: string) => void;
+  setStatusFilter: (filter: "all" | ProjectStatus) => void;
+  setActiveProjectId: (id: string | null) => void;
+}
+
+export const useProjectsStore = create<ProjectsState>()(
+  persist(
+    (set, get) => ({
+      projects: [],
+      activeProjectId: null,
+      saveStatus: "saved",
+      searchQuery: "",
+      statusFilter: "all",
+      selectedCollectionId: null,
+      collections: [],
+      completedChallengeIds: [],
+
+      // Offline state
+      isOnline: typeof navigator !== "undefined" ? navigator.onLine : true,
+      syncState: "synced",
+      offlineQueue: [],
+
+      setOnlineStatus: (isOnline) => {
+        set({ isOnline, syncState: isOnline ? (get().offlineQueue.length > 0 ? "syncing" : "synced") : "offline" });
+        if (isOnline) {
+          get().flushOfflineQueue();
+        }
+      },
+
+      // ── Replay Offline Action Queue ──
+      flushOfflineQueue: async () => {
+        const queue = [...get().offlineQueue];
+        if (queue.length === 0) {
+          set({ syncState: "synced" });
+          return;
+        }
+
+        set({ syncState: "syncing" });
+        const remaining: QueuedSyncAction[] = [];
+
+        for (const action of queue) {
+          const success = await executeSyncAction(action);
+          if (!success) {
+            remaining.push(action);
+          }
+        }
+
+        if (remaining.length === 0) {
+          set({ offlineQueue: [], syncState: "synced" });
+          get().hydrateFromDatabase();
+        } else {
+          set({ offlineQueue: remaining, syncState: get().isOnline ? "error" : "offline" });
+        }
+      },
+
+      // ── Full Workspace Database Hydration ──
+      hydrateFromDatabase: async () => {
+        try {
+          if (typeof navigator !== "undefined" && !navigator.onLine) {
+            set({ syncState: "offline", isOnline: false });
+            return;
+          }
+
+          const res = await fetch("/api/user/sync");
+          if (!res.ok) return;
+          const json = await res.json();
+          if (json.success && json.data?.authenticated) {
+            const { projects, collections, completedChallengeIds } = json.data;
+            set((state) => {
+              const serverProjectsMap = new Map((projects as Project[]).map((p) => [p.id, p]));
+              const mergedProjects = [
+                ...(projects as Project[]),
+                ...state.projects.filter((p) => !serverProjectsMap.has(p.id)),
+              ];
+
+              const serverColsMap = new Map((collections as Collection[]).map((c) => [c.id, c]));
+              const mergedCols = [
+                ...(collections as Collection[]),
+                ...state.collections.filter((c) => !serverColsMap.has(c.id)),
+              ];
+
+              const mergedChallenges = Array.from(
+                new Set([...state.completedChallengeIds, ...(completedChallengeIds as string[])])
+              );
+
+              return {
+                projects: mergedProjects,
+                collections: mergedCols,
+                completedChallengeIds: mergedChallenges,
+                syncState: "synced",
+                isOnline: true,
+              };
+            });
+          }
+        } catch (err) {
+          console.warn("Database hydration skipped (offline/local fallback):", err);
+          set({ syncState: "offline" });
+        }
+      },
+
+      // ── Level & Challenge Progression ──
+      completeChallenge: (challengeId) => {
+        set((state) => {
+          const alreadyCompleted = state.completedChallengeIds.includes(challengeId);
+          if (alreadyCompleted) return state;
+
+          const newCompleted = [...state.completedChallengeIds, challengeId];
+          return { completedChallengeIds: newCompleted };
+        });
+
+        // Enqueue or sync
+        const action: QueuedSyncAction = {
+          id: `sync_ch_${Date.now()}`,
+          type: "complete_challenge",
+          payload: { challengeId },
+          timestamp: Date.now(),
+        };
+
+        executeSyncAction(action).then((success) => {
+          if (!success) {
+            set((state) => ({
+              offlineQueue: [...state.offlineQueue, action],
+              syncState: "offline",
+            }));
+          }
+        });
+      },
+
+      startLevelChallenge: (levelId, challengeId) => {
+        const level = CODING_LEVELS.find((l) => l.id === levelId);
+        const challenge = level?.challenges.find((c) => c.id === challengeId);
+
+        const newProj = get().createProject(
+          "empty",
+          challenge ? `${challenge.title}` : "Level Challenge",
+          challenge?.description || "Construct an algorithm to solve this coding challenge."
+        );
+
+        if (challenge) {
+          newProj.learningState = {
+            progress: 0,
+            levelId,
+            challengeId,
+            currentChallenge: challenge,
+          };
+          if (challenge.starterNodes && challenge.starterNodes.length > 0) {
+            newProj.visualProgram.nodes = JSON.parse(JSON.stringify(challenge.starterNodes));
+          }
+          if (challenge.starterEdges && challenge.starterEdges.length > 0) {
+            newProj.visualProgram.edges = JSON.parse(JSON.stringify(challenge.starterEdges));
+          }
+        }
+
+        set((state) => ({
+          projects: state.projects.map((p) => (p.id === newProj.id ? newProj : p)),
+          activeProjectId: newProj.id,
+        }));
+
+        const action: QueuedSyncAction = {
+          id: `sync_save_${newProj.id}_${Date.now()}`,
+          type: "save_visual_program",
+          payload: newProj,
+          timestamp: Date.now(),
+        };
+
+        executeSyncAction(action).then((success) => {
+          if (!success) {
+            set((state) => ({
+              offlineQueue: [...state.offlineQueue, action],
+              syncState: "offline",
+            }));
+          }
+        });
+
+        return newProj;
+      },
+
+      isLevelUnlocked: (levelNumber) => {
+        if (levelNumber <= 1) return true;
+        const prevLevel = CODING_LEVELS.find((l) => l.levelNumber === levelNumber - 1);
+        if (!prevLevel) return true;
+        const completedInPrev = prevLevel.challenges.filter((c) =>
+          get().completedChallengeIds.includes(c.id)
+        ).length;
+        return completedInPrev >= Math.min(2, prevLevel.challenges.length);
+      },
+
+      isLevelMastered: (levelId) => {
+        const level = CODING_LEVELS.find((l) => l.id === levelId);
+        if (!level) return false;
+        const completedCount = level.challenges.filter((c) =>
+          get().completedChallengeIds.includes(c.id)
+        ).length;
+        return completedCount >= level.requiredChallengesToMaster;
+      },
+
+      getLevelMasteryPercent: (levelId) => {
+        const level = CODING_LEVELS.find((l) => l.id === levelId);
+        if (!level || level.challenges.length === 0) return 0;
+        const completedCount = level.challenges.filter((c) =>
+          get().completedChallengeIds.includes(c.id)
+        ).length;
+        return Math.min(100, Math.round((completedCount / level.challenges.length) * 100));
+      },
+
+      getTotalEarnedPoints: () => {
+        let total = 0;
+        const completed = get().completedChallengeIds;
+        for (const lvl of CODING_LEVELS) {
+          for (const ch of lvl.challenges) {
+            if (completed.includes(ch.id)) {
+              total += ch.points;
+            }
+          }
+        }
+        return total;
+      },
+
+      // ── Collections Actions ──
+      createCollection: (name, description = "", icon = "Folder", color = "#F26A3D") => {
+        const now = new Date().toISOString();
+        const newCol: Collection = {
+          id: `col_${Date.now()}`,
+          name: name.trim(),
+          description: description.trim(),
+          icon,
+          color,
+          projectIds: [],
+          createdAt: now,
+          updatedAt: now,
+        };
+
+        set((state) => ({ collections: [newCol, ...state.collections] }));
+
+        const action: QueuedSyncAction = {
+          id: `sync_col_${newCol.id}`,
+          type: "create_collection",
+          payload: newCol,
+          timestamp: Date.now(),
+        };
+
+        executeSyncAction(action).then((success) => {
+          if (!success) {
+            set((state) => ({
+              offlineQueue: [...state.offlineQueue, action],
+              syncState: "offline",
+            }));
+          }
+        });
+
+        return newCol;
+      },
+
+      deleteCollection: (id) => {
+        set((state) => ({
+          collections: state.collections.filter((c) => c.id !== id),
+          selectedCollectionId: state.selectedCollectionId === id ? null : state.selectedCollectionId,
+        }));
+
+        const action: QueuedSyncAction = {
+          id: `sync_del_col_${id}`,
+          type: "delete_collection",
+          payload: { id },
+          timestamp: Date.now(),
+        };
+
+        executeSyncAction(action).then((success) => {
+          if (!success) {
+            set((state) => ({
+              offlineQueue: [...state.offlineQueue, action],
+              syncState: "offline",
+            }));
+          }
+        });
+      },
+
+      updateCollection: (id, updates) => {
+        const now = new Date().toISOString();
+        set((state) => ({
+          collections: state.collections.map((c) =>
+            c.id === id ? { ...c, ...updates, updatedAt: now } : c
+          ),
+        }));
+
+        const action: QueuedSyncAction = {
+          id: `sync_up_col_${id}`,
+          type: "update_collection",
+          payload: { id, ...updates },
+          timestamp: Date.now(),
+        };
+
+        executeSyncAction(action).then((success) => {
+          if (!success) {
+            set((state) => ({
+              offlineQueue: [...state.offlineQueue, action],
+              syncState: "offline",
+            }));
+          }
+        });
+      },
+
+      toggleProjectInCollection: (collectionId, projectId) => {
+        const now = new Date().toISOString();
+        set((state) => ({
+          collections: state.collections.map((c) => {
+            if (c.id !== collectionId) return c;
+            const has = c.projectIds.includes(projectId);
+            return {
+              ...c,
+              projectIds: has ? c.projectIds.filter((p) => p !== projectId) : [...c.projectIds, projectId],
+              updatedAt: now,
+            };
+          }),
+        }));
+
+        const action: QueuedSyncAction = {
+          id: `sync_toggle_${collectionId}_${projectId}`,
+          type: "toggle_collection",
+          payload: { collectionId, projectId },
+          timestamp: Date.now(),
+        };
+
+        executeSyncAction(action).then((success) => {
+          if (!success) {
+            set((state) => ({
+              offlineQueue: [...state.offlineQueue, action],
+              syncState: "offline",
+            }));
+          }
+        });
+      },
+
+      setSelectedCollectionId: (selectedCollectionId) => set({ selectedCollectionId }),
+
+      // ── Project CRUD ──
+      createProject: (templateId, name, description) => {
+        const newProj = createProjectFromTemplate(templateId, name, description);
+        set((state) => ({
+          projects: [newProj, ...state.projects],
+          activeProjectId: newProj.id,
+        }));
+
+        const action: QueuedSyncAction = {
+          id: `sync_proj_${newProj.id}`,
+          type: "create_project",
+          payload: newProj,
+          timestamp: Date.now(),
+        };
+
+        executeSyncAction(action).then((success) => {
+          if (!success) {
+            set((state) => ({
+              offlineQueue: [...state.offlineQueue, action],
+              syncState: "offline",
+            }));
+          }
+        });
+
+        return newProj;
+      },
+
+      getProject: (id) => {
+        return get().projects.find((p) => p.id === id);
+      },
+
+      updateProject: (id, updates) => {
+        const now = new Date().toISOString();
+        set((state) => ({
+          projects: state.projects.map((p) =>
+            p.id === id ? { ...p, ...updates, updatedAt: now, lastEditedAt: now } : p
+          ),
+        }));
+
+        const action: QueuedSyncAction = {
+          id: `sync_up_proj_${id}_${Date.now()}`,
+          type: "update_project",
+          payload: { id, updates },
+          timestamp: Date.now(),
+        };
+
+        executeSyncAction(action).then((success) => {
+          if (!success) {
+            set((state) => ({
+              offlineQueue: [...state.offlineQueue, action],
+              syncState: "offline",
+            }));
+          }
+        });
+      },
+
+      saveVisualProgram: (id, nodes, edges, generatedCode) => {
+        const now = new Date().toISOString();
+        let targetProj: Project | undefined;
+
+        set((state) => {
+          const updatedProjects = state.projects.map((p) => {
+            if (p.id !== id) return p;
+            const updatedFiles = p.files.map((f) =>
+              f.isMain && generatedCode !== undefined
+                ? { ...f, content: generatedCode, updatedAt: now }
+                : f
+            );
+            targetProj = {
+              ...p,
+              visualProgram: { nodes, edges },
+              files: updatedFiles,
+              updatedAt: now,
+              lastEditedAt: now,
+            };
+            return targetProj;
+          });
+
+          return {
+            projects: updatedProjects,
+            saveStatus: "saved",
+          };
+        });
+
+        if (targetProj) {
+          const action: QueuedSyncAction = {
+            id: `sync_save_${id}_${Date.now()}`,
+            type: "save_visual_program",
+            payload: {
+              id,
+              visualProgram: { nodes, edges },
+              files: targetProj.files,
+              activity: {
+                id: `act_${Date.now()}`,
+                type: "saved",
+                description: `Saved visual program with ${nodes.length} blocks`,
+              },
+            },
+            timestamp: Date.now(),
+          };
+
+          executeSyncAction(action).then((success) => {
+            if (!success) {
+              set((state) => ({
+                offlineQueue: [...state.offlineQueue, action],
+                syncState: "offline",
+              }));
+            }
+          });
+        }
+      },
+
+      duplicateProject: (id) => {
+        const orig = get().projects.find((p) => p.id === id);
+        if (!orig) return null;
+        const now = new Date().toISOString();
+        const dup: Project = {
+          ...JSON.parse(JSON.stringify(orig)),
+          id: `proj_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`,
+          name: `${orig.name} (Copy)`,
+          createdAt: now,
+          updatedAt: now,
+          lastEditedAt: now,
+          status: "draft",
+          activity: [
+            {
+              id: `act_${Date.now()}`,
+              type: "created",
+              description: `Duplicated from "${orig.name}"`,
+              timestamp: now,
+            },
+          ],
+        };
+
+        set((state) => ({ projects: [dup, ...state.projects] }));
+
+        const action: QueuedSyncAction = {
+          id: `sync_dup_${dup.id}`,
+          type: "create_project",
+          payload: dup,
+          timestamp: Date.now(),
+        };
+
+        executeSyncAction(action).then((success) => {
+          if (!success) {
+            set((state) => ({
+              offlineQueue: [...state.offlineQueue, action],
+              syncState: "offline",
+            }));
+          }
+        });
+
+        return dup;
+      },
+
+      archiveProject: (id) => {
+        const now = new Date().toISOString();
+        set((state) => ({
+          projects: state.projects.map((p) =>
+            p.id === id ? { ...p, status: "archived" as const, updatedAt: now } : p
+          ),
+        }));
+
+        const action: QueuedSyncAction = {
+          id: `sync_arch_${id}`,
+          type: "update_project",
+          payload: { id, updates: { status: "archived" } },
+          timestamp: Date.now(),
+        };
+
+        executeSyncAction(action).then((success) => {
+          if (!success) {
+            set((state) => ({
+              offlineQueue: [...state.offlineQueue, action],
+              syncState: "offline",
+            }));
+          }
+        });
+      },
+
+      restoreProject: (id) => {
+        const now = new Date().toISOString();
+        set((state) => ({
+          projects: state.projects.map((p) =>
+            p.id === id ? { ...p, status: "draft" as const, updatedAt: now } : p
+          ),
+        }));
+
+        const action: QueuedSyncAction = {
+          id: `sync_res_${id}`,
+          type: "update_project",
+          payload: { id, updates: { status: "draft" } },
+          timestamp: Date.now(),
+        };
+
+        executeSyncAction(action).then((success) => {
+          if (!success) {
+            set((state) => ({
+              offlineQueue: [...state.offlineQueue, action],
+              syncState: "offline",
+            }));
+          }
+        });
+      },
+
+      deleteProject: (id) => {
+        set((state) => ({
+          projects: state.projects.filter((p) => p.id !== id),
+          activeProjectId: state.activeProjectId === id ? null : state.activeProjectId,
+          collections: state.collections.map((c) => ({
+            ...c,
+            projectIds: c.projectIds.filter((pId) => pId !== id),
+          })),
+        }));
+
+        const action: QueuedSyncAction = {
+          id: `sync_del_${id}`,
+          type: "delete_project",
+          payload: { id },
+          timestamp: Date.now(),
+        };
+
+        executeSyncAction(action).then((success) => {
+          if (!success) {
+            set((state) => ({
+              offlineQueue: [...state.offlineQueue, action],
+              syncState: "offline",
+            }));
+          }
+        });
+      },
+
+      recordRun: (id, run) => {
+        const now = new Date().toISOString();
+        const p = get().projects.find((proj) => proj.id === id);
+        const runNumber = (p?.runs.length || 0) + 1;
+
+        const newRun: ProjectRun = {
+          ...run,
+          id: `run_${Date.now()}`,
+          runNumber,
+          timestamp: now,
+        };
+        const newActivity: ProjectActivity = {
+          id: `act_${Date.now()}`,
+          type: "run",
+          description: `Executed run #${newRun.runNumber} (${run.status})`,
+          timestamp: now,
+        };
+
+        set((state) => ({
+          projects: state.projects.map((proj) => {
+            if (proj.id !== id) return proj;
+            return {
+              ...proj,
+              runs: [newRun, ...proj.runs].slice(0, 50),
+              activity: [newActivity, ...proj.activity].slice(0, 100),
+              updatedAt: now,
+            };
+          }),
+        }));
+
+        const action: QueuedSyncAction = {
+          id: `sync_run_${newRun.id}`,
+          type: "save_visual_program",
+          payload: { id, run: newRun, activity: newActivity },
+          timestamp: Date.now(),
+        };
+
+        executeSyncAction(action).then((success) => {
+          if (!success) {
+            set((state) => ({
+              offlineQueue: [...state.offlineQueue, action],
+              syncState: "offline",
+            }));
+          }
+        });
+      },
+
+      recordActivity: (id, type, description) => {
+        const now = new Date().toISOString();
+        const act: ProjectActivity = {
+          id: `act_${Date.now()}`,
+          type,
+          description,
+          timestamp: now,
+        };
+
+        set((state) => ({
+          projects: state.projects.map((p) =>
+            p.id === id ? { ...p, activity: [act, ...p.activity].slice(0, 100) } : p
+          ),
+        }));
+
+        const action: QueuedSyncAction = {
+          id: `sync_act_${act.id}`,
+          type: "save_visual_program",
+          payload: { id, activity: act },
+          timestamp: Date.now(),
+        };
+
+        executeSyncAction(action).then((success) => {
+          if (!success) {
+            set((state) => ({
+              offlineQueue: [...state.offlineQueue, action],
+              syncState: "offline",
+            }));
+          }
+        });
+      },
+
+      updateFileContent: (projectId, fileId, content) => {
+        const now = new Date().toISOString();
+        let targetFile: ProjectFile | undefined;
+
+        set((state) => ({
+          projects: state.projects.map((p) => {
+            if (p.id !== projectId) return p;
+            return {
+              ...p,
+              files: p.files.map((f) => {
+                if (f.id === fileId) {
+                  targetFile = { ...f, content, updatedAt: now };
+                  return targetFile;
+                }
+                return f;
+              }),
+              updatedAt: now,
+              lastEditedAt: now,
+            };
+          }),
+        }));
+
+        if (targetFile) {
+          const action: QueuedSyncAction = {
+            id: `sync_file_${fileId}_${Date.now()}`,
+            type: "save_visual_program",
+            payload: { id: projectId, files: [targetFile] },
+            timestamp: Date.now(),
+          };
+
+          executeSyncAction(action).then((success) => {
+            if (!success) {
+              set((state) => ({
+                offlineQueue: [...state.offlineQueue, action],
+                syncState: "offline",
+              }));
+            }
+          });
+        }
+      },
+
+      addFile: (projectId, path, content = "") => {
+        const now = new Date().toISOString();
+        const name = path.split("/").pop() || path;
+        const newFile: ProjectFile = {
+          id: `file_${Date.now()}`,
+          path,
+          name,
+          content,
+          language: path.endsWith(".py") ? "python" : "markdown",
+          updatedAt: now,
+        };
+
+        set((state) => ({
+          projects: state.projects.map((p) =>
+            p.id === projectId ? { ...p, files: [...p.files, newFile], updatedAt: now } : p
+          ),
+        }));
+
+        const action: QueuedSyncAction = {
+          id: `sync_addfile_${newFile.id}`,
+          type: "save_visual_program",
+          payload: { id: projectId, files: [newFile] },
+          timestamp: Date.now(),
+        };
+
+        executeSyncAction(action).then((success) => {
+          if (!success) {
+            set((state) => ({
+              offlineQueue: [...state.offlineQueue, action],
+              syncState: "offline",
+            }));
+          }
+        });
+      },
+
+      deleteFile: (projectId, fileId) => {
+        const now = new Date().toISOString();
+        set((state) => ({
+          projects: state.projects.map((p) => {
+            if (p.id !== projectId) return p;
+            return {
+              ...p,
+              files: p.files.filter((f) => f.id !== fileId && !f.isMain),
+              updatedAt: now,
+            };
+          }),
+        }));
+      },
+
+      setSaveStatus: (saveStatus) => set({ saveStatus }),
+      setSearchQuery: (searchQuery) => set({ searchQuery }),
+      setStatusFilter: (statusFilter) => set({ statusFilter }),
+      setActiveProjectId: (activeProjectId) => set({ activeProjectId }),
+    }),
+    {
+      name: "teachflow_projects_store_v6",
+    }
+  )
+);
