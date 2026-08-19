@@ -1,26 +1,159 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ── React Flow ──────────────────────────────────────────────────────── */
+@layer base {
+  @import "@xyflow/react/dist/style.css";
 }
 
+/* ── CodeFlow Design Tokens ──────────────────────────────────────────── */
+:root {
+  /* Brand */
+  --cf-ink:           #171717;
+  --cf-ink-secondary: #555555;
+  --cf-paper:         #F4F1EA;
+  --cf-surface:       #FFFFFF;
+  --cf-border:        #D8D4CC;
+  --cf-brand:         #F26A3D;
+  --cf-blue:          #356A9A;
+  --cf-green:         #287A52;
+  --cf-brown:         #806A55;
+  --cf-error:         #C94A45;
+
+  /* Radius */
+  --cf-radius-sm: 4px;
+  --cf-radius-md: 6px;
+  --cf-radius-lg: 8px;
+
+  /* Typography */
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "Cascadia Code", monospace;
+
+  /* Keep shadcn compat */
+  --background: #F4F1EA;
+  --foreground: #171717;
+  --border: #D8D4CC;
+  --radius: 4px;
+}
+
+/* ── Global reset ────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background: var(--cf-paper);
+  color: var(--cf-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── React Flow overrides for light theme ────────────────────────────── */
+.react-flow {
+  background: #F8F6F1;
+}
+
+.react-flow__background {
+  background: #F8F6F1;
+}
+
+.react-flow__controls {
+  border: 1px solid var(--cf-border) !important;
+  border-radius: var(--cf-radius-md) !important;
+  box-shadow: none !important;
+  background: var(--cf-surface) !important;
+}
+
+.react-flow__controls-button {
+  border-bottom: 1px solid var(--cf-border) !important;
+  background: var(--cf-surface) !important;
+  color: var(--cf-ink) !important;
+  fill: var(--cf-ink) !important;
+}
+
+.react-flow__controls-button:hover {
+  background: var(--cf-paper) !important;
+}
+
+.react-flow__minimap {
+  border: 1px solid var(--cf-border) !important;
+  border-radius: var(--cf-radius-md) !important;
+  box-shadow: none !important;
+}
+
+.react-flow__edge-path {
+  stroke: #aaa9a4;
+  stroke-width: 2;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: var(--cf-brand);
+  stroke-width: 2;
+}
+
+.react-flow__handle {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  border: 1.5px solid var(--cf-border);
+  background: var(--cf-surface);
+  transition: border-color 120ms, background 120ms;
+}
+
+.react-flow__handle:hover,
+.react-flow__handle.connectable:hover {
+  border-color: var(--cf-brand);
+  background: var(--cf-brand);
+}
+
+.react-flow__handle-connecting {
+  border-color: var(--cf-brand) !important;
+}
+
+/* ── Python syntax highlighting (subtle — not rainbow) ──────────────── */
+.py-kw       { color: #356A9A; font-weight: 600; }  /* keyword: blue   */
+.py-fn       { color: #171717; }                      /* functions: ink  */
+.py-str      { color: #287A52; }                      /* strings: green  */
+.py-num      { color: #C94A45; }                      /* numbers: red    */
+.py-comment  { color: #aaa9a4; font-style: italic; }  /* comments: muted */
+.py-builtin  { color: #806A55; }                      /* builtins: brown */
+
+/* ── Scrollbar ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--cf-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #bbb8b2; }
+
+/* ── Utility ─────────────────────────────────────────────────────────── */
+.cf-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cf-ink-secondary);
+}
+
+.cf-divider {
+  width: 1px;
+  background: var(--cf-border);
+  flex-shrink: 0;
+}
+
+.cf-divider-h {
+  height: 1px;
+  background: var(--cf-border);
+  flex-shrink: 0;
+}
+
+/* Orange rule — signature visual element */
+.cf-orange-rule {
+  border-left: 3px solid var(--cf-brand);
+}
+
+/* ── @theme inline (Tailwind compat) ─────────────────────────────────── */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --color-border: var(--border);
 }
