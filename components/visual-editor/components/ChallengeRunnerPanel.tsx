@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Check,
   X,
@@ -13,12 +14,15 @@ import {
   Target,
   Sparkles,
   RotateCcw,
+  ArrowRight,
+  Trophy,
+  Compass,
 } from "lucide-react";
 import { parseProgram } from "../ast/parser";
 import { runProgram } from "../execution/runner";
 import { useEditorStore } from "../state/editorStore";
 import { useProjectsStore } from "../projects/projectStore";
-import { CODING_LEVELS } from "../learning/levelsData";
+import { CODING_LEVELS, getNextChallenge, findChallengeById } from "../learning/levelsData";
 import type { Project, LevelChallenge, TestCase } from "../projects/types";
 
 export interface TestCaseResult {
@@ -38,10 +42,12 @@ interface ChallengeRunnerPanelProps {
 }
 
 export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelProps) {
+  const router = useRouter();
   const { nodes, edges, resetToBlankCanvas } = useEditorStore();
   const {
     completedChallengeIds,
     completeChallenge,
+    startLevelChallenge,
   } = useProjectsStore();
 
   // Look up active challenge from project.learningState or fallback to level 1 challenge 1
@@ -49,18 +55,30 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
   const projectLevelId = project?.learningState?.levelId;
 
   let activeChallenge: LevelChallenge | undefined = undefined;
+  let activeLevelId = projectLevelId || "level-1";
+
   if (projectLevelId && projectChallengeId) {
     const lvl = CODING_LEVELS.find((l) => l.id === projectLevelId);
     activeChallenge = lvl?.challenges.find((c) => c.id === projectChallengeId);
   }
 
+  if (!activeChallenge && projectChallengeId) {
+    const found = findChallengeById(projectChallengeId);
+    if (found) {
+      activeChallenge = found.challenge;
+      activeLevelId = found.level.id;
+    }
+  }
+
   if (!activeChallenge && project?.learningState?.currentChallenge) {
     activeChallenge = project.learningState.currentChallenge;
+    activeLevelId = activeChallenge.levelId;
   }
 
   if (!activeChallenge) {
     // Default fallback
     activeChallenge = CODING_LEVELS[0].challenges[0];
+    activeLevelId = CODING_LEVELS[0].id;
   }
 
   const isCompleted = completedChallengeIds.includes(activeChallenge.id);
@@ -70,6 +88,11 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
   const [showHint, setShowHint] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [submitted, setSubmitted] = useState(isCompleted);
+
+  // Compute next challenge info
+  const nextInfo = activeChallenge
+    ? getNextChallenge(activeLevelId, activeChallenge.id)
+    : null;
 
   // Run automated test cases
   async function handleRunTests() {
@@ -139,6 +162,20 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
     completeChallenge(activeChallenge.id);
     setSubmitted(true);
     setShowCelebration(true);
+  }
+
+  function handleGoToNextChallenge() {
+    setShowCelebration(false);
+    if (!nextInfo) {
+      router.push("/learn");
+      return;
+    }
+
+    const nextProject = startLevelChallenge(
+      nextInfo.nextLevel.id,
+      nextInfo.nextChallenge.id
+    );
+    router.push(`/projects/${nextProject.id}/editor`);
   }
 
   return (
@@ -292,57 +329,104 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
           <span>{isRunningTests ? "Checking…" : "Test Code"}</span>
         </button>
 
-        <button
-          onClick={handleSubmit}
-          disabled={submitted || !allPassed}
-          className={`flex-1 py-1.5 px-2.5 text-[11px] font-bold rounded flex items-center justify-center gap-1.5 cursor-pointer border transition-colors shadow-xs ${
-            submitted
-              ? "bg-[#287A52] border-[#287A52] text-white cursor-default"
-              : allPassed
-              ? "bg-[#F26A3D] border-[#F26A3D] text-white hover:bg-[#E0592C]"
-              : "bg-[#EFECE6] border-[#D8D4CC] text-[#888888] cursor-not-allowed"
-          }`}
-        >
-          {submitted ? (
-            <>
-              <Check size={11} strokeWidth={3} />
-              <span>Solved</span>
-            </>
-          ) : (
-            <>
-              <Send size={10} />
-              <span>Submit</span>
-            </>
-          )}
-        </button>
+        {submitted ? (
+          <button
+            onClick={handleGoToNextChallenge}
+            className="flex-1 py-1.5 px-2.5 bg-[#287A52] hover:bg-[#1E5F3F] text-white text-[11px] font-bold rounded flex items-center justify-center gap-1.5 cursor-pointer border border-[#287A52] transition-colors shadow-xs"
+            title={nextInfo ? `Next: ${nextInfo.nextChallenge.title}` : "View All Levels"}
+          >
+            <span>{nextInfo ? "Next Challenge" : "All Levels"}</span>
+            <ArrowRight size={11} />
+          </button>
+        ) : (
+          <button
+            onClick={handleSubmit}
+            disabled={!allPassed}
+            className={`flex-1 py-1.5 px-2.5 text-[11px] font-bold rounded flex items-center justify-center gap-1.5 cursor-pointer border transition-colors shadow-xs ${
+              allPassed
+                ? "bg-[#F26A3D] border-[#F26A3D] text-white hover:bg-[#E0592C]"
+                : "bg-[#EFECE6] border-[#D8D4CC] text-[#888888] cursor-not-allowed"
+            }`}
+          >
+            <Send size={10} />
+            <span>Submit</span>
+          </button>
+        )}
       </div>
 
-      {/* Celebration Modal */}
+      {/* Celebration Modal with Next Challenge Redirection */}
       {showCelebration && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4">
-          <div className="bg-[#FFFFFF] border-2 border-[#171717] rounded-xl shadow-2xl p-5 max-w-xs w-full text-center space-y-3 animate-in zoom-in-95">
-            <div className="w-12 h-12 bg-[#287A52]/15 text-[#287A52] rounded-full flex items-center justify-center mx-auto text-2xl">
-              <Award size={28} />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+          <div className="bg-[#FFFFFF] border-2 border-[#171717] rounded-xl shadow-2xl p-6 max-w-sm w-full text-center space-y-4 animate-in zoom-in-95">
+            <div className="w-14 h-14 bg-[#287A52]/15 text-[#287A52] rounded-full flex items-center justify-center mx-auto text-3xl">
+              <Award size={32} />
             </div>
 
             <div>
-              <h2 className="text-base font-bold text-[#171717]">
-                🎉 Challenge Solved!
+              <div className="text-[10px] font-mono font-bold uppercase text-[#287A52] tracking-wider mb-1">
+                CHALLENGE COMPLETED
+              </div>
+              <h2 className="text-lg font-bold text-[#171717]">
+                🎉 {activeChallenge.title}
               </h2>
-              <p className="text-xs text-[#555] mt-1">
+              <p className="text-xs text-[#555] mt-1.5">
                 You earned <strong className="text-[#F26A3D]">+{activeChallenge.points} Points ⭐</strong>!
               </p>
             </div>
 
-            <button
-              onClick={() => setShowCelebration(false)}
-              className="w-full py-2 bg-[#F26A3D] hover:bg-[#E0592C] text-white font-bold text-xs rounded-lg uppercase border-none cursor-pointer"
-            >
-              Continue 🚀
-            </button>
+            {/* Next Challenge Info Card */}
+            {nextInfo ? (
+              <div className="p-3.5 bg-[#FAF9F5] border border-[#D8D4CC] rounded-lg text-left space-y-2">
+                {nextInfo.isNextLevel && (
+                  <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#287A52] bg-[#287A52]/10 px-2 py-0.5 rounded uppercase">
+                    <Trophy size={12} />
+                    <span>Level {nextInfo.nextLevel.levelNumber} Unlocked!</span>
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold uppercase bg-[#EFECE6] px-1.5 py-0.5 rounded text-[#666]">
+                    NEXT: LEVEL {nextInfo.nextLevel.levelNumber}
+                  </span>
+                  <span className="text-[10px] font-mono font-bold text-[#F26A3D]">
+                    ⭐ {nextInfo.nextChallenge.points} PTS
+                  </span>
+                </div>
+
+                <div className="text-xs font-bold text-[#171717]">
+                  {nextInfo.nextChallenge.title}
+                </div>
+                <p className="text-[11px] text-[#666] line-clamp-2">
+                  {nextInfo.nextChallenge.goal || nextInfo.nextChallenge.description}
+                </p>
+              </div>
+            ) : (
+              <div className="p-3.5 bg-[#F7FDF9] border border-[#287A52] rounded-lg text-xs text-[#287A52] font-semibold flex items-center justify-center gap-2">
+                <Sparkles size={16} />
+                <span>🎓 Congratulations! You completed all 10 Levels!</span>
+              </div>
+            )}
+
+            <div className="space-y-2 pt-1">
+              <button
+                onClick={handleGoToNextChallenge}
+                className="w-full py-2.5 px-4 bg-[#F26A3D] hover:bg-[#E0592C] text-white font-bold text-xs rounded-lg uppercase tracking-wider flex items-center justify-center gap-2 border-none cursor-pointer shadow-sm transition-colors"
+              >
+                <span>{nextInfo ? "Start Next Challenge" : "View All Levels"}</span>
+                <ArrowRight size={14} />
+              </button>
+
+              <button
+                onClick={() => setShowCelebration(false)}
+                className="w-full py-1.5 text-[11px] font-semibold text-[#777] hover:text-[#171717] bg-transparent border-none cursor-pointer"
+              >
+                Stay on current canvas
+              </button>
+            </div>
           </div>
         </div>
       )}
     </div>
   );
 }
+

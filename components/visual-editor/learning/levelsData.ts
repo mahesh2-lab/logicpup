@@ -1,4 +1,4 @@
-import type { CodingLevel } from "../projects/types";
+import type { CodingLevel, LevelChallenge } from "../projects/types";
 
 export const CODING_LEVELS: CodingLevel[] = [
   // ── Level 1 ─────────────────────────────────────────────────────────────────
@@ -1235,3 +1235,62 @@ export const CODING_LEVELS: CodingLevel[] = [
     ],
   },
 ];
+
+export interface NextChallengeInfo {
+  nextLevel: CodingLevel;
+  nextChallenge: LevelChallenge;
+  isNextLevel: boolean;
+}
+
+export function findChallengeById(challengeId: string): { level: CodingLevel; challenge: LevelChallenge } | null {
+  for (const level of CODING_LEVELS) {
+    const challenge = level.challenges.find((c) => c.id === challengeId);
+    if (challenge) {
+      return { level, challenge };
+    }
+  }
+  return null;
+}
+
+export function getNextChallenge(
+  levelId: string,
+  challengeId: string
+): NextChallengeInfo | null {
+  let lvlIndex = CODING_LEVELS.findIndex((l) => l.id === levelId);
+
+  // If level not found directly, lookup by challengeId
+  if (lvlIndex === -1) {
+    const found = findChallengeById(challengeId);
+    if (found) {
+      lvlIndex = CODING_LEVELS.findIndex((l) => l.id === found.level.id);
+    }
+  }
+
+  if (lvlIndex === -1) return null;
+
+  const currentLevel = CODING_LEVELS[lvlIndex];
+  const chIndex = currentLevel.challenges.findIndex((c) => c.id === challengeId);
+
+  if (chIndex !== -1 && chIndex + 1 < currentLevel.challenges.length) {
+    return {
+      nextLevel: currentLevel,
+      nextChallenge: currentLevel.challenges[chIndex + 1],
+      isNextLevel: false,
+    };
+  }
+
+  // Next level's first challenge
+  if (lvlIndex + 1 < CODING_LEVELS.length) {
+    const nextLevel = CODING_LEVELS[lvlIndex + 1];
+    if (nextLevel.challenges.length > 0) {
+      return {
+        nextLevel,
+        nextChallenge: nextLevel.challenges[0],
+        isNextLevel: true,
+      };
+    }
+  }
+
+  return null;
+}
+

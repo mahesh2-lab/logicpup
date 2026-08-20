@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { CheckSquare, Square, ArrowRight, Lightbulb, Code2, Target, Trophy } from "lucide-react";
 import { useProjectsStore } from "./projectStore";
+import { getNextChallenge } from "../learning/levelsData";
 import type { Project } from "./types";
 
 interface ProjectLearningViewProps {
@@ -73,14 +74,36 @@ export function ProjectLearningView({ project }: ProjectLearningViewProps) {
             </div>
           </div>
 
-          <div className="flex justify-end pt-2">
+          <div className="flex justify-end items-center gap-3 pt-2">
             <Link
               href={`/projects/${project.id}/editor`}
-              className="py-2 px-4 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold rounded uppercase flex items-center gap-1.5 no-underline transition-colors"
+              className="py-2 px-4 bg-[#FFFFFF] hover:bg-[#FAF9F5] border border-[#D8D4CC] text-[#171717] text-xs font-bold rounded uppercase flex items-center gap-1.5 no-underline transition-colors shadow-xs"
             >
               <span>Open in Editor</span>
               <ArrowRight size={13} />
             </Link>
+
+            {isCompleted && (
+              <button
+                onClick={() => {
+                  const activeLvlId = challenge.levelId || project.learningState?.levelId || "level-1";
+                  const nextInfo = getNextChallenge(activeLvlId, challenge.id);
+                  if (nextInfo) {
+                    const newProj = useProjectsStore.getState().startLevelChallenge(
+                      nextInfo.nextLevel.id,
+                      nextInfo.nextChallenge.id
+                    );
+                    window.location.href = `/projects/${newProj.id}/editor`;
+                  } else {
+                    window.location.href = "/learn";
+                  }
+                }}
+                className="py-2 px-4 bg-[#287A52] hover:bg-[#1E5F3F] text-white text-xs font-bold rounded uppercase flex items-center gap-1.5 border-none cursor-pointer shadow-xs transition-colors"
+              >
+                <span>Next Challenge</span>
+                <ArrowRight size={13} />
+              </button>
+            )}
           </div>
         </div>
       ) : (

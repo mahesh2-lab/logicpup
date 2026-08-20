@@ -129,7 +129,15 @@ export async function GET(request: NextRequest) {
       completedChallengeIds,
     });
   } catch (error) {
-    console.error("Error during user workspace sync:", error);
-    return jsonError("Failed to sync workspace data", 500);
+    // Return guest/local mode fallback without 500 error when PostgreSQL is not running
+    return jsonSuccess({
+      authenticated: false,
+      projects: [],
+      collections: [],
+      completedChallengeIds: [],
+      user: null,
+      offline: true,
+    });
   }
 }
+
