@@ -1294,3 +1294,66 @@ export function getNextChallenge(
   return null;
 }
 
+export function getPrevChallenge(
+  levelId: string,
+  challengeId: string
+): NextChallengeInfo | null {
+  let lvlIndex = CODING_LEVELS.findIndex((l) => l.id === levelId);
+  if (lvlIndex === -1) {
+    const found = findChallengeById(challengeId);
+    if (found) lvlIndex = CODING_LEVELS.findIndex((l) => l.id === found.level.id);
+  }
+  if (lvlIndex === -1) return null;
+
+  const currentLevel = CODING_LEVELS[lvlIndex];
+  const chIndex = currentLevel.challenges.findIndex((c) => c.id === challengeId);
+
+  if (chIndex > 0) {
+    return {
+      nextLevel: currentLevel,
+      nextChallenge: currentLevel.challenges[chIndex - 1],
+      isNextLevel: false,
+    };
+  }
+
+  if (lvlIndex > 0) {
+    const prevLevel = CODING_LEVELS[lvlIndex - 1];
+    if (prevLevel.challenges.length > 0) {
+      return {
+        nextLevel: prevLevel,
+        nextChallenge: prevLevel.challenges[prevLevel.challenges.length - 1],
+        isNextLevel: true,
+      };
+    }
+  }
+
+  return null;
+}
+
+export interface FlatChallengeItem {
+  levelId: string;
+  levelNumber: number;
+  levelTitle: string;
+  challengeIndex: number;
+  totalChallengesInLevel: number;
+  challenge: LevelChallenge;
+}
+
+export function getAllChallengesFlat(): FlatChallengeItem[] {
+  const list: FlatChallengeItem[] = [];
+  for (const lvl of CODING_LEVELS) {
+    lvl.challenges.forEach((ch, idx) => {
+      list.push({
+        levelId: lvl.id,
+        levelNumber: lvl.levelNumber,
+        levelTitle: lvl.title,
+        challengeIndex: idx + 1,
+        totalChallengesInLevel: lvl.challenges.length,
+        challenge: ch,
+      });
+    });
+  }
+  return list;
+}
+
+

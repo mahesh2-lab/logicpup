@@ -421,6 +421,7 @@ interface ProjectsState {
   completedChallengeIds: string[];
   completeChallenge: (challengeId: string) => void;
   startLevelChallenge: (levelId: string, challengeId: string) => Project;
+  switchProjectToChallenge: (projectId: string, levelId: string, challengeId: string) => void;
   isLevelUnlocked: (levelNumber: number) => boolean;
   isLevelMastered: (levelId: string) => boolean;
   getLevelMasteryPercent: (levelId: string) => number;
@@ -616,6 +617,90 @@ export const useProjectsStore = create<ProjectsState>()(
         });
 
         return newProj;
+      },
+
+      switchProjectToChallenge: (projectId, levelId, challengeId) => {
+        const level = CODING_LEVELS.find((l) => l.id === levelId);
+        const challenge = level?.challenges.find((c) => c.id === challengeId);
+        if (!challenge) return;
+
+        const now = new Date().toISOString();
+        const defaultStarterNodes = [
+          {
+            id: "start-1",
+            type: "startBlock",
+            position: { x: 260, y: 60 },
+            data: { blockType: "start", label: "Start", category: "program", color: "#555555", icon: "Play", values: {} },
+            deletable: false,
+          },
+          {
+            id: "end-1",
+            type: "endBlock",
+            position: { x: 260, y: 260 },
+            data: { blockType: "end", label: "End", category: "program", color: "#555555", icon: "Square", values: {} },
+            deletable: false,
+          },
+        ];
+        const defaultStarterEdges = [
+          {
+            id: "edge-start-end",
+            source: "start-1",
+            target: "end-1",
+          },
+        ];
+
+        const nodes = challenge.starterNodes && challenge.starterNodes.length > 0
+          ? JSON.parse(JSON.stringify(challenge.starterNodes))
+          : defaultStarterNodes;
+        const edges = challenge.starterEdges && challenge.starterEdges.length > 0
+          ? JSON.parse(JSON.stringify(challenge.starterEdges))
+          : defaultStarterEdges;
+
+        let updatedProject: Project | undefined;
+
+        set((state) => {
+          const updatedProjects = state.projects.map((p) => {
+            if (p.id !== projectId) return p;
+            updatedProject = {
+              ...p,
+              name: challenge.title,
+              description: challenge.description,
+              learningState: {
+                progress: 0,
+                levelId,
+                challengeId,
+                currentChallenge: challenge,
+              },
+              visualProgram: { nodes, edges },
+              updatedAt: now,
+              lastEditedAt: now,
+            };
+            return updatedProject;
+          });
+
+          return {
+            projects: updatedProjects,
+            activeProjectId: projectId,
+          };
+        });
+
+        if (updatedProject) {
+          const action: QueuedSyncAction = {
+            id: `sync_save_${projectId}_${Date.now()}`,
+            type: "save_visual_program",
+            payload: updatedProject,
+            timestamp: Date.now(),
+          };
+
+          executeSyncAction(action).then((success) => {
+            if (!success) {
+              set((state) => ({
+                offlineQueue: [...state.offlineQueue, action],
+                syncState: "offline",
+              }));
+            }
+          });
+        }
       },
 
       isLevelUnlocked: (levelNumber) => {

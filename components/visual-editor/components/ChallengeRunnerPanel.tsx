@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   Check,
@@ -10,6 +10,8 @@ import {
   Send,
   HelpCircle,
   ChevronRight,
+  ChevronLeft,
+  ChevronDown,
   RefreshCw,
   Target,
   Sparkles,
@@ -17,12 +19,20 @@ import {
   ArrowRight,
   Trophy,
   Compass,
+  ListOrdered,
+  BookOpen,
 } from "lucide-react";
 import { parseProgram } from "../ast/parser";
 import { runProgram } from "../execution/runner";
 import { useEditorStore } from "../state/editorStore";
 import { useProjectsStore } from "../projects/projectStore";
-import { CODING_LEVELS, getNextChallenge, findChallengeById } from "../learning/levelsData";
+import {
+  CODING_LEVELS,
+  getNextChallenge,
+  getPrevChallenge,
+  findChallengeById,
+  getAllChallengesFlat,
+} from "../learning/levelsData";
 import type { Project, LevelChallenge, TestCase } from "../projects/types";
 
 export interface TestCaseResult {
@@ -43,11 +53,12 @@ interface ChallengeRunnerPanelProps {
 
 export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelProps) {
   const router = useRouter();
-  const { nodes, edges, resetToBlankCanvas } = useEditorStore();
+  const { nodes, edges, resetToBlankCanvas, loadProjectProgram } = useEditorStore();
   const {
     completedChallengeIds,
     completeChallenge,
     startLevelChallenge,
+    switchProjectToChallenge,
   } = useProjectsStore();
 
   // Look up active challenge from project.learningState or fallback to level 1 challenge 1
@@ -76,10 +87,12 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
   }
 
   if (!activeChallenge) {
-    // Default fallback
     activeChallenge = CODING_LEVELS[0].challenges[0];
     activeLevelId = CODING_LEVELS[0].id;
   }
+
+  const currentLevel = CODING_LEVELS.find((l) => l.id === activeLevelId) || CODING_LEVELS[0];
+  const challengeIndexInLevel = currentLevel.challenges.findIndex((c) => c.id === activeChallenge.id);
 
   const isCompleted = completedChallengeIds.includes(activeChallenge.id);
 
@@ -87,12 +100,71 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
   const [testResults, setTestResults] = useState<TestCaseResult[] | null>(null);
   const [showHint, setShowHint] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [showChallengeSelector, setShowChallengeSelector] = useState(false);
   const [submitted, setSubmitted] = useState(isCompleted);
 
-  // Compute next challenge info
+  // Compute next and previous challenge info
   const nextInfo = activeChallenge
     ? getNextChallenge(activeLevelId, activeChallenge.id)
     : null;
+  const prevInfo = activeChallenge
+    ? getPrevChallenge(activeLevelId, activeChallenge.id)
+    : null;
+
+  // Reset local state whenever activeChallenge changes
+  useEffect(() => {
+    setTestResults(null);
+    setShowHint(false);
+    setShowCelebration(false);
+    setSubmitted(completedChallengeIds.includes(activeChallenge.id));
+  }, [activeChallenge.id, completedChallengeIds]);
+
+  // Navigate to target challenge
+  function navigateToChallenge(targetLevelId: string, targetChallengeId: string) {
+    setShowChallengeSelector(false);
+    setShowCelebration(false);
+
+    if (project?.id) {
+      // In-place update within current project
+      switchProjectToChallenge(project.id, targetLevelId, targetChallengeId);
+      const lvl = CODING_LEVELS.find((l) => l.id === targetLevelId);
+      const ch = lvl?.challenges.find((c) => c.id === targetChallengeId);
+      if (ch) {
+        const defaultStarterNodes = [
+          {
+            id: "start-1",
+            type: "startBlock",
+            position: { x: 260, y: 60 },
+            data: { blockType: "start", label: "Start", category: "program", color: "#555555", icon: "Play", values: {} },
+            deletable: false,
+          },
+          {
+            id: "end-1",
+            type: "endBlock",
+            position: { x: 260, y: 260 },
+            data: { blockType: "end", label: "End", category: "program", color: "#555555", icon: "Square", values: {} },
+            deletable: false,
+          },
+        ];
+        const defaultStarterEdges = [
+          { id: "edge-start-end", source: "start-1", target: "end-1" },
+        ];
+
+        const starterNodes = ch.starterNodes && ch.starterNodes.length > 0
+          ? JSON.parse(JSON.stringify(ch.starterNodes))
+          : defaultStarterNodes;
+        const starterEdges = ch.starterEdges && ch.starterEdges.length > 0
+          ? JSON.parse(JSON.stringify(ch.starterEdges))
+          : defaultStarterEdges;
+
+        loadProjectProgram(project.id, starterNodes, starterEdges);
+      }
+    } else {
+      // Start a new project for this challenge
+      const newProj = startLevelChallenge(targetLevelId, targetChallengeId);
+      router.push(`/projects/${newProj.id}/editor`);
+    }
+  }
 
   // Run automated test cases
   async function handleRunTests() {
@@ -170,24 +242,26 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
       router.push("/learn");
       return;
     }
-
-    const nextProject = startLevelChallenge(
-      nextInfo.nextLevel.id,
-      nextInfo.nextChallenge.id
-    );
-    router.push(`/projects/${nextProject.id}/editor`);
+    navigateToChallenge(nextInfo.nextLevel.id, nextInfo.nextChallenge.id);
   }
+
+  function handleGoToPrevChallenge() {
+    if (!prevInfo) return;
+    navigateToChallenge(prevInfo.nextLevel.id, prevInfo.nextChallenge.id);
+  }
+
+  const allChallengesFlat = getAllChallengesFlat();
 
   return (
     <div
-      className="w-72 bg-[#FFFFFF] border-l border-[#D8D4CC] flex flex-col h-full overflow-hidden text-xs"
+      className="w-80 bg-[#FFFFFF] border-l border-[#D8D4CC] flex flex-col h-full overflow-hidden text-xs relative"
       style={{ fontFamily: "var(--font-sans)", color: "#171717" }}
     >
       {/* Header */}
       <div className="p-3 bg-[#F4F1EA] border-b border-[#D8D4CC] flex items-center justify-between">
         <div className="flex items-center gap-1.5 font-bold text-xs">
           <Target size={15} color="#F26A3D" />
-          <span className="uppercase">Challenge</span>
+          <span className="uppercase tracking-wider">Challenge</span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -204,6 +278,100 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
           )}
         </div>
       </div>
+
+      {/* Challenge Navigation Bar */}
+      <div className="px-3 py-2 bg-[#FAF9F5] border-b border-[#E5E2DA] flex items-center justify-between gap-1">
+        <button
+          onClick={handleGoToPrevChallenge}
+          disabled={!prevInfo}
+          className="p-1 bg-[#FFFFFF] hover:bg-[#F4F1EA] border border-[#D8D4CC] rounded cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed text-[#555] hover:text-[#171717]"
+          title={prevInfo ? `Previous: ${prevInfo.nextChallenge.title}` : "First challenge"}
+        >
+          <ChevronLeft size={13} />
+        </button>
+
+        {/* Level / Challenge Dropdown Trigger */}
+        <button
+          onClick={() => setShowChallengeSelector(!showChallengeSelector)}
+          className="flex-1 px-2 py-1 bg-[#FFFFFF] hover:bg-[#F4F1EA] border border-[#D8D4CC] rounded flex items-center justify-between text-left cursor-pointer transition-colors shadow-2xs"
+        >
+          <div className="truncate font-bold text-[11px] text-[#171717] flex items-center gap-1">
+            <span className="text-[#F26A3D]">L0{currentLevel.levelNumber}</span>
+            <span className="text-[#999]">·</span>
+            <span>Ch {challengeIndexInLevel + 1}/{currentLevel.challenges.length}</span>
+            {isCompleted && <span className="text-[#287A52] text-[10px]">✓</span>}
+          </div>
+          <ChevronDown size={12} className="text-[#888] shrink-0" />
+        </button>
+
+        <button
+          onClick={handleGoToNextChallenge}
+          disabled={!nextInfo}
+          className="p-1 bg-[#FFFFFF] hover:bg-[#F4F1EA] border border-[#D8D4CC] rounded cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed text-[#555] hover:text-[#171717]"
+          title={nextInfo ? `Next: ${nextInfo.nextChallenge.title}` : "All challenges completed"}
+        >
+          <ChevronRight size={13} />
+        </button>
+      </div>
+
+      {/* Challenge Selector Dropdown Menu */}
+      {showChallengeSelector && (
+        <div className="absolute top-[82px] left-2 right-2 z-40 bg-[#FFFFFF] border-2 border-[#171717] rounded-lg shadow-xl max-h-80 overflow-y-auto p-2 space-y-2 animate-in fade-in-50">
+          <div className="flex items-center justify-between px-1 pb-1 border-b border-[#E5E2DA]">
+            <span className="font-bold text-[11px] uppercase tracking-wider text-[#777]">
+              Switch Challenge
+            </span>
+            <button
+              onClick={() => setShowChallengeSelector(false)}
+              className="bg-transparent border-none cursor-pointer text-[#888] hover:text-[#171717] p-0.5"
+            >
+              <X size={12} />
+            </button>
+          </div>
+
+          <div className="space-y-1">
+            {allChallengesFlat.map((item) => {
+              const isItemActive = item.challenge.id === activeChallenge.id;
+              const isItemDone = completedChallengeIds.includes(item.challenge.id);
+
+              return (
+                <button
+                  key={item.challenge.id}
+                  onClick={() => navigateToChallenge(item.levelId, item.challenge.id)}
+                  className={`w-full p-2 text-left rounded flex items-center justify-between gap-2 border cursor-pointer transition-colors ${
+                    isItemActive
+                      ? "bg-[#F26A3D]/10 border-[#F26A3D] text-[#171717]"
+                      : "bg-[#FFFFFF] hover:bg-[#FAF9F5] border-[#E5E2DA] text-[#444]"
+                  }`}
+                >
+                  <div className="truncate">
+                    <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#888]">
+                      <span>L0{item.levelNumber} Ch {item.challengeIndex}</span>
+                      <span>•</span>
+                      <span>⭐ {item.challenge.points}p</span>
+                    </div>
+                    <div className="font-bold text-xs truncate text-[#171717]">
+                      {item.challenge.title}
+                    </div>
+                  </div>
+
+                  <div className="shrink-0">
+                    {isItemDone ? (
+                      <span className="text-[10px] font-bold text-[#287A52] bg-[#287A52]/10 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+                        <Check size={10} strokeWidth={3} /> Solved
+                      </span>
+                    ) : isItemActive ? (
+                      <span className="text-[10px] font-bold text-[#F26A3D] bg-[#F26A3D]/10 px-1.5 py-0.5 rounded">
+                        Active
+                      </span>
+                    ) : null}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Body */}
       <div className="flex-1 overflow-y-auto p-3 space-y-3">
@@ -227,8 +395,15 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
             </button>
           </div>
 
-          <div className="text-[10px] font-mono text-[#555] bg-[#FFFFFF] px-2 py-0.5 rounded border border-[#E5E2DA] inline-block uppercase">
-            {activeChallenge.formatLabel}
+          <div className="flex items-center gap-1.5">
+            <div className="text-[10px] font-mono text-[#555] bg-[#FFFFFF] px-2 py-0.5 rounded border border-[#E5E2DA] inline-block uppercase">
+              {activeChallenge.formatLabel}
+            </div>
+            {isCompleted && (
+              <span className="text-[10px] font-bold bg-[#287A52] text-white px-2 py-0.5 rounded flex items-center gap-0.5">
+                <Check size={10} strokeWidth={3} /> Solved
+              </span>
+            )}
           </div>
 
           <p className="text-[11px] text-[#444] leading-relaxed">
