@@ -126,10 +126,23 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       RETURNING *
     `;
 
+    // Basic validation for visualProgram to prevent storing bad schema
+    let validVisualProgram = null;
+    if (visualProgram) {
+      if (typeof visualProgram === 'object') {
+        validVisualProgram = {
+          nodes: Array.isArray(visualProgram.nodes) ? visualProgram.nodes : [],
+          edges: Array.isArray(visualProgram.edges) ? visualProgram.edges : [],
+        };
+      } else {
+        validVisualProgram = { nodes: [], edges: [] };
+      }
+    }
+
     const values = [
       name || null,
       description !== undefined ? description : null,
-      visualProgram ? JSON.stringify(visualProgram) : null,
+      validVisualProgram ? JSON.stringify(validVisualProgram) : null,
       settings ? JSON.stringify(settings) : null,
       progress !== undefined ? progress : null,
       status || null,

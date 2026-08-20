@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { User, LogOut, LogIn, ChevronDown } from "lucide-react";
+import { User, LogOut, LogIn, ChevronDown, Settings } from "lucide-react";
 import { useSession, signOut } from "@/lib/auth-client";
 
 export function UserAuthMenu() {
@@ -72,7 +72,11 @@ export function UserAuthMenu() {
         }}
       >
 
-        {initial}
+        {user.image ? (
+          <img src={user.image} alt="Avatar" className="w-full h-full object-cover" style={{ borderRadius: 50 }} />
+        ) : (
+          initial
+        )}
         {/* <span style={{ fontSize: 11, fontWeight: 700, maxWidth: 100 }} className="truncate">
           {user.name || user.email}
         </span> */}
@@ -90,6 +94,14 @@ export function UserAuthMenu() {
             <div className="text-[10px] text-[#888888] truncate font-mono">{user.email}</div>
           </div>
 
+          <Link
+            href="/settings"
+            onClick={() => setIsOpen(false)}
+            className="w-full px-3 py-2 text-left text-xs hover:bg-[#FAF9F5] text-[#171717] flex items-center gap-2 font-bold cursor-pointer border-none bg-transparent no-underline"
+          >
+            <Settings size={12} />
+            <span>SETTINGS</span>
+          </Link>
           <button
             onClick={handleSignOut}
             className="w-full px-3 py-2 text-left text-xs hover:bg-[#C94A45]/10 text-[#C94A45] flex items-center gap-2 font-bold cursor-pointer border-none bg-transparent"

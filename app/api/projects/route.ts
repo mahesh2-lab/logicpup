@@ -9,20 +9,6 @@ export async function GET(request: NextRequest) {
       headers: request.headers,
     });
 
-    // Clean up any stale challenge rows from the database
-    try {
-      await pool.query(`
-        DELETE FROM "project"
-        WHERE "id" = 'challenge-sandbox'
-           OR "id" LIKE 'proj_challenge%'
-           OR "name" ILIKE '%Score Keeper%'
-           OR "name" ILIKE '%Create & Print Your Age%'
-           OR "name" ILIKE '%Level Challenge%'
-      `);
-    } catch {
-      // Ignored if table doesn't exist or offline
-    }
-
     const userId = session?.user?.id;
     let query = `SELECT * FROM "project" WHERE "id" != 'challenge-sandbox' AND "id" NOT LIKE 'proj_challenge%' ORDER BY "updatedAt" DESC`;
     const params: unknown[] = [];
@@ -75,6 +61,15 @@ export async function POST(request: NextRequest) {
       RETURNING *
     `;
 
+    // Basic validation for visualProgram to prevent storing bad schema
+    let validVisualProgram = { nodes: [], edges: [] };
+    if (visualProgram && typeof visualProgram === 'object') {
+      validVisualProgram = {
+        nodes: Array.isArray(visualProgram.nodes) ? visualProgram.nodes : [],
+        edges: Array.isArray(visualProgram.edges) ? visualProgram.edges : [],
+      };
+    }
+
     const values = [
       projectId,
       projectName,
@@ -84,7 +79,7 @@ export async function POST(request: NextRequest) {
       status || "active",
       progress || 0,
       session?.user?.id || null,
-      JSON.stringify(visualProgram || { nodes: [], edges: [] }),
+      JSON.stringify(validVisualProgram),
       JSON.stringify(settings || { autoSave: true, formatOnSave: true, visibility: "private" }),
     ];
 

@@ -123,46 +123,22 @@ export function DashboardShell({ children }: DashboardShellProps) {
   ];
 
   return (
-    <div
-      className="min-h-screen flex flex-col"
-      style={{ background: "#F4F1EA", color: "#171717", fontFamily: "var(--font-sans)" }}
-    >
+    <div className="h-screen flex flex-col bg-[#F4F1EA] text-[#171717] font-sans">
       {/* ── Top Global Navbar ── */}
-      <header
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 24px",
-          height: 48,
-          borderBottom: "1px solid #D8D4CC",
-          background: "#FFFFFF",
-          flexShrink: 0,
-        }}
-      >
+      <header className="flex items-center justify-between px-6 h-12 border-b border-[#D8D4CC] bg-white shrink-0">
         {/* Left: Brand + Breadcrumbs */}
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2 no-underline text-[#171717]">
             <div className="w-6 h-6 bg-[#F26A3D] text-white flex items-center justify-center font-bold text-xs rounded">
               TF
             </div>
-            <span
-              style={{
-                fontSize: 14,
-                fontWeight: 700,
-                letterSpacing: "-0.01em",
-                textTransform: "uppercase",
-              }}
-            >
+            <span className="text-sm font-bold tracking-[-0.01em] uppercase">
               TEACHFLOW
             </span>
           </Link>
 
           {/* Quick Breadcrumbs */}
-          <div
-            className="flex items-center gap-4 text-xs font-mono"
-            style={{ color: "#888888" }}
-          >
+          <div className="flex items-center gap-4 text-xs font-mono text-[#888888]">
             <span>/</span>
             <Link
               href="/"
@@ -217,8 +193,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
                   router.push("/projects");
                 }
               }}
-              className="pl-8 pr-3 py-1 text-xs bg-[#FAF9F5] border border-[#D8D4CC] rounded focus:outline-none focus:border-[#F26A3D] transition-colors"
-              style={{ width: 190 }}
+              className="pl-8 pr-3 py-1 text-xs bg-[#FAF9F5] border border-[#D8D4CC] rounded focus:outline-none focus:border-[#F26A3D] transition-colors w-[190px]"
             />
           </div>
 
@@ -239,17 +214,8 @@ export function DashboardShell({ children }: DashboardShellProps) {
       <div className="flex flex-1 overflow-hidden">
         {/* ── Left Sidebar Navigation ── */}
         <aside
-          style={{
-            width: sidebarCollapsed ? 64 : 220,
-            borderRight: "1px solid #D8D4CC",
-            background: "#FFFFFF",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            padding: "16px 0",
-            flexShrink: 0,
-            transition: "width 180ms ease",
-          }}
+          className="border-r border-[#D8D4CC] bg-white flex flex-col justify-between py-4 shrink-0 transition-[width] duration-180 ease-out"
+          style={{ width: sidebarCollapsed ? 64 : 220 }}
         >
           {/* Navigation Links */}
           <div className="space-y-1 px-2">

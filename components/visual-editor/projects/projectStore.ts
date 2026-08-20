@@ -14,224 +14,9 @@ import type {
 import type { BlockNode, BlockEdge } from "../state/editorStore";
 import { CODING_LEVELS } from "../learning/levelsData";
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Built-in Starter Templates
-// ─────────────────────────────────────────────────────────────────────────────
+import { PROJECT_TEMPLATES } from "./templates";
+export { PROJECT_TEMPLATES };
 
-export const PROJECT_TEMPLATES: ProjectTemplate[] = [
-  {
-    id: "empty",
-    name: "Blank Canvas",
-    description: "Start with a clean canvas (Start and End blocks) and build your program from scratch.",
-    language: "python",
-    icon: "FileCode",
-    badge: "BLANK",
-    starterNodes: [
-      {
-        id: "start-1",
-        type: "startBlock",
-        position: { x: 260, y: 60 },
-        data: { blockType: "start", label: "Start", category: "program", color: "#555555", icon: "Play", values: {} },
-        deletable: false,
-      },
-      {
-        id: "end-1",
-        type: "endBlock",
-        position: { x: 260, y: 260 },
-        data: { blockType: "end", label: "End", category: "program", color: "#555555", icon: "Square", values: {} },
-        deletable: false,
-      },
-    ],
-    starterEdges: [
-      {
-        id: "edge-start-end",
-        source: "start-1",
-        target: "end-1",
-      },
-    ],
-  },
-  {
-    id: "guessing-game",
-    name: "Number Guessing Game",
-    description: "A fun interactive game where the computer picks a secret number and player guesses it with hints.",
-    language: "python",
-    icon: "Target",
-    badge: "LOGIC",
-    starterNodes: [
-      {
-        id: "start-1",
-        type: "startBlock",
-        position: { x: 260, y: 60 },
-        data: { blockType: "start", label: "Start", category: "program", color: "#555555", icon: "Play", values: {} },
-        deletable: false,
-      },
-      {
-        id: "set-secret",
-        type: "statementBlock",
-        position: { x: 260, y: 160 },
-        data: {
-          blockType: "set_variable",
-          label: "Set Secret Number",
-          category: "variables",
-          color: "#356A9A",
-          icon: "Variable",
-          values: { varName: "secret", value: "42" },
-        },
-      },
-      {
-        id: "ask-guess",
-        type: "statementBlock",
-        position: { x: 260, y: 260 },
-        data: {
-          blockType: "ask_input",
-          label: "Ask for Guess",
-          category: "input",
-          color: "#171717",
-          icon: "HelpCircle",
-          values: { prompt: "Guess my number (1-100):", varName: "guess" },
-        },
-      },
-      {
-        id: "check-guess",
-        type: "conditionBlock",
-        position: { x: 260, y: 370 },
-        data: {
-          blockType: "if_else",
-          label: "Check Match",
-          category: "conditions",
-          color: "#F26A3D",
-          icon: "GitBranch",
-          values: { left: "guess", op: "==", right: "secret" },
-        },
-      },
-      {
-        id: "print-win",
-        type: "statementBlock",
-        position: { x: 120, y: 500 },
-        data: {
-          blockType: "print",
-          label: "Victory Message",
-          category: "output",
-          color: "#171717",
-          icon: "CheckCircle2",
-          values: { message: "🎉 Wow! You guessed it!" },
-        },
-      },
-      {
-        id: "print-try-again",
-        type: "statementBlock",
-        position: { x: 400, y: 500 },
-        data: {
-          blockType: "print",
-          label: "Try Again",
-          category: "output",
-          color: "#171717",
-          icon: "AlertCircle",
-          values: { message: "Not quite, try again!" },
-        },
-      },
-      {
-        id: "end-1",
-        type: "endBlock",
-        position: { x: 260, y: 640 },
-        data: { blockType: "end", label: "End", category: "program", color: "#555555", icon: "Square", values: {} },
-        deletable: false,
-      },
-    ],
-    starterEdges: [
-      { id: "e1", source: "start-1", target: "set-secret" },
-      { id: "e2", source: "set-secret", target: "ask-guess" },
-      { id: "e3", source: "ask-guess", target: "check-guess" },
-      { id: "e4", source: "check-guess", sourceHandle: "true", target: "print-win" },
-      { id: "e5", source: "check-guess", sourceHandle: "false", target: "print-try-again" },
-      { id: "e6", source: "print-win", target: "end-1" },
-      { id: "e7", source: "print-try-again", target: "end-1" },
-    ],
-  },
-  {
-    id: "calculator",
-    name: "Interactive Math Tool",
-    description: "Accepts two numbers, performs operations, and formats the output cleanly.",
-    language: "python",
-    icon: "Calculator",
-    badge: "MATH",
-    starterNodes: [
-      {
-        id: "start-1",
-        type: "startBlock",
-        position: { x: 260, y: 60 },
-        data: { blockType: "start", label: "Start", category: "program", color: "#555555", icon: "Play", values: {} },
-        deletable: false,
-      },
-      {
-        id: "input-a",
-        type: "statementBlock",
-        position: { x: 260, y: 160 },
-        data: {
-          blockType: "ask_input",
-          label: "First Number",
-          category: "input",
-          color: "#171717",
-          icon: "HelpCircle",
-          values: { prompt: "Enter first number:", varName: "num1" },
-        },
-      },
-      {
-        id: "input-b",
-        type: "statementBlock",
-        position: { x: 260, y: 260 },
-        data: {
-          blockType: "ask_input",
-          label: "Second Number",
-          category: "input",
-          color: "#171717",
-          icon: "HelpCircle",
-          values: { prompt: "Enter second number:", varName: "num2" },
-        },
-      },
-      {
-        id: "calc-sum",
-        type: "statementBlock",
-        position: { x: 260, y: 360 },
-        data: {
-          blockType: "calculate",
-          label: "Add Numbers",
-          category: "math",
-          color: "#287A52",
-          icon: "Calculator",
-          values: { varName: "total", left: "num1", op: "+", right: "num2" },
-        },
-      },
-      {
-        id: "print-res",
-        type: "statementBlock",
-        position: { x: 260, y: 460 },
-        data: {
-          blockType: "print",
-          label: "Show Sum",
-          category: "output",
-          color: "#171717",
-          icon: "Terminal",
-          values: { message: "The sum is: " + "total" },
-        },
-      },
-      {
-        id: "end-1",
-        type: "endBlock",
-        position: { x: 260, y: 560 },
-        data: { blockType: "end", label: "End", category: "program", color: "#555555", icon: "Square", values: {} },
-        deletable: false,
-      },
-    ],
-    starterEdges: [
-      { id: "e1", source: "start-1", target: "input-a" },
-      { id: "e2", source: "input-a", target: "input-b" },
-      { id: "e3", source: "input-b", target: "calc-sum" },
-      { id: "e4", source: "calc-sum", target: "print-res" },
-      { id: "e5", source: "print-res", target: "end-1" },
-    ],
-  },
-];
 
 // Helper to instantiate a Project from template
 export function createProjectFromTemplate(
@@ -524,6 +309,12 @@ export const useProjectsStore = create<ProjectsState>()(
           if (json.success && json.data?.authenticated) {
             const { projects, collections, completedChallengeIds } = json.data;
             set((state) => {
+              const pendingProjectCreateIds = new Set(
+                state.offlineQueue
+                  .filter((a) => a.type === "create_project")
+                  .map((a) => a.payload.id)
+              );
+
               const serverProjectsMap = new Map((projects as Project[]).map((p) => [p.id, p]));
               const cleanedStateProjects = state.projects.filter(
                 (p) => p.id !== "challenge-sandbox" && !p.id.startsWith("proj_challenge") && !p.learningState?.challengeId
@@ -533,13 +324,19 @@ export const useProjectsStore = create<ProjectsState>()(
               );
               const mergedProjects = [
                 ...cleanedServerProjects,
-                ...cleanedStateProjects.filter((p) => !serverProjectsMap.has(p.id)),
+                ...cleanedStateProjects.filter((p) => !serverProjectsMap.has(p.id) && pendingProjectCreateIds.has(p.id)),
               ];
+
+              const pendingCollectionCreateIds = new Set(
+                state.offlineQueue
+                  .filter((a) => a.type === "create_collection")
+                  .map((a) => a.payload.id)
+              );
 
               const serverColsMap = new Map((collections as Collection[]).map((c) => [c.id, c]));
               const mergedCols = [
                 ...(collections as Collection[]),
-                ...state.collections.filter((c) => !serverColsMap.has(c.id)),
+                ...state.collections.filter((c) => !serverColsMap.has(c.id) && pendingCollectionCreateIds.has(c.id)),
               ];
 
               const mergedChallenges = Array.from(
