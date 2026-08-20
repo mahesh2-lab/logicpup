@@ -175,23 +175,37 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
 
     for (const tc of activeChallenge.testCases) {
       const startTime = performance.now();
-      const inputQueue = [...(tc.inputs || ["0"])];
+      const inputQueue = [...(tc.inputs || [])];
 
       try {
         const runRes = await runProgram(program.ast, async () => {
-          const next = inputQueue.shift() || "0";
-          return Promise.resolve(next);
+          const next = inputQueue.shift();
+          return Promise.resolve(next !== undefined ? String(next) : "0");
         });
 
         const durationMs = Math.round(performance.now() - startTime);
         const actualOutputs = runRes.finalState.output;
-        const outStr = actualOutputs.join(" ").toLowerCase();
+        const outStr = actualOutputs.join("\n").toLowerCase();
 
+        // Validate that all expected outputs are matched
         const passed =
           !runRes.finalState.error &&
-          tc.expectedOutputs.some((exp) =>
-            outStr.includes(exp.toLowerCase().trim())
-          );
+          tc.expectedOutputs.length > 0 &&
+          tc.expectedOutputs.every((exp) => {
+            const cleanExp = exp.toLowerCase().trim();
+            if (!cleanExp) return true;
+            if (outStr.includes(cleanExp)) return true;
+
+            // Numeric check fallback (e.g., "110" vs 110)
+            const num = Number(cleanExp);
+            if (!isNaN(num)) {
+              return actualOutputs.some((act) => {
+                const actNum = Number(act.trim());
+                return !isNaN(actNum) && actNum === num;
+              });
+            }
+            return false;
+          });
 
         results.push({
           testCaseId: tc.id,
