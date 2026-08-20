@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { signIn, signUp } from "@/lib/auth-client";
 import { ArrowRight, Lock, Mail, User, AlertCircle, CheckCircle2, Eye, EyeOff } from "lucide-react";
 import { MiniLoader } from "@/components/visual-editor/components/MiniLoader";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 
 export default function LoginPage() {
   return (
@@ -92,12 +93,7 @@ function LoginForm() {
     >
       {/* Brand Header */}
       <div className="flex items-center gap-2 mb-6">
-        <div className="w-8 h-8 bg-[#F26A3D] text-white flex items-center justify-center font-bold text-sm rounded">
-          CF
-        </div>
-        <span style={{ fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: "#171717" }}>
-          CODEFLOW
-        </span>
+        <BrandLogo size="md" href="" />
       </div>
 
       {/* Main Auth Card */}

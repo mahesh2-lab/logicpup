@@ -11,6 +11,7 @@ import { runProgram } from "../execution/runner";
 import { UserAuthMenu } from "../components/UserAuthMenu";
 import type { Project } from "./types";
 import { useMounted } from "@/lib/useMounted";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 
 interface ProjectHeaderProps {
   project: Project;
@@ -182,24 +183,9 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
     >
       {/* Left: Back Link + Project Title */}
       <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-        <Link
-          href="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 4,
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.06em",
-            color: "#555555",
-            textDecoration: "none",
-            borderRight: "1px solid #D8D4CC",
-            paddingRight: 12,
-          }}
-        >
-          <ArrowLeft size={13} />
-          <span>PROJECTS</span>
-        </Link>
+        <div style={{ paddingRight: 12, borderRight: "1px solid #D8D4CC" }}>
+          <BrandLogo size="sm" href="/dashboard" />
+        </div>
 
         {/* Project Name (Editable) */}
         {isEditingTitle ? (

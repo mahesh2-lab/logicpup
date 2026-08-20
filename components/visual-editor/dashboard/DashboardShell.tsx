@@ -22,6 +22,7 @@ import { UserAuthMenu } from "../components/UserAuthMenu";
 import { CreateProjectModal } from "./CreateProjectModal";
 import { CreateCollectionModal } from "./CreateCollectionModal";
 import { useMounted } from "@/lib/useMounted";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 
 interface DashboardShellProps {
   children: React.ReactNode;
@@ -128,14 +129,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
       <header className="flex items-center justify-between px-6 h-12 border-b border-[#D8D4CC] bg-white shrink-0">
         {/* Left: Brand + Breadcrumbs */}
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2 no-underline text-[#171717]">
-            <div className="w-6 h-6 bg-[#F26A3D] text-white flex items-center justify-center font-bold text-xs rounded">
-              TF
-            </div>
-            <span className="text-sm font-bold tracking-[-0.01em] uppercase">
-              TEACHFLOW
-            </span>
-          </Link>
+          <BrandLogo size="sm" href="/dashboard" className="mr-2" />
 
           {/* Quick Breadcrumbs */}
           <div className="flex items-center gap-4 text-xs font-mono text-[#888888]">

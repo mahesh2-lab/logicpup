@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { NavItem } from '../../types/landing';
 import { UserAuthMenu } from '../visual-editor/components/UserAuthMenu';
+import { BrandLogo } from '@/components/ui/BrandLogo';
 
 interface HeaderProps {
   onOpenIdePreferences: () => void;
@@ -42,26 +43,7 @@ export const Header: React.FC<HeaderProps> = ({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo */}
-        <a
-          id="teachflow-brand-logo"
-          href="#"
-          className="flex items-center gap-2.5 group cursor-pointer focus:outline-none"
-        >
-          <div className="w-9 h-9 rounded-xl bg-[#F26A3D] text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-            <Boxes className="w-4.5 h-4.5" />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-bold text-base text-[#121212] tracking-tight leading-none flex items-center gap-1.5">
-              TeachFlow
-              <span className="text-[9px] font-mono font-medium px-1.5 py-0.5 rounded-full bg-[#287A52]/10 text-[#287A52]">
-                v1.4
-              </span>
-            </span>
-            <span className="text-[11px] text-[#666666] font-medium">
-              Visual Logic IDE
-            </span>
-          </div>
-        </a>
+        <BrandLogo size="lg" />
 
         {/* Desktop Navigation Links */}
         <nav
