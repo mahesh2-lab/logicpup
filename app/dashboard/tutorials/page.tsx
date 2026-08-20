@@ -68,7 +68,7 @@ export default function TutorialsPage() {
         </div>
 
         <Link
-          href="/learn"
+          href="/dashboard/learn"
           className="px-4 py-2 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold uppercase rounded no-underline flex items-center gap-1.5 shadow-xs transition-colors"
         >
           <span>Go to 10 Coding Levels</span>

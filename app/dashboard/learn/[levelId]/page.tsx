@@ -34,7 +34,7 @@ export default function LevelDetailPage({ params }: LevelPageProps) {
           The coding level <code className="font-mono text-[#F26A3D]">{levelId}</code> does not exist.
         </p>
         <Link
-          href="/learn"
+          href="/dashboard/learn"
           className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#171717] text-white text-xs font-bold uppercase rounded no-underline"
         >
           <ArrowLeft size={13} />
@@ -75,7 +75,7 @@ export default function LevelDetailPage({ params }: LevelPageProps) {
         </p>
         <div className="flex items-center justify-center gap-3">
           <Link
-            href="/learn"
+            href="/dashboard/learn"
             className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#FAF9F5] border border-[#D8D4CC] hover:border-[#171717] text-[#171717] text-xs font-bold uppercase rounded no-underline transition-colors"
           >
             <ArrowLeft size={13} />
@@ -105,7 +105,7 @@ export default function LevelDetailPage({ params }: LevelPageProps) {
       level={level}
       isUnlocked={unlocked}
       completedChallengeIds={completedIds}
-      onBack={() => router.push("/learn")}
+      onBack={() => router.push("/dashboard/learn")}
       onStartChallenge={handleStartChallenge}
     />
   );

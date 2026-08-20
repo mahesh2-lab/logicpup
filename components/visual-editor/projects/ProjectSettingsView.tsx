@@ -69,7 +69,7 @@ export function ProjectSettingsView({ project }: ProjectSettingsViewProps) {
   function handleDelete() {
     if (confirm(`Are you sure you want to permanently delete "${project.name}"? This action cannot be undone.`)) {
       deleteProject(project.id);
-      router.push("/");
+      router.push("/dashboard/projects");
     }
   }
 

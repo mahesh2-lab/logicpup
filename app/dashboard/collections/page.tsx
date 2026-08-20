@@ -93,7 +93,7 @@ export default function CollectionsPage() {
                 key={col.id}
                 onClick={() => {
                   setSelectedCollectionId(col.id);
-                  router.push("/projects");
+                  router.push("/dashboard/projects");
                 }}
                 className="bg-[#FFFFFF] border border-[#D8D4CC] p-5 rounded flex flex-col justify-between cursor-pointer hover:border-[#F26A3D] transition-colors relative group shadow-xs"
                 style={{ minHeight: 140 }}

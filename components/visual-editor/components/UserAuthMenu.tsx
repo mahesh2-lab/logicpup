@@ -95,7 +95,7 @@ export function UserAuthMenu() {
           </div>
 
           <Link
-            href="/settings"
+            href="/dashboard/settings"
             onClick={() => setIsOpen(false)}
             className="w-full px-3 py-2 text-left text-xs hover:bg-[#FAF9F5] text-[#171717] flex items-center gap-2 font-bold cursor-pointer border-none bg-transparent no-underline"
           >

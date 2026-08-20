@@ -88,37 +88,37 @@ export function DashboardShell({ children }: DashboardShellProps) {
 
   const sidebarNavItems = [
     {
-      href: "/",
+      href: "/dashboard",
       label: "Home",
       icon: <Home size={15} />,
-      isActive: pathname === "/",
+      isActive: pathname === "/dashboard",
     },
     {
-      href: "/learn",
+      href: "/dashboard/learn",
       label: "Learn & Levels",
       icon: <Trophy size={15} />,
       badge: mounted ? `${solvedCount} Solved` : undefined,
-      isActive: pathname.startsWith("/learn"),
+      isActive: pathname.startsWith("/dashboard/learn"),
     },
     {
-      href: "/projects",
+      href: "/dashboard/projects",
       label: "My Projects",
       icon: <FolderCode size={15} />,
       count: mounted ? String(activeProjectsCount) : undefined,
-      isActive: pathname === "/projects" || pathname.startsWith("/projects/"),
+      isActive: pathname === "/dashboard/projects" || pathname.startsWith("/dashboard/projects/"),
     },
     {
-      href: "/collections",
+      href: "/dashboard/collections",
       label: "Collections",
       icon: <FolderArchive size={15} />,
       count: mounted ? String(collectionsCount) : undefined,
-      isActive: pathname.startsWith("/collections"),
+      isActive: pathname.startsWith("/dashboard/collections"),
     },
     {
-      href: "/tutorials",
+      href: "/dashboard/tutorials",
       label: "Tutorials & Docs",
       icon: <BookOpen size={15} />,
-      isActive: pathname.startsWith("/tutorials"),
+      isActive: pathname.startsWith("/dashboard/tutorials"),
     },
   ];
 
@@ -141,33 +141,33 @@ export function DashboardShell({ children }: DashboardShellProps) {
           <div className="flex items-center gap-4 text-xs font-mono text-[#888888]">
             <span>/</span>
             <Link
-              href="/"
+              href="/dashboard"
               className={`hover:text-[#F26A3D] transition-colors no-underline ${
-                pathname === "/" ? "text-[#F26A3D] font-bold" : "text-[#888888]"
+                pathname === "/dashboard" ? "text-[#F26A3D] font-bold" : "text-[#888888]"
               }`}
             >
               DASHBOARD
             </Link>
             <Link
-              href="/learn"
+              href="/dashboard/learn"
               className={`hover:text-[#F26A3D] transition-colors no-underline ${
-                pathname.startsWith("/learn") ? "text-[#F26A3D] font-bold" : "text-[#888888]"
+                pathname.startsWith("/dashboard/learn") ? "text-[#F26A3D] font-bold" : "text-[#888888]"
               }`}
             >
               LEARN & LEVELS
             </Link>
             <Link
-              href="/projects"
+              href="/dashboard/projects"
               className={`hover:text-[#F26A3D] transition-colors no-underline ${
-                pathname === "/projects" ? "text-[#F26A3D] font-bold" : "text-[#888888]"
+                pathname === "/dashboard/projects" ? "text-[#F26A3D] font-bold" : "text-[#888888]"
               }`}
             >
               PROJECTS
             </Link>
             <Link
-              href="/collections"
+              href="/dashboard/collections"
               className={`hover:text-[#F26A3D] transition-colors no-underline ${
-                pathname.startsWith("/collections") ? "text-[#F26A3D] font-bold" : "text-[#888888]"
+                pathname.startsWith("/dashboard/collections") ? "text-[#F26A3D] font-bold" : "text-[#888888]"
               }`}
             >
               COLLECTIONS
@@ -189,8 +189,8 @@ export function DashboardShell({ children }: DashboardShellProps) {
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
-                if (pathname !== "/projects" && e.target.value.trim().length > 0) {
-                  router.push("/projects");
+                if (pathname !== "/dashboard/projects" && e.target.value.trim().length > 0) {
+                  router.push("/dashboard/projects");
                 }
               }}
               className="pl-8 pr-3 py-1 text-xs bg-[#FAF9F5] border border-[#D8D4CC] rounded focus:outline-none focus:border-[#F26A3D] transition-colors w-[190px]"
@@ -262,7 +262,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
           {/* Bottom Help & Collapse Button */}
           <div className="px-3 pt-3 border-t border-[#E5E2DA] flex items-center justify-between">
             <Link
-              href="/tutorials"
+              href="/dashboard/tutorials"
               className="flex items-center gap-2 text-xs font-semibold text-[#555555] no-underline hover:text-[#171717]"
               title="Help & Tutorials"
             >

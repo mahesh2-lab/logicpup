@@ -85,7 +85,7 @@ export default function HomePage() {
 
         <div className="flex items-center gap-3 shrink-0">
           <Link
-            href="/learn"
+            href="/dashboard/learn"
             className="px-4 py-2 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold uppercase rounded no-underline flex items-center gap-1.5 transition-colors shadow-xs"
           >
             <span>Explore 10 Levels</span>
@@ -311,7 +311,7 @@ export default function HomePage() {
             </p>
           </div>
           <Link
-            href="/projects"
+            href="/dashboard/projects"
             className="text-xs font-bold uppercase text-[#F26A3D] hover:underline no-underline"
           >
             View All Projects ➔

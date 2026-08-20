@@ -18,15 +18,17 @@ export function proxy(request: NextRequest) {
   // If authenticated user visits /login, redirect to home dashboard
   if (pathname === "/login") {
     if (sessionCookie) {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/dashboard", request.url));
     }
     return NextResponse.next();
   }
 
-  // Protect all other application routes
-  if (!sessionCookie) {
-    const callbackUrl = encodeURIComponent(pathname + request.nextUrl.search);
-    return NextResponse.redirect(new URL(`/login?callbackUrl=${callbackUrl}`, request.url));
+  // Protect dashboard routes
+  if (pathname.startsWith("/dashboard")) {
+    if (!sessionCookie) {
+      const callbackUrl = encodeURIComponent(pathname + request.nextUrl.search);
+      return NextResponse.redirect(new URL(`/login?callbackUrl=${callbackUrl}`, request.url));
+    }
   }
 
   return NextResponse.next();
