@@ -228,7 +228,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
             className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold uppercase tracking-wider rounded border-none cursor-pointer transition-colors"
           >
             <Plus size={13} />
-            <span>+ NEW PROJECT</span>
+            <span>NEW PROJECT</span>
           </button>
 
           <UserAuthMenu />

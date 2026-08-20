@@ -21,10 +21,12 @@ import {
 import { useProjectsStore, PROJECT_TEMPLATES } from "@/components/visual-editor/projects/projectStore";
 import type { ProjectStatus, Project } from "@/components/visual-editor/projects/types";
 import { useMounted } from "@/lib/useMounted";
+import { CreateProjectModal } from "@/components/visual-editor/dashboard/CreateProjectModal";
 
 export default function ProjectsPage() {
   const router = useRouter();
   const mounted = useMounted();
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const {
     projects,
     collections,
@@ -119,11 +121,11 @@ export default function ProjectsPage() {
 
         <div className="flex items-center gap-3">
           <button
-            onClick={handleCreateBlank}
+            onClick={() => setIsCreateModalOpen(true)}
             className="px-4 py-2 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold uppercase rounded border-none cursor-pointer flex items-center gap-1.5 shadow-xs transition-colors"
           >
             <Plus size={13} />
-            <span>+ New Project</span>
+            <span>New Project</span>
           </button>
         </div>
       </div>
@@ -322,13 +324,19 @@ export default function ProjectsPage() {
               : "You don't have any projects in this view yet."}
           </p>
           <button
-            onClick={handleCreateBlank}
+            onClick={() => setIsCreateModalOpen(true)}
             className="px-4 py-2 bg-[#F26A3D] text-white text-xs font-bold uppercase rounded border-none cursor-pointer"
           >
             + Create First Project
           </button>
         </div>
       )}
+
+      {/* Project Creation Form Modal */}
+      <CreateProjectModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+      />
     </div>
   );
 }
