@@ -17,14 +17,17 @@ export default function ProjectLayout({
   const params = useParams();
   const projectId = typeof params.projectId === "string" ? params.projectId : Array.isArray(params.projectId) ? params.projectId[0] : "";
 
-  const { getProject, setActiveProjectId, hydrateFromDatabase } = useProjectsStore();
+  const { getProject, setActiveProjectId, hydrateFromDatabase, startLevelChallenge } = useProjectsStore();
   const { loadProjectProgram, activeProjectId } = useEditorStore();
 
   useEffect(() => {
     hydrateFromDatabase();
   }, [hydrateFromDatabase]);
 
-  const project = getProject(projectId);
+  let project = getProject(projectId);
+  if (!project && projectId === "challenge-sandbox") {
+    project = startLevelChallenge("level-1", "l1-c1");
+  }
 
   // Sync active project into editorStore when opening project
   useEffect(() => {

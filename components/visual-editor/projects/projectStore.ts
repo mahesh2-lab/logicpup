@@ -906,7 +906,11 @@ export const useProjectsStore = create<ProjectsState>()(
       },
 
       getProject: (id) => {
-        return get().projects.find((p) => p.id === id);
+        let proj = get().projects.find((p) => p.id === id);
+        if (!proj && id === "challenge-sandbox") {
+          proj = get().startLevelChallenge("level-1", "l1-c1");
+        }
+        return proj;
       },
 
       updateProject: (id, updates) => {
