@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/landing/Header';
 import { HeroSection } from '@/components/landing/HeroSection';
-import { ValuePropComparison } from '@/components/landing/ValuePropComparison';
 import { InteractiveEditorDemo } from '@/components/landing/InteractiveEditorDemo';
 import { FeaturesSection } from '@/components/landing/FeaturesSection';
 import { CurriculumProgression } from '@/components/landing/CurriculumProgression';
@@ -112,9 +111,6 @@ export default function App() {
           onStartLearning={() => handleOpenAuth('signup')}
           onExploreDemo={() => handleScrollToSection('interactive-demo-playground')}
         />
-
-        {/* 2. Value Proposition (Hands-On vs. Passive Tutorials) */}
-        <ValuePropComparison />
 
         {/* 3. Interactive In-Browser Node Playground */}
         <InteractiveEditorDemo />
