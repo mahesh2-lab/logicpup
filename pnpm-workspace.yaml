@@ -1,5 +1,8 @@
+packages:
+  - "."
 allowBuilds:
   '@prisma/client': set this to true or false
   better-sqlite3: set this to true or false
-  sharp: false
-  unrs-resolver: false
+onlyBuiltDependencies:
+  - "@prisma/client"
+  - "better-sqlite3"
