@@ -723,12 +723,15 @@ export const useProjectsStore = create<ProjectsState>()(
 
       isLevelUnlocked: (levelNumber) => {
         if (levelNumber <= 1) return true;
-        const prevLevel = CODING_LEVELS.find((l) => l.levelNumber === levelNumber - 1);
-        if (!prevLevel) return true;
-        const completedInPrev = prevLevel.challenges.filter((c) =>
-          get().completedChallengeIds.includes(c.id)
-        ).length;
-        return completedInPrev >= Math.min(2, prevLevel.challenges.length);
+        for (let i = 1; i < levelNumber; i++) {
+          const lvl = CODING_LEVELS.find((l) => l.levelNumber === i);
+          if (!lvl) continue;
+          const allCompleted = lvl.challenges.every((c) =>
+            get().completedChallengeIds.includes(c.id)
+          );
+          if (!allCompleted) return false;
+        }
+        return true;
       },
 
       isLevelMastered: (levelId) => {

@@ -124,7 +124,11 @@ export default function LearnHubPage() {
                         Challenges: <strong>{completedCount}</strong> / {lvl.challenges.length} completed
                       </span>
                       <span>•</span>
-                      <span>Requires: {lvl.requiredChallengesToMaster} to unlock next level</span>
+                      <span>
+                        {lvl.levelNumber === 1 || unlocked
+                          ? `Complete all ${lvl.challenges.length} challenges to unlock Level ${lvl.levelNumber + 1}`
+                          : `Locked • Complete all challenges in Level ${lvl.levelNumber - 1} to unlock`}
+                      </span>
                     </div>
                   </div>
                 </div>

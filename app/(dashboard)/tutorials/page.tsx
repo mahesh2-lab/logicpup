@@ -107,31 +107,6 @@ export default function TutorialsPage() {
         ))}
       </div>
 
-      {/* 10 Level Quick Reference */}
-      <div className="bg-[#FFFFFF] border border-[#D8D4CC] p-6 rounded">
-        <h3 className="text-sm font-bold uppercase mb-2">10 Coding Levels Curriculum</h3>
-        <p className="text-xs text-[#666666] mb-4">
-          Each level includes visual explanations, code examples, interactive challenges, and mistake analysis.
-        </p>
-
-        <div className="grid grid-cols-5 gap-3">
-          {CODING_LEVELS.map((lvl) => (
-            <Link
-              key={lvl.id}
-              href={`/learn/${lvl.id}`}
-              className="p-3 bg-[#FAF9F5] border border-[#D8D4CC] hover:border-[#F26A3D] rounded no-underline text-[#171717] transition-colors block"
-            >
-              <div className="text-[10px] font-mono font-bold text-[#F26A3D] uppercase">
-                LVL {lvl.levelNumber}
-              </div>
-              <div className="text-xs font-bold uppercase truncate mt-0.5">{lvl.title}</div>
-              <div className="text-[10px] font-mono text-[#888] mt-1">
-                {lvl.challenges.length} challenges
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
