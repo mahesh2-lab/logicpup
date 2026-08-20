@@ -235,7 +235,7 @@ export default function ProjectsPage() {
                       </button>
 
                       {isMenuOpen && (
-                        <div className="absolute right-0 top-6 z-30 bg-[#FFFFFF] border border-[#D8D4CC] rounded shadow-lg py-1 w-36 text-xs">
+                        <div className="absolute right-0 top-full mt-1 z-30 bg-[#FFFFFF] border border-[#D8D4CC] rounded shadow-lg py-1 w-36 text-xs origin-top-right">
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
