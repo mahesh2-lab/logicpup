@@ -164,6 +164,52 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
     }
   }
 
+function normalizeString(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/[!.,?:;'"`~@#$%^&*()_\-+=\[\]{}|\\]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function matchOutput(actualOutputs: string[], expectedOutputs: string[]): boolean {
+  if (!expectedOutputs || expectedOutputs.length === 0) return true;
+
+  const fullRawText = actualOutputs.join("\n").toLowerCase();
+  const fullNormText = normalizeString(actualOutputs.join(" "));
+  const fullTokens = new Set(fullNormText.split(" ").filter(Boolean));
+
+  return expectedOutputs.every((exp) => {
+    const rawExp = exp.toLowerCase().trim();
+    if (!rawExp) return true;
+
+    // 1. Direct raw substring match
+    if (fullRawText.includes(rawExp)) return true;
+
+    // 2. Normalized text match (ignoring punctuation differences like ! or .)
+    const normExp = normalizeString(exp);
+    if (!normExp) return true;
+    if (fullNormText.includes(normExp)) return true;
+
+    // 3. Word token subset match
+    const expTokens = normExp.split(" ").filter(Boolean);
+    const allWordsPresent = expTokens.every((token) => fullTokens.has(token) || fullNormText.includes(token));
+    if (allWordsPresent && expTokens.length > 0) return true;
+
+    // 4. Numeric check (e.g. 110 vs 110.0 vs "110")
+    const expNum = Number(normExp);
+    if (!isNaN(expNum)) {
+      return actualOutputs.some((act) => {
+        const actClean = act.replace(/[^0-9.-]/g, " ").trim();
+        const actNums = actClean.split(/\s+/).map(Number).filter((n) => !isNaN(n));
+        return actNums.includes(expNum);
+      });
+    }
+
+    return false;
+  });
+}
+
   // Run automated test cases
   async function handleRunTests() {
     if (!activeChallenge) return;
@@ -185,27 +231,9 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
 
         const durationMs = Math.round(performance.now() - startTime);
         const actualOutputs = runRes.finalState.output;
-        const outStr = actualOutputs.join("\n").toLowerCase();
 
-        // Validate that all expected outputs are matched
-        const passed =
-          !runRes.finalState.error &&
-          tc.expectedOutputs.length > 0 &&
-          tc.expectedOutputs.every((exp) => {
-            const cleanExp = exp.toLowerCase().trim();
-            if (!cleanExp) return true;
-            if (outStr.includes(cleanExp)) return true;
-
-            // Numeric check fallback (e.g., "110" vs 110)
-            const num = Number(cleanExp);
-            if (!isNaN(num)) {
-              return actualOutputs.some((act) => {
-                const actNum = Number(act.trim());
-                return !isNaN(actNum) && actNum === num;
-              });
-            }
-            return false;
-          });
+        // Check if outputs match expected requirements using robust matching
+        const passed = !runRes.finalState.error && matchOutput(actualOutputs, tc.expectedOutputs);
 
         results.push({
           testCaseId: tc.id,
