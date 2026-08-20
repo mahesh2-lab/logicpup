@@ -445,6 +445,19 @@ interface ProjectsState {
   setSearchQuery: (query: string) => void;
   setStatusFilter: (filter: "all" | ProjectStatus) => void;
   setActiveProjectId: (id: string | null) => void;
+  resetAllLocalData: () => void;
+}
+
+// Clean up legacy store keys on startup
+if (typeof window !== "undefined") {
+  try {
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith("teachflow_projects_store_v") && k !== "teachflow_projects_store_v9") {
+        localStorage.removeItem(k);
+      }
+    }
+  } catch {}
 }
 
 export const useProjectsStore = create<ProjectsState>()(
@@ -1270,9 +1283,34 @@ export const useProjectsStore = create<ProjectsState>()(
       setSearchQuery: (searchQuery) => set({ searchQuery }),
       setStatusFilter: (statusFilter) => set({ statusFilter }),
       setActiveProjectId: (activeProjectId) => set({ activeProjectId }),
+
+      resetAllLocalData: () => {
+        if (typeof window !== "undefined") {
+          try {
+            for (let i = localStorage.length - 1; i >= 0; i--) {
+              const k = localStorage.key(i);
+              if (k && (k.startsWith("teachflow_") || k.startsWith("codeflow_"))) {
+                localStorage.removeItem(k);
+              }
+            }
+          } catch {}
+        }
+        set({
+          projects: [],
+          collections: [],
+          completedChallengeIds: [],
+          activeProjectId: null,
+          saveStatus: "saved",
+          searchQuery: "",
+          statusFilter: "all",
+          selectedCollectionId: null,
+          syncState: "synced",
+          offlineQueue: [],
+        });
+      },
     }),
     {
-      name: "teachflow_projects_store_v6",
+      name: "teachflow_projects_store_v9",
     }
   )
 );
