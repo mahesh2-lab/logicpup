@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Check,
   X,
@@ -53,6 +53,7 @@ interface ChallengeRunnerPanelProps {
 
 export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { nodes, edges, resetToBlankCanvas, loadProjectProgram } = useEditorStore();
   const {
     completedChallengeIds,
@@ -61,23 +62,27 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
     switchProjectToChallenge,
   } = useProjectsStore();
 
-  // Look up active challenge from project.learningState or fallback to level 1 challenge 1
-  const projectChallengeId = project?.learningState?.challengeId;
-  const projectLevelId = project?.learningState?.levelId;
+  // 1. Read query parameters for level and challenge
+  const paramChallengeId = searchParams.get("challenge") || searchParams.get("challengeId");
+  const paramLevelId = searchParams.get("level") || searchParams.get("levelId");
 
+  // Look up active challenge from searchParams -> project.learningState -> fallback
   let activeChallenge: LevelChallenge | undefined = undefined;
-  let activeLevelId = projectLevelId || "level-1";
+  let activeLevelId = paramLevelId || project?.learningState?.levelId || "level-1";
 
-  if (projectLevelId && projectChallengeId) {
-    const lvl = CODING_LEVELS.find((l) => l.id === projectLevelId);
-    activeChallenge = lvl?.challenges.find((c) => c.id === projectChallengeId);
-  }
-
-  if (!activeChallenge && projectChallengeId) {
-    const found = findChallengeById(projectChallengeId);
+  if (paramChallengeId) {
+    const found = findChallengeById(paramChallengeId);
     if (found) {
       activeChallenge = found.challenge;
-      activeLevelId = found.level.id;
+      activeLevelId = paramLevelId || found.level.id;
+    }
+  }
+
+  if (!activeChallenge && project?.learningState?.challengeId) {
+    const found = findChallengeById(project.learningState.challengeId);
+    if (found) {
+      activeChallenge = found.challenge;
+      activeLevelId = project.learningState.levelId || found.level.id;
     }
   }
 
@@ -92,7 +97,7 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
   }
 
   const currentLevel = CODING_LEVELS.find((l) => l.id === activeLevelId) || CODING_LEVELS[0];
-  const challengeIndexInLevel = currentLevel.challenges.findIndex((c) => c.id === activeChallenge.id);
+  const challengeIndexInLevel = currentLevel.challenges.findIndex((c) => c.id === activeChallenge!.id);
 
   const isCompleted = completedChallengeIds.includes(activeChallenge.id);
 
@@ -100,7 +105,7 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
   const [testResults, setTestResults] = useState<TestCaseResult[] | null>(null);
   const [showHint, setShowHint] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [showChallengeSelector, setShowChallengeSelector] = useState(false);
+  const [showLevelPicker, setShowLevelPicker] = useState(false);
   const [submitted, setSubmitted] = useState(isCompleted);
 
   // Compute next and previous challenge info
@@ -111,25 +116,12 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
     ? getPrevChallenge(activeLevelId, activeChallenge.id)
     : null;
 
-  // Reset local state whenever activeChallenge changes
+  // Sync project state with URL params and load starter code if switched
   useEffect(() => {
-    setTestResults(null);
-    setShowHint(false);
-    setShowCelebration(false);
-    setSubmitted(completedChallengeIds.includes(activeChallenge.id));
-  }, [activeChallenge.id, completedChallengeIds]);
+    if (project?.id && activeChallenge) {
+      if (project.learningState?.challengeId !== activeChallenge.id) {
+        switchProjectToChallenge(project.id, activeLevelId, activeChallenge.id);
 
-  // Navigate to target challenge
-  function navigateToChallenge(targetLevelId: string, targetChallengeId: string) {
-    setShowChallengeSelector(false);
-    setShowCelebration(false);
-
-    if (project?.id) {
-      // In-place update within current project
-      switchProjectToChallenge(project.id, targetLevelId, targetChallengeId);
-      const lvl = CODING_LEVELS.find((l) => l.id === targetLevelId);
-      const ch = lvl?.challenges.find((c) => c.id === targetChallengeId);
-      if (ch) {
         const defaultStarterNodes = [
           {
             id: "start-1",
@@ -150,19 +142,36 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
           { id: "edge-start-end", source: "start-1", target: "end-1" },
         ];
 
-        const starterNodes = ch.starterNodes && ch.starterNodes.length > 0
-          ? JSON.parse(JSON.stringify(ch.starterNodes))
+        const starterNodes = activeChallenge.starterNodes && activeChallenge.starterNodes.length > 0
+          ? JSON.parse(JSON.stringify(activeChallenge.starterNodes))
           : defaultStarterNodes;
-        const starterEdges = ch.starterEdges && ch.starterEdges.length > 0
-          ? JSON.parse(JSON.stringify(ch.starterEdges))
+        const starterEdges = activeChallenge.starterEdges && activeChallenge.starterEdges.length > 0
+          ? JSON.parse(JSON.stringify(activeChallenge.starterEdges))
           : defaultStarterEdges;
 
         loadProjectProgram(project.id, starterNodes, starterEdges);
       }
+    }
+  }, [activeChallenge?.id, activeLevelId, project?.id]);
+
+  // Reset local tests & status whenever activeChallenge changes
+  useEffect(() => {
+    setTestResults(null);
+    setShowHint(false);
+    setShowCelebration(false);
+    setSubmitted(completedChallengeIds.includes(activeChallenge.id));
+  }, [activeChallenge.id, completedChallengeIds]);
+
+  // Navigate to target challenge via URL query params
+  function navigateToChallenge(targetLevelId: string, targetChallengeId: string) {
+    setShowLevelPicker(false);
+    setShowCelebration(false);
+
+    if (project?.id) {
+      router.push(`/projects/${project.id}/editor?level=${targetLevelId}&challenge=${targetChallengeId}`);
     } else {
-      // Start a new project for this challenge
       const newProj = startLevelChallenge(targetLevelId, targetChallengeId);
-      router.push(`/projects/${newProj.id}/editor`);
+      router.push(`/projects/${newProj.id}/editor?level=${targetLevelId}&challenge=${targetChallengeId}`);
     }
   }
 
@@ -250,8 +259,6 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
     navigateToChallenge(prevInfo.nextLevel.id, prevInfo.nextChallenge.id);
   }
 
-  const allChallengesFlat = getAllChallengesFlat();
-
   return (
     <div
       className="w-80 bg-[#FFFFFF] border-l border-[#D8D4CC] flex flex-col h-full overflow-hidden text-xs relative"
@@ -261,7 +268,7 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
       <div className="p-3 bg-[#F4F1EA] border-b border-[#D8D4CC] flex items-center justify-between">
         <div className="flex items-center gap-1.5 font-bold text-xs">
           <Target size={15} color="#F26A3D" />
-          <span className="uppercase tracking-wider">Challenge</span>
+          <span className="uppercase tracking-wider">Challenge & Tests</span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -279,8 +286,8 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
         </div>
       </div>
 
-      {/* Challenge Navigation Bar */}
-      <div className="px-3 py-2 bg-[#FAF9F5] border-b border-[#E5E2DA] flex items-center justify-between gap-1">
+      {/* Level Navigation & Dropdown Bar */}
+      <div className="px-3 py-2 bg-[#FAF9F5] border-b border-[#E5E2DA] flex items-center justify-between gap-1.5">
         <button
           onClick={handleGoToPrevChallenge}
           disabled={!prevInfo}
@@ -290,18 +297,16 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
           <ChevronLeft size={13} />
         </button>
 
-        {/* Level / Challenge Dropdown Trigger */}
+        {/* Level Switcher Button */}
         <button
-          onClick={() => setShowChallengeSelector(!showChallengeSelector)}
+          onClick={() => setShowLevelPicker(!showLevelPicker)}
           className="flex-1 px-2 py-1 bg-[#FFFFFF] hover:bg-[#F4F1EA] border border-[#D8D4CC] rounded flex items-center justify-between text-left cursor-pointer transition-colors shadow-2xs"
         >
           <div className="truncate font-bold text-[11px] text-[#171717] flex items-center gap-1">
-            <span className="text-[#F26A3D]">L0{currentLevel.levelNumber}</span>
-            <span className="text-[#999]">·</span>
-            <span>Ch {challengeIndexInLevel + 1}/{currentLevel.challenges.length}</span>
-            {isCompleted && <span className="text-[#287A52] text-[10px]">✓</span>}
+            <span className="text-[#F26A3D]">LEVEL 0{currentLevel.levelNumber}:</span>
+            <span className="truncate">{currentLevel.title}</span>
           </div>
-          <ChevronDown size={12} className="text-[#888] shrink-0" />
+          <ChevronDown size={12} className="text-[#888] shrink-0 ml-1" />
         </button>
 
         <button
@@ -314,64 +319,78 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
         </button>
       </div>
 
-      {/* Challenge Selector Dropdown Menu */}
-      {showChallengeSelector && (
-        <div className="absolute top-[82px] left-2 right-2 z-40 bg-[#FFFFFF] border-2 border-[#171717] rounded-lg shadow-xl max-h-80 overflow-y-auto p-2 space-y-2 animate-in fade-in-50">
+      {/* Level Switcher Modal/Menu */}
+      {showLevelPicker && (
+        <div className="absolute top-[82px] left-2 right-2 z-40 bg-[#FFFFFF] border-2 border-[#171717] rounded-lg shadow-xl max-h-72 overflow-y-auto p-2 space-y-1 animate-in fade-in-50">
           <div className="flex items-center justify-between px-1 pb-1 border-b border-[#E5E2DA]">
-            <span className="font-bold text-[11px] uppercase tracking-wider text-[#777]">
-              Switch Challenge
+            <span className="font-bold text-[10px] uppercase tracking-wider text-[#777]">
+              Select Coding Level
             </span>
             <button
-              onClick={() => setShowChallengeSelector(false)}
+              onClick={() => setShowLevelPicker(false)}
               className="bg-transparent border-none cursor-pointer text-[#888] hover:text-[#171717] p-0.5"
             >
               <X size={12} />
             </button>
           </div>
 
-          <div className="space-y-1">
-            {allChallengesFlat.map((item) => {
-              const isItemActive = item.challenge.id === activeChallenge.id;
-              const isItemDone = completedChallengeIds.includes(item.challenge.id);
+          {CODING_LEVELS.map((lvl) => {
+            const isCurrentLvl = lvl.id === currentLevel.id;
+            const solvedInLvl = lvl.challenges.filter((c) => completedChallengeIds.includes(c.id)).length;
 
-              return (
-                <button
-                  key={item.challenge.id}
-                  onClick={() => navigateToChallenge(item.levelId, item.challenge.id)}
-                  className={`w-full p-2 text-left rounded flex items-center justify-between gap-2 border cursor-pointer transition-colors ${
-                    isItemActive
-                      ? "bg-[#F26A3D]/10 border-[#F26A3D] text-[#171717]"
-                      : "bg-[#FFFFFF] hover:bg-[#FAF9F5] border-[#E5E2DA] text-[#444]"
-                  }`}
-                >
-                  <div className="truncate">
-                    <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#888]">
-                      <span>L0{item.levelNumber} Ch {item.challengeIndex}</span>
-                      <span>•</span>
-                      <span>⭐ {item.challenge.points}p</span>
-                    </div>
-                    <div className="font-bold text-xs truncate text-[#171717]">
-                      {item.challenge.title}
-                    </div>
+            return (
+              <button
+                key={lvl.id}
+                onClick={() => navigateToChallenge(lvl.id, lvl.challenges[0].id)}
+                className={`w-full p-2 text-left rounded flex items-center justify-between border cursor-pointer transition-colors ${
+                  isCurrentLvl
+                    ? "bg-[#F26A3D]/10 border-[#F26A3D] text-[#171717]"
+                    : "bg-[#FFFFFF] hover:bg-[#FAF9F5] border-[#E5E2DA] text-[#444]"
+                }`}
+              >
+                <div className="truncate">
+                  <div className="text-[10px] font-mono text-[#F26A3D] font-bold">
+                    LEVEL 0{lvl.levelNumber}
                   </div>
+                  <div className="font-bold text-xs truncate text-[#171717]">
+                    {lvl.title}
+                  </div>
+                </div>
 
-                  <div className="shrink-0">
-                    {isItemDone ? (
-                      <span className="text-[10px] font-bold text-[#287A52] bg-[#287A52]/10 px-1.5 py-0.5 rounded flex items-center gap-0.5">
-                        <Check size={10} strokeWidth={3} /> Solved
-                      </span>
-                    ) : isItemActive ? (
-                      <span className="text-[10px] font-bold text-[#F26A3D] bg-[#F26A3D]/10 px-1.5 py-0.5 rounded">
-                        Active
-                      </span>
-                    ) : null}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
+                <span className="text-[10px] font-mono text-[#888] shrink-0 ml-2">
+                  {solvedInLvl}/{lvl.challenges.length} solved
+                </span>
+              </button>
+            );
+          })}
         </div>
       )}
+
+      {/* ── Challenge Tabs Strip (Tabs like in challenges page) ── */}
+      <div className="bg-[#FFFFFF] border-b border-[#D8D4CC] flex items-center overflow-x-auto scrollbar-none px-2 py-1.5 gap-1.5">
+        {currentLevel.challenges.map((ch, idx) => {
+          const isCurrentTab = ch.id === activeChallenge.id;
+          const isTabSolved = completedChallengeIds.includes(ch.id);
+
+          return (
+            <button
+              key={ch.id}
+              onClick={() => navigateToChallenge(currentLevel.id, ch.id)}
+              className={`py-1 px-2.5 rounded-full text-[11px] font-bold whitespace-nowrap flex items-center gap-1.5 cursor-pointer border transition-all shrink-0 ${
+                isCurrentTab
+                  ? "bg-[#171717] text-white border-[#171717] shadow-xs"
+                  : isTabSolved
+                  ? "bg-[#F7FDF9] text-[#287A52] border-[#287A52]/40 hover:bg-[#EAF7EE]"
+                  : "bg-[#FAF9F5] text-[#666] border-[#D8D4CC] hover:border-[#171717] hover:text-[#171717]"
+              }`}
+              title={`${ch.title} (${ch.points} pts)`}
+            >
+              <span>{idx + 1}. {ch.title.length > 15 ? ch.title.slice(0, 15) + "…" : ch.title}</span>
+              {isTabSolved && <Check size={10} strokeWidth={3} className="text-[#287A52]" />}
+            </button>
+          );
+        })}
+      </div>
 
       {/* Body */}
       <div className="flex-1 overflow-y-auto p-3 space-y-3">
@@ -604,4 +623,3 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
     </div>
   );
 }
-

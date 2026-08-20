@@ -49,7 +49,7 @@ export default function LevelDetailPage({ params }: LevelPageProps) {
 
   function handleStartChallenge(challengeId: string) {
     const project = startLevelChallenge(level!.id, challengeId);
-    router.push(`/projects/${project.id}/editor`);
+    router.push(`/projects/${project.id}/editor?level=${level!.id}&challenge=${challengeId}`);
   }
 
   return (

@@ -42,6 +42,10 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [titleValue, setTitleValue] = useState(project.name);
 
+  React.useEffect(() => {
+    setTitleValue(project.name);
+  }, [project.name]);
+
   const isRunning = execution.status === "running";
 
   const tabs = [

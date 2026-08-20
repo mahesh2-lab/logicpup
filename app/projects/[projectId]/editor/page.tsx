@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { useParams } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { useParams, useSearchParams } from "next/navigation";
 import { BlockLibrary } from "@/components/visual-editor/components/BlockLibrary";
 import { Canvas } from "@/components/visual-editor/components/Canvas";
 import { CodePanel } from "@/components/visual-editor/components/CodePanel";
@@ -13,11 +13,17 @@ import { useProjectsStore } from "@/components/visual-editor/projects/projectSto
 
 export default function ProjectEditorPage() {
   const params = useParams();
+  const searchParams = useSearchParams();
   const projectId = params?.projectId as string;
   const { projects } = useProjectsStore();
 
   const currentProject = projects.find((p) => p.id === projectId);
-  const hasLinkedChallenge = Boolean(currentProject?.learningState?.challengeId || currentProject?.learningState?.currentChallenge);
+  const challengeParam = searchParams.get("challenge") || searchParams.get("challengeId");
+  const hasLinkedChallenge = Boolean(
+    challengeParam ||
+    currentProject?.learningState?.challengeId ||
+    currentProject?.learningState?.currentChallenge
+  );
 
   const {
     layoutMode,
@@ -31,8 +37,8 @@ export default function ProjectEditorPage() {
 
   const [outputExpanded, setOutputExpanded] = useState(true);
 
-  // Automatically open challenge panel on load if this project is a level challenge
-  React.useEffect(() => {
+  // Automatically open challenge panel on load if this project is a level challenge or has challenge in URL
+  useEffect(() => {
     if (hasLinkedChallenge) {
       setTaskPanelOpen(true);
     }
@@ -53,9 +59,10 @@ export default function ProjectEditorPage() {
           <div className="flex flex-1 overflow-hidden">
             <Canvas />
 
-            {/* Challenge & Automated Test Cases Panel */}
+            {/* Challenge & Automated Test Cases Panel with searchParams binding */}
             {taskPanelOpen && (
               <ChallengeRunnerPanel
+                key={projectId + "_" + (challengeParam || currentProject?.learningState?.challengeId || "main")}
                 project={currentProject}
                 onClose={() => setTaskPanelOpen(false)}
               />
