@@ -20,9 +20,23 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // 1. Fetch User Projects
+    // Clean up any stale challenge rows from the database
+    try {
+      await pool.query(`
+        DELETE FROM "project"
+        WHERE "id" = 'challenge-sandbox'
+           OR "id" LIKE 'proj_challenge%'
+           OR "name" ILIKE '%Score Keeper%'
+           OR "name" ILIKE '%Create & Print Your Age%'
+           OR "name" ILIKE '%Level Challenge%'
+      `);
+    } catch {
+      // Ignored if table doesn't exist or offline
+    }
+
+    // 1. Fetch User Projects (excluding challenges)
     const projectsResult = await pool.query(
-      `SELECT * FROM "project" WHERE "ownerId" = $1 ORDER BY "updatedAt" DESC`,
+      `SELECT * FROM "project" WHERE "ownerId" = $1 AND "id" != 'challenge-sandbox' AND "id" NOT LIKE 'proj_challenge%' ORDER BY "updatedAt" DESC`,
       [userId]
     );
 

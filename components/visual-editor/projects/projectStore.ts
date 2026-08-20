@@ -512,9 +512,15 @@ export const useProjectsStore = create<ProjectsState>()(
             const { projects, collections, completedChallengeIds } = json.data;
             set((state) => {
               const serverProjectsMap = new Map((projects as Project[]).map((p) => [p.id, p]));
+              const cleanedStateProjects = state.projects.filter(
+                (p) => p.id !== "challenge-sandbox" && !p.id.startsWith("proj_challenge") && !p.learningState?.challengeId
+              );
+              const cleanedServerProjects = (projects as Project[]).filter(
+                (p) => p.id !== "challenge-sandbox" && !p.id.startsWith("proj_challenge") && !p.learningState?.challengeId
+              );
               const mergedProjects = [
-                ...(projects as Project[]),
-                ...state.projects.filter((p) => !serverProjectsMap.has(p.id)),
+                ...cleanedServerProjects,
+                ...cleanedStateProjects.filter((p) => !serverProjectsMap.has(p.id)),
               ];
 
               const serverColsMap = new Map((collections as Collection[]).map((c) => [c.id, c]));

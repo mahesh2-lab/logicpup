@@ -9,12 +9,26 @@ export async function GET(request: NextRequest) {
       headers: request.headers,
     });
 
+    // Clean up any stale challenge rows from the database
+    try {
+      await pool.query(`
+        DELETE FROM "project"
+        WHERE "id" = 'challenge-sandbox'
+           OR "id" LIKE 'proj_challenge%'
+           OR "name" ILIKE '%Score Keeper%'
+           OR "name" ILIKE '%Create & Print Your Age%'
+           OR "name" ILIKE '%Level Challenge%'
+      `);
+    } catch {
+      // Ignored if table doesn't exist or offline
+    }
+
     const userId = session?.user?.id;
-    let query = `SELECT * FROM "project" ORDER BY "updatedAt" DESC`;
+    let query = `SELECT * FROM "project" WHERE "id" != 'challenge-sandbox' AND "id" NOT LIKE 'proj_challenge%' ORDER BY "updatedAt" DESC`;
     const params: unknown[] = [];
 
     if (userId) {
-      query = `SELECT * FROM "project" WHERE "ownerId" = $1 OR "ownerId" IS NULL ORDER BY "updatedAt" DESC`;
+      query = `SELECT * FROM "project" WHERE ("ownerId" = $1 OR "ownerId" IS NULL) AND "id" != 'challenge-sandbox' AND "id" NOT LIKE 'proj_challenge%' ORDER BY "updatedAt" DESC`;
       params.push(userId);
     }
 
@@ -33,7 +47,12 @@ export async function POST(request: NextRequest) {
     });
 
     const body = await request.json();
-    const { id, name, description, language, templateId, visualProgram, files, settings, progress, status } = body;
+    const { id, name, description, language, templateId, visualProgram, files, settings, progress, status, learningState } = body;
+
+    // Do NOT insert learning challenges into the projects database table
+    if (id === "challenge-sandbox" || Boolean(learningState?.challengeId) || id?.startsWith("proj_challenge")) {
+      return jsonSuccess({ project: { id, name, status: "active", isChallenge: true } }, 200);
+    }
 
     const projectId = id || `proj_${Date.now()}`;
     const nameVal = validateString(name, "Project name", { min: 1, max: 150 });
