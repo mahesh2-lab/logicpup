@@ -76,7 +76,7 @@ export function ProjectLearningView({ project }: ProjectLearningViewProps) {
 
           <div className="flex justify-end items-center gap-3 pt-2">
             <Link
-              href={`/projects/${project.id}/editor`}
+              href={`/projects/${project.id}/editor?level=${challenge.levelId || "level-1"}&challenge=${challenge.id}`}
               className="py-2 px-4 bg-[#FFFFFF] hover:bg-[#FAF9F5] border border-[#D8D4CC] text-[#171717] text-xs font-bold rounded uppercase flex items-center gap-1.5 no-underline transition-colors shadow-xs"
             >
               <span>Open in Editor</span>
@@ -93,7 +93,7 @@ export function ProjectLearningView({ project }: ProjectLearningViewProps) {
                       nextInfo.nextLevel.id,
                       nextInfo.nextChallenge.id
                     );
-                    window.location.href = `/projects/${newProj.id}/editor`;
+                    window.location.href = `/projects/${newProj.id}/editor?level=${nextInfo.nextLevel.id}&challenge=${nextInfo.nextChallenge.id}`;
                   } else {
                     window.location.href = "/learn";
                   }
