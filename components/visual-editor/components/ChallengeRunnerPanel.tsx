@@ -234,13 +234,17 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
     setShowCelebration(true);
   }
 
+  // Check if there is a next challenge WITHIN the current level
+  const hasNextInSameLevel = Boolean(nextInfo && !nextInfo.isNextLevel);
+
   function handleGoToNextChallenge() {
     setShowCelebration(false);
-    if (!nextInfo) {
-      router.push("/learn");
-      return;
+    if (hasNextInSameLevel && nextInfo) {
+      navigateToChallenge(nextInfo.nextLevel.id, nextInfo.nextChallenge.id);
+    } else {
+      // Level completed -> Redirect to level challenges page
+      router.push(`/learn/${currentLevel.id}`);
     }
-    navigateToChallenge(nextInfo.nextLevel.id, nextInfo.nextChallenge.id);
   }
 
   return (
@@ -407,9 +411,9 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
           <button
             onClick={handleGoToNextChallenge}
             className="flex-1 py-1.5 px-2.5 bg-[#287A52] hover:bg-[#1E5F3F] text-white text-[11px] font-bold rounded flex items-center justify-center gap-1.5 cursor-pointer border border-[#287A52] transition-colors shadow-xs"
-            title={nextInfo ? `Next: ${nextInfo.nextChallenge.title}` : "View All Levels"}
+            title={hasNextInSameLevel ? `Next: ${nextInfo?.nextChallenge.title}` : `Back to Level 0${currentLevel.levelNumber} Challenges`}
           >
-            <span>{nextInfo ? "Next Challenge" : "All Levels"}</span>
+            <span>{hasNextInSameLevel ? "Next Challenge" : "Level Challenges"}</span>
             <ArrowRight size={11} />
           </button>
         ) : (
@@ -428,7 +432,7 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
         )}
       </div>
 
-      {/* Celebration Modal with Next Challenge Redirection */}
+      {/* Celebration Modal with Level Completion / Next Challenge Redirection */}
       {showCelebration && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
           <div className="bg-[#FFFFFF] border-2 border-[#171717] rounded-xl shadow-2xl p-6 max-w-sm w-full text-center space-y-4 animate-in zoom-in-95">
@@ -438,29 +442,22 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
 
             <div>
               <div className="text-[10px] font-mono font-bold uppercase text-[#287A52] tracking-wider mb-1">
-                CHALLENGE COMPLETED
+                {hasNextInSameLevel ? "CHALLENGE COMPLETED" : `🎉 LEVEL 0${currentLevel.levelNumber} MASTERED!`}
               </div>
               <h2 className="text-lg font-bold text-[#171717]">
-                🎉 {activeChallenge.title}
+                {hasNextInSameLevel ? `🎉 ${activeChallenge.title}` : `All Level 0${currentLevel.levelNumber} Challenges Solved!`}
               </h2>
               <p className="text-xs text-[#555] mt-1.5">
                 You earned <strong className="text-[#F26A3D]">+{activeChallenge.points} Points ⭐</strong>!
               </p>
             </div>
 
-            {/* Next Challenge Info Card */}
-            {nextInfo ? (
+            {/* Next Challenge Info Card or Level Mastered Card */}
+            {hasNextInSameLevel && nextInfo ? (
               <div className="p-3.5 bg-[#FAF9F5] border border-[#D8D4CC] rounded-lg text-left space-y-2">
-                {nextInfo.isNextLevel && (
-                  <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#287A52] bg-[#287A52]/10 px-2 py-0.5 rounded uppercase">
-                    <Trophy size={12} />
-                    <span>Level {nextInfo.nextLevel.levelNumber} Unlocked!</span>
-                  </div>
-                )}
-
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono font-bold uppercase bg-[#EFECE6] px-1.5 py-0.5 rounded text-[#666]">
-                    NEXT: LEVEL {nextInfo.nextLevel.levelNumber}
+                    NEXT: CHALLENGE {challengeIndexInLevel + 2}/{currentLevel.challenges.length}
                   </span>
                   <span className="text-[10px] font-mono font-bold text-[#F26A3D]">
                     ⭐ {nextInfo.nextChallenge.points} PTS
@@ -475,9 +472,14 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
                 </p>
               </div>
             ) : (
-              <div className="p-3.5 bg-[#F7FDF9] border border-[#287A52] rounded-lg text-xs text-[#287A52] font-semibold flex items-center justify-center gap-2">
-                <Sparkles size={16} />
-                <span>🎓 Congratulations! You completed all 10 Levels!</span>
+              <div className="p-3.5 bg-[#F7FDF9] border border-[#287A52] rounded-lg text-left space-y-1.5">
+                <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#287A52] bg-[#287A52]/10 px-2 py-0.5 rounded uppercase">
+                  <Trophy size={12} />
+                  <span>Level 0{currentLevel.levelNumber} Completed!</span>
+                </div>
+                <p className="text-[11px] text-[#444] leading-relaxed">
+                  You have solved every challenge in <strong className="text-[#171717]">{currentLevel.title}</strong>! Return to the challenges list to review or proceed to the next level.
+                </p>
               </div>
             )}
 
@@ -486,7 +488,7 @@ export function ChallengeRunnerPanel({ project, onClose }: ChallengeRunnerPanelP
                 onClick={handleGoToNextChallenge}
                 className="w-full py-2.5 px-4 bg-[#F26A3D] hover:bg-[#E0592C] text-white font-bold text-xs rounded-lg uppercase tracking-wider flex items-center justify-center gap-2 border-none cursor-pointer shadow-sm transition-colors"
               >
-                <span>{nextInfo ? "Start Next Challenge" : "View All Levels"}</span>
+                <span>{hasNextInSameLevel ? "Start Next Challenge" : "Back to Level Challenges"}</span>
                 <ArrowRight size={14} />
               </button>
 
