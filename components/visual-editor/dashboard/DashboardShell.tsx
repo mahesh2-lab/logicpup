@@ -66,7 +66,14 @@ export function DashboardShell({ children }: DashboardShellProps) {
     };
   }, [hydrateFromDatabase, setOnlineStatus]);
 
-  const activeProjectsCount = mounted ? projects.filter((p) => p.status !== "archived").length : 0;
+  const activeProjectsCount = mounted
+    ? projects.filter(
+        (p) =>
+          p.status !== "archived" &&
+          p.id !== "challenge-sandbox" &&
+          !p.learningState?.challengeId
+      ).length
+    : 0;
   const solvedCount = mounted ? completedChallengeIds.length : 0;
   const collectionsCount = mounted ? collections.length : 0;
 

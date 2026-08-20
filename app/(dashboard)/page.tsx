@@ -34,8 +34,15 @@ export default function HomePage() {
     getTotalEarnedPoints,
   } = useProjectsStore();
 
-  const activeProjects = mounted ? projects.filter((p) => p.status !== "archived") : [];
-  const recentProject = mounted ? (activeProjects[0] || projects[0]) : undefined;
+  const activeProjects = mounted
+    ? projects.filter(
+        (p) =>
+          p.status !== "archived" &&
+          p.id !== "challenge-sandbox" &&
+          !p.learningState?.challengeId
+      )
+    : [];
+  const recentProject = mounted ? activeProjects[0] : undefined;
   const totalPoints = mounted ? getTotalEarnedPoints() : 0;
   const currentActiveLevel = mounted
     ? (CODING_LEVELS.find((l) => isLevelUnlocked(l.levelNumber) && !isLevelMastered(l.id)) || CODING_LEVELS[0])

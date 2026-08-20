@@ -45,6 +45,11 @@ export default function ProjectsPage() {
 
   const activeProjects = mounted
     ? projects.filter((p) => {
+        // Exclude learning challenges from user projects
+        if (p.id === "challenge-sandbox" || Boolean(p.learningState?.challengeId)) {
+          return false;
+        }
+
         const matchesStatus =
           statusFilter === "all"
             ? p.status !== "archived"
@@ -60,7 +65,14 @@ export default function ProjectsPage() {
       })
     : [];
 
-  const archivedProjects = mounted ? projects.filter((p) => p.status === "archived") : [];
+  const archivedProjects = mounted
+    ? projects.filter(
+        (p) =>
+          p.status === "archived" &&
+          p.id !== "challenge-sandbox" &&
+          !p.learningState?.challengeId
+      )
+    : [];
   const selectedCollection = mounted ? collections.find((c) => c.id === selectedCollectionId) : undefined;
 
   function formatTimeAgo(isoString: string) {

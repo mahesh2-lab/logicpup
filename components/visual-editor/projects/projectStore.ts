@@ -574,49 +574,48 @@ export const useProjectsStore = create<ProjectsState>()(
         const level = CODING_LEVELS.find((l) => l.id === levelId);
         const challenge = level?.challenges.find((c) => c.id === challengeId);
 
-        const newProj = get().createProject(
-          "empty",
-          challenge ? `${challenge.title}` : "Level Challenge",
-          challenge?.description || "Construct an algorithm to solve this coding challenge."
-        );
+        const challengeProjId = "challenge-sandbox";
+        const existing = get().projects.find((p) => p.id === challengeProjId);
 
-        if (challenge) {
-          newProj.learningState = {
-            progress: 0,
-            levelId,
-            challengeId,
-            currentChallenge: challenge,
-          };
-          if (challenge.starterNodes && challenge.starterNodes.length > 0) {
-            newProj.visualProgram.nodes = JSON.parse(JSON.stringify(challenge.starterNodes));
-          }
-          if (challenge.starterEdges && challenge.starterEdges.length > 0) {
-            newProj.visualProgram.edges = JSON.parse(JSON.stringify(challenge.starterEdges));
-          }
+        const challengeProj: Project = existing
+          ? {
+              ...existing,
+              name: challenge ? challenge.title : "Challenge Sandbox",
+              description: challenge?.description || "",
+              learningState: {
+                progress: 0,
+                levelId,
+                challengeId,
+                currentChallenge: challenge,
+              },
+              updatedAt: new Date().toISOString(),
+            }
+          : {
+              ...createProjectFromTemplate("empty", challenge ? challenge.title : "Challenge Sandbox", challenge?.description || ""),
+              id: challengeProjId,
+              learningState: {
+                progress: 0,
+                levelId,
+                challengeId,
+                currentChallenge: challenge,
+              },
+            };
+
+        if (challenge?.starterNodes && challenge.starterNodes.length > 0) {
+          challengeProj.visualProgram.nodes = JSON.parse(JSON.stringify(challenge.starterNodes));
+        }
+        if (challenge?.starterEdges && challenge.starterEdges.length > 0) {
+          challengeProj.visualProgram.edges = JSON.parse(JSON.stringify(challenge.starterEdges));
         }
 
         set((state) => ({
-          projects: state.projects.map((p) => (p.id === newProj.id ? newProj : p)),
-          activeProjectId: newProj.id,
+          projects: existing
+            ? state.projects.map((p) => (p.id === challengeProjId ? challengeProj : p))
+            : [...state.projects, challengeProj],
+          activeProjectId: challengeProjId,
         }));
 
-        const action: QueuedSyncAction = {
-          id: `sync_save_${newProj.id}_${Date.now()}`,
-          type: "save_visual_program",
-          payload: newProj,
-          timestamp: Date.now(),
-        };
-
-        executeSyncAction(action).then((success) => {
-          if (!success) {
-            set((state) => ({
-              offlineQueue: [...state.offlineQueue, action],
-              syncState: "offline",
-            }));
-          }
-        });
-
-        return newProj;
+        return challengeProj;
       },
 
       switchProjectToChallenge: (projectId, levelId, challengeId) => {
