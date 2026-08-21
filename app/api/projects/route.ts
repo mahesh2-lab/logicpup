@@ -1,7 +1,27 @@
 import { NextRequest } from "next/server";
 import { pool } from "@/lib/db";
 import { auth } from "@/lib/auth";
-import { jsonSuccess, jsonError, validateString } from "@/lib/validation";
+import { jsonSuccess, jsonError } from "@/lib/validation";
+import { z } from "zod";
+
+const visualProgramSchema = z.object({
+  nodes: z.array(z.any()).optional().default([]),
+  edges: z.array(z.any()).optional().default([]),
+});
+
+const projectSchema = z.object({
+  id: z.string().optional(),
+  name: z.string().min(1).max(150).optional().default("New Python Project"),
+  description: z.string().optional(),
+  language: z.string().optional().default("python"),
+  templateId: z.string().optional().default("empty"),
+  visualProgram: visualProgramSchema.optional().nullable(),
+  files: z.array(z.record(z.any())).optional(),
+  settings: z.record(z.any()).optional(),
+  progress: z.number().optional().default(0),
+  status: z.string().optional().default("active"),
+  learningState: z.record(z.any()).optional(),
+});
 
 export async function GET(request: NextRequest) {
   try {
@@ -32,17 +52,26 @@ export async function POST(request: NextRequest) {
       headers: request.headers,
     });
 
-    const body = await request.json();
-    const { id, name, description, language, templateId, visualProgram, files, settings, progress, status, learningState } = body;
-
-    // Do NOT insert learning challenges into the projects database table
-    if (id === "challenge-sandbox" || Boolean(learningState?.challengeId) || id?.startsWith("proj_challenge")) {
-      return jsonSuccess({ project: { id, name, status: "active", isChallenge: true } }, 200);
+    if (!session?.user?.id) {
+      return jsonError("Unauthorized: Please sign in to create a project", 401);
     }
 
+    const body = await request.json();
+    
+    // Do NOT insert learning challenges into the projects database table
+    if (body.id === "challenge-sandbox" || Boolean(body.learningState?.challengeId) || body.id?.startsWith("proj_challenge")) {
+      return jsonSuccess({ project: { id: body.id, name: body.name, status: "active", isChallenge: true } }, 200);
+    }
+
+    const parsedBody = projectSchema.safeParse(body);
+    if (!parsedBody.success) {
+      return jsonError("Invalid request data", 400, parsedBody.error.format());
+    }
+
+    const { id, name, description, language, templateId, visualProgram, files, settings, progress, status } = parsedBody.data;
+
     const projectId = id || `proj_${Date.now()}`;
-    const nameVal = validateString(name, "Project name", { min: 1, max: 150 });
-    const projectName = nameVal.valid ? nameVal.value : "New Python Project";
+    const projectName = name;
 
     const query = `
       INSERT INTO "project" (
@@ -61,15 +90,6 @@ export async function POST(request: NextRequest) {
       RETURNING *
     `;
 
-    // Basic validation for visualProgram to prevent storing bad schema
-    let validVisualProgram = { nodes: [], edges: [] };
-    if (visualProgram && typeof visualProgram === 'object') {
-      validVisualProgram = {
-        nodes: Array.isArray(visualProgram.nodes) ? visualProgram.nodes : [],
-        edges: Array.isArray(visualProgram.edges) ? visualProgram.edges : [],
-      };
-    }
-
     const values = [
       projectId,
       projectName,
@@ -79,7 +99,7 @@ export async function POST(request: NextRequest) {
       status || "active",
       progress || 0,
       session?.user?.id || null,
-      JSON.stringify(validVisualProgram),
+      JSON.stringify(visualProgram || { nodes: [], edges: [] }),
       JSON.stringify(settings || { autoSave: true, formatOnSave: true, visibility: "private" }),
     ];
 

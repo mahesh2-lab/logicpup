@@ -1,4 +1,5 @@
 import { Pool } from "pg";
+import { env } from "./env";
 
 const globalForPg = globalThis as unknown as {
   pool?: Pool;
@@ -7,9 +8,9 @@ const globalForPg = globalThis as unknown as {
 export const pool =
   globalForPg.pool ||
   new Pool({
-    connectionString:
-      process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5432/app",
+    connectionString: env.DATABASE_URL,
   });
+
 
 if (process.env.NODE_ENV !== "production") {
   globalForPg.pool = pool;

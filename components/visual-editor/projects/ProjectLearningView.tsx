@@ -35,9 +35,9 @@ export function ProjectLearningView({ project }: ProjectLearningViewProps) {
           >
             PROJECT CHALLENGE
           </span>
-          <h1 style={{ fontSize: 20, fontWeight: 700, textTransform: "uppercase", marginTop: 2 }}>
+          <h2 style={{ fontSize: 20, fontWeight: 700, textTransform: "uppercase", marginTop: 2 }}>
             {challenge ? challenge.title : project.name}
-          </h1>
+          </h2>
           <p style={{ fontSize: 12, color: "#666666", marginTop: 2 }}>
             {challenge ? challenge.description : "Construct visual block algorithms in the editor."}
           </p>

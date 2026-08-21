@@ -10,6 +10,28 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <ClientPage />;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "LogicPup",
+    "operatingSystem": "Web",
+    "applicationCategory": "EducationalApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "The leash-free visual Python programming environment."
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ClientPage />
+    </>
+  );
 }
 

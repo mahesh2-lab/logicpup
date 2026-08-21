@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion, useScroll, useTransform, useSpring } from 'motion/react';
 import {
   Sparkles,
@@ -28,6 +29,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onStartLearning,
   onExploreDemo,
 }) => {
+  const router = useRouter();
   const heroRef = useRef<HTMLElement>(null);
 
   // Keep an eye on how far down they scroll so we can do cool 3D effects
@@ -156,7 +158,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             >
               <button
                 id="hero-start-learning-cta"
-                onClick={() => { window.location.href = "/login?mode=signup"; }}
+                onClick={() => { router.push("/login?mode=signup"); }}
                 className="w-auto px-5 py-2.5 sm:px-6 sm:py-3.5 bg-[#F26A3D] hover:bg-[#D9552A] active:scale-98 text-white font-semibold text-sm sm:text-base rounded-sm shadow-[0_4px_14px_rgba(242,106,61,0.25)] hover:shadow-[0_6px_20px_rgba(242,106,61,0.35)] transition-all duration-150 flex items-center justify-center gap-2.5 cursor-pointer group"
               >
                 <span>Start Learning <span className="hidden sm:inline">Python </span>(Free<span className="hidden sm:inline"> Forever</span>)</span>

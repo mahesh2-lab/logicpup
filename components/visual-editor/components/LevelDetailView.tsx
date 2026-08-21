@@ -86,7 +86,7 @@ export function LevelDetailView({
                 )}
               </div>
 
-              <h1 className="text-xl font-bold text-[#171717]">{level.title}</h1>
+              <h2 className="text-xl font-bold text-[#171717]">{level.title}</h2>
               <p className="text-xs text-[#666] mt-1 hidden md:block">{level.subtitle} • {level.description}</p>
             </div>
           </div>

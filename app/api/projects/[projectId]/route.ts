@@ -2,7 +2,24 @@ import { NextRequest } from "next/server";
 import { pool } from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { jsonSuccess, jsonError } from "@/lib/validation";
+import { z } from "zod";
 
+const visualProgramSchema = z.object({
+  nodes: z.array(z.any()).optional().default([]),
+  edges: z.array(z.any()).optional().default([]),
+});
+
+const putProjectSchema = z.object({
+  name: z.string().min(1).max(150).optional(),
+  description: z.string().optional(),
+  visualProgram: visualProgramSchema.optional().nullable(),
+  settings: z.record(z.any()).optional(),
+  progress: z.number().optional(),
+  status: z.string().optional(),
+  files: z.array(z.record(z.any())).optional(),
+  run: z.record(z.any()).optional(),
+  activity: z.record(z.any()).optional(),
+});
 interface RouteParams {
   params: Promise<{
     projectId: string;
@@ -35,19 +52,12 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       }
     }
 
-    // Fetch related files, runs, activity
-    const filesResult = await pool.query(
-      `SELECT * FROM "project_file" WHERE "projectId" = $1`,
-      [projectId]
-    );
-    const runsResult = await pool.query(
-      `SELECT * FROM "project_run" WHERE "projectId" = $1 ORDER BY "timestamp" DESC LIMIT 50`,
-      [projectId]
-    );
-    const actResult = await pool.query(
-      `SELECT * FROM "project_activity" WHERE "projectId" = $1 ORDER BY "timestamp" DESC LIMIT 50`,
-      [projectId]
-    );
+    // Fetch related files, runs, activity concurrently
+    const [filesResult, runsResult, actResult] = await Promise.all([
+      pool.query(`SELECT * FROM "project_file" WHERE "projectId" = $1`, [projectId]),
+      pool.query(`SELECT * FROM "project_run" WHERE "projectId" = $1 ORDER BY "timestamp" DESC LIMIT 50`, [projectId]),
+      pool.query(`SELECT * FROM "project_activity" WHERE "projectId" = $1 ORDER BY "timestamp" DESC LIMIT 50`, [projectId])
+    ]);
 
     const visualProgram = typeof project.visualProgram === "string" ? JSON.parse(project.visualProgram) : project.visualProgram;
     const settings = typeof project.settings === "string" ? JSON.parse(project.settings) : project.settings;
@@ -76,7 +86,13 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     });
 
     const body = await request.json();
-    const { name, description, visualProgram, settings, progress, status, files, run, activity } = body;
+    const parsedBody = putProjectSchema.safeParse(body);
+    
+    if (!parsedBody.success) {
+      return jsonError("Invalid request data", 400, parsedBody.error.format());
+    }
+    
+    const { name, description, visualProgram, settings, progress, status, files, run, activity } = parsedBody.data;
 
     // Check project existence & ownership
     const existing = await pool.query(
@@ -126,23 +142,10 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       RETURNING *
     `;
 
-    // Basic validation for visualProgram to prevent storing bad schema
-    let validVisualProgram = null;
-    if (visualProgram) {
-      if (typeof visualProgram === 'object') {
-        validVisualProgram = {
-          nodes: Array.isArray(visualProgram.nodes) ? visualProgram.nodes : [],
-          edges: Array.isArray(visualProgram.edges) ? visualProgram.edges : [],
-        };
-      } else {
-        validVisualProgram = { nodes: [], edges: [] };
-      }
-    }
-
     const values = [
       name || null,
       description !== undefined ? description : null,
-      validVisualProgram ? JSON.stringify(validVisualProgram) : null,
+      visualProgram ? JSON.stringify(visualProgram) : null,
       settings ? JSON.stringify(settings) : null,
       progress !== undefined ? progress : null,
       status || null,

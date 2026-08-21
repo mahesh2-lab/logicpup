@@ -110,9 +110,9 @@ export function ProjectSettingsView({ project }: ProjectSettingsViewProps) {
         >
           PROJECT CONFIGURATION
         </span>
-        <h1 style={{ fontSize: 20, fontWeight: 700, textTransform: "uppercase", marginTop: 2 }}>
+        <h2 style={{ fontSize: 20, fontWeight: 700, textTransform: "uppercase", marginTop: 2 }}>
           Settings for {project.name}
-        </h1>
+        </h2>
       </div>
 
       {/* General Settings Card */}

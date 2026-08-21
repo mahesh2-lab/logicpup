@@ -47,7 +47,7 @@ export function ProjectOverviewView({ project }: ProjectOverviewViewProps) {
             >
               PROJECT OVERVIEW
             </div>
-            <h1
+            <h2
               style={{
                 fontSize: 22,
                 fontWeight: 700,
@@ -55,7 +55,7 @@ export function ProjectOverviewView({ project }: ProjectOverviewViewProps) {
               }}
             >
               {project.name}
-            </h1>
+            </h2>
             <p style={{ fontSize: 13, color: "#555555", marginTop: 4 }}>
               {project.description ||
                 "Python visual programming project built with LogicPup. 🐾"}

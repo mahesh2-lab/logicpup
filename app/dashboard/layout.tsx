@@ -1,6 +1,14 @@
 import React from "react";
+import type { Metadata } from "next";
 import { DashboardShell } from "@/components/visual-editor/dashboard/DashboardShell";
 import { BlockExplanationModal } from "@/components/visual-editor/components/BlockExplanationModal";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function DashboardLayout({
   children,
