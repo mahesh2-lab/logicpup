@@ -15,6 +15,8 @@ import { Scroll3DBackgroundTrack } from '@/components/landing/Scroll3DBackground
 import { IdePreferencesState } from '@/types/landing';
 import { Sparkles } from 'lucide-react';
 
+import { GoogleAuthInfoSection } from '@/components/landing/GoogleAuthInfoSection';
+
 export default function App() {
   const router = useRouter();
 
@@ -132,6 +134,9 @@ export default function App() {
         <CurriculumProgression
           onStartLearning={() => handleOpenAuth('signup')}
         />
+
+        {/* Google OAuth Verification Info */}
+        <GoogleAuthInfoSection />
 
         {/* 6. The final push to get them to sign up! */}
         <CtaSection
