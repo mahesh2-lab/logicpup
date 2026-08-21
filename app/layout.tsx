@@ -107,7 +107,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`h-full ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
+      className={`h-full scroll-smooth ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
     >
       <head>
       </head>

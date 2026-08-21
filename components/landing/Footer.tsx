@@ -123,7 +123,7 @@ export const Footer: React.FC = () => {
         {/* Bottom copyright line */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#888888]">
           <div>
-            © {new Date().getFullYear()} LogicPup Inc. All rights reserved. 🐶
+            © {new Date().getFullYear()} LogicPup Inc. All rights reserved.
           </div>
           <div className="flex items-center gap-4">
             <a

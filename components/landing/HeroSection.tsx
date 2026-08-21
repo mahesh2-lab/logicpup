@@ -108,7 +108,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           >
             <Workflow className="w-3.5 h-3.5 text-[#F26A3D]" />
             <span>Visual Flowchart Coding for Python</span>
-            <span className="hidden sm:inline text-[#806A55] font-mono">• No Leash, No Syntax Bites 🐶</span>
+            <span className="hidden sm:inline text-[#806A55] font-mono">• No Leash, No Syntax Bites </span>
           </motion.div>
 
           {/* The giant hero text that slightly follows their mouse! */}

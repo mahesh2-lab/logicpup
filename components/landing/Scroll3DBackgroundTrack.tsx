@@ -159,12 +159,13 @@ export const Scroll3DBackgroundTrack: React.FC = () => {
 
     // 5. Render Loop
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    let timer = new THREE.Timer();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      const delta = clock.getDelta();
-      const elapsed = clock.getElapsedTime();
+      timer.update();
+      const delta = timer.getDelta();
+      const elapsed = timer.getElapsed();
 
       // Smooth lerp scroll progress
       currentScrollProgress += (targetScrollProgress - currentScrollProgress) * 0.06;

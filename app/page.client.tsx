@@ -6,6 +6,7 @@ import { Header } from '@/components/landing/Header';
 import { HeroSection } from '@/components/landing/HeroSection';
 import { InteractiveEditorDemo } from '@/components/landing/InteractiveEditorDemo';
 import { FeaturesSection } from '@/components/landing/FeaturesSection';
+import { HowItWorksSection } from '@/components/landing/HowItWorksSection';
 import { CurriculumProgression } from '@/components/landing/CurriculumProgression';
 import { IdePreferencesDrawer } from '@/components/landing/IdePreferencesDrawer';
 import { CtaSection } from '@/components/landing/CtaSection';
@@ -117,6 +118,9 @@ export default function App() {
 
         {/* 3. Where they can actually play with the editor */}
         <InteractiveEditorDemo />
+
+        {/* How It Works */}
+        <HowItWorksSection />
 
         {/* 4. Showing off all the cool things we can do */}
         <FeaturesSection
