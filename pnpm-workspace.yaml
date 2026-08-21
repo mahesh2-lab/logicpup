@@ -5,9 +5,10 @@ allowBuilds:
   "better-sqlite3": true
   "unrs-resolver@1.12.2": true
   "sqljson-parser": true
-  core-js: set this to true or false
+  core-js: true
 onlyBuiltDependencies:
   - "@prisma/client"
   - "better-sqlite3"
   - "unrs-resolver@1.12.2"
   - "sqljson-parser"
+  - "core-js"
