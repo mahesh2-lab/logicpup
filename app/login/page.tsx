@@ -293,6 +293,13 @@ function LoginForm() {
             </svg>
             <span>CONTINUE WITH GOOGLE</span>
           </button>
+          
+          <p className="text-[10px] text-center text-[#888] mt-4">
+            By continuing, you agree to our{" "}
+            <a href="/terms" className="underline hover:text-[#171717]">Terms of Service</a>{" "}
+            and{" "}
+            <a href="/privacy" className="underline hover:text-[#171717]">Privacy Policy</a>.
+          </p>
         </form>
 
         {/* Card Footer Tab Switcher */}
