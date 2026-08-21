@@ -16,7 +16,7 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "https://logicpup.com";
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL as string;
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     siteName: "LogicPup",
     images: [
       {
-        url: "/og-image.png",
+        url: "/logo.png",
         width: 1200,
         height: 630,
         alt: "LogicPup — Visual Python Flowchart IDE",
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
     description:
       "Connect flowchart blocks, fetch real Python 3 code, and chase zero bugs. Good boy, clean code! 🐾",
     creator: "@logicpup",
-    images: ["/og-image.png"],
+    images: ["/logo.png"],
   },
   robots: {
     index: true,
@@ -95,11 +95,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
 };
 
 export default function RootLayout({
@@ -107,27 +102,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    name: "LogicPup",
-    url: siteUrl,
-    description:
-      "The leash-free visual Python programming playground where logic meets fun. Connect flowchart blocks, fetch real Python 3 code, and master programming.",
-    applicationCategory: "EducationalApplication",
-    operatingSystem: "All",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-    },
-    author: {
-      "@type": "Organization",
-      name: "LogicPup Inc.",
-      url: siteUrl,
-    },
-  };
-
   return (
     <html
       lang="en"
@@ -135,10 +109,6 @@ export default function RootLayout({
       className={`h-full ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
     >
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
       </head>
       <body
         suppressHydrationWarning

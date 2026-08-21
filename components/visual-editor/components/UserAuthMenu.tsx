@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { User, LogOut, LogIn, ChevronDown, Settings } from "lucide-react";
 import { useSession, signOut } from "@/lib/auth-client";
@@ -73,7 +74,7 @@ export function UserAuthMenu() {
       >
 
         {user.image ? (
-          <img src={user.image} alt="Avatar" className="w-full h-full object-cover" style={{ borderRadius: 50 }} />
+          <Image src={user.image} alt={user.name ? `${user.name}'s profile picture` : "User profile picture"} width={32} height={32} className="w-full h-full object-cover" style={{ borderRadius: 50 }} />
         ) : (
           initial
         )}

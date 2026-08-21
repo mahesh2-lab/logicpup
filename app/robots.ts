@@ -1,14 +1,14 @@
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "https://logicpup.com";
+  const siteUrl = process.env.NEXT_PUBLIC_APP_URL as string;
 
   return {
     rules: [
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/dashboard/settings"],
+        disallow: ["/api/", "/dashboard/"],
       },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,

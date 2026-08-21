@@ -114,7 +114,7 @@ function LoginForm() {
           >
             {mode === "signin" ? "AUTHENTICATION" : "JOIN THE PACK"}
           </span>
-          <h1 style={{ fontSize: 18, fontWeight: 700, textTransform: "uppercase", marginTop: 2 }}>
+          <h1 className="text-lg font-bold uppercase mt-1 text-[#171717]">
             {mode === "signin" ? "Sign In to LogicPup 🐾" : "Create LogicPup Account"}
           </h1>
           <p style={{ fontSize: 12, color: "#666666", marginTop: 2 }}>

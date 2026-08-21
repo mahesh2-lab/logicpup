@@ -1,39 +1,63 @@
-import React from 'react';
-import { Dog } from 'lucide-react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 interface BrandLogoProps {
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   href?: string;
   className?: string;
 }
 
-export function BrandLogo({ size = 'md', href = '/', className = '' }: BrandLogoProps) {
-  const isLarge = size === 'lg';
-  const isSmall = size === 'sm';
+export function BrandLogo({
+  size = "md",
+  href = "/",
+  className = "",
+}: BrandLogoProps) {
+  const isLarge = size === "lg";
+  const isSmall = size === "sm";
 
   const containerClasses = `flex items-center group cursor-pointer focus:outline-none ${
-    isLarge ? 'gap-2.5' : isSmall ? 'gap-2' : 'gap-2'
+    isLarge ? "gap-2.5" : isSmall ? "gap-2" : "gap-2"
   } ${className}`;
 
   const boxWrapperClasses = `flex items-center justify-center bg-[#F26A3D] text-white transition-transform ${
-    href ? 'group-hover:scale-105 shadow-xs' : ''
+    href ? "shadow-xs" : ""
   } ${
-    isLarge ? 'w-9 h-9 rounded-xl' : isSmall ? 'w-6 h-6 rounded' : 'w-8 h-8 rounded-lg'
+    isLarge
+      ? "w-9 h-9 rounded-xl"
+      : isSmall
+        ? "w-6 h-6 rounded"
+        : "w-8 h-8 rounded-lg"
   }`;
 
-  const iconClasses = isLarge ? 'w-[18px] h-[18px]' : isSmall ? 'w-3.5 h-3.5' : 'w-4 h-4';
+  const iconClasses = isLarge
+    ? "w-[18px] h-[18px]"
+    : isSmall
+      ? "w-3.5 h-3.5"
+      : "w-4 h-4";
 
-  const textSize = isLarge ? 'text-base' : isSmall ? 'text-sm' : 'text-[15px]';
-  
+  const textSize = isLarge ? "text-base" : isSmall ? "text-sm" : "text-[15px]";
+
   const content = (
     <>
-      <div className={boxWrapperClasses}>
-        <Dog className={iconClasses} strokeWidth={isSmall ? 2.5 : 2} />
+      <div
+        className={
+          boxWrapperClasses + " overflow-hidden border-2 border-amber-400"
+        }
+      >
+        <Image
+          src="/logo.png"
+          alt="LogicPup Logo"
+          width={isLarge ? 36 : isSmall ? 24 : 32}
+          height={isLarge ? 36 : isSmall ? 24 : 32}
+          className="w-full h-full object-cover "
+        />
       </div>
-      
+
       <div className="flex flex-col justify-center">
-        <span className={`font-bold ${textSize} text-[#121212] tracking-tight leading-none flex items-center gap-1.5`}>
+        <span
+          className={`font-bold ${textSize} text-[#121212] tracking-tight leading-none flex items-center gap-1.5`}
+        >
           LogicPup
           {!isSmall && (
             <span className="text-[9px] font-mono font-medium px-1.5 py-0.5 rounded-full bg-[#287A52]/10 text-[#287A52]">
@@ -41,7 +65,7 @@ export function BrandLogo({ size = 'md', href = '/', className = '' }: BrandLogo
             </span>
           )}
         </span>
-        
+
         {isLarge && (
           <span className="text-[11px] text-[#666666] font-medium mt-0.5 leading-none">
             Visual Python IDE
@@ -59,9 +83,5 @@ export function BrandLogo({ size = 'md', href = '/', className = '' }: BrandLogo
     );
   }
 
-  return (
-    <div className={containerClasses}>
-      {content}
-    </div>
-  );
+  return <div className={containerClasses}>{content}</div>;
 }

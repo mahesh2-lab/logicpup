@@ -227,61 +227,7 @@ const PYTHON_PRESETS: Record<string, PythonPreset> = {
       },
     ],
   },
-  evenOdd: {
-    id: 'evenOdd',
-    title: 'Even or Odd Checker',
-    category: 'Arithmetic & Modulo',
-    difficulty: 'Beginner',
-    description: 'Takes a number, computes modulo 2 remainder, and determines parity.',
-    defaultInput: '8',
-    pythonSnippet: `num = int(input("Enter number: "))\nif num % 2 == 0:\n    print("Even")\nelse:\n    print("Odd")`,
-    nodes: [
-      {
-        id: 'n-start',
-        type: 'start',
-        position: { x: 260, y: 40 },
-        data: { label: 'START', nodeType: 'start', subtitle: 'Program begins here', pythonCode: '# Start', status: 'idle', explanation: 'Start' },
-      },
-      {
-        id: 'n-input',
-        type: 'input',
-        position: { x: 260, y: 160 },
-        data: { label: 'Input Number', nodeType: 'input', subtitle: 'num = int(input())', pythonCode: 'num = int(input("Enter number: "))', status: 'idle', explanation: 'Read integer' },
-      },
-      {
-        id: 'n-cond',
-        type: 'condition',
-        position: { x: 260, y: 290 },
-        data: { label: 'Is num % 2 == 0 ?', nodeType: 'condition', subtitle: 'if num % 2 == 0', pythonCode: 'if num % 2 == 0:', status: 'idle', explanation: 'Check remainder' },
-      },
-      {
-        id: 'n-even',
-        type: 'output',
-        position: { x: 80, y: 430 },
-        data: { label: 'Print "Even"', nodeType: 'output', subtitle: 'print("Even")', pythonCode: 'print("Number is Even")', status: 'idle', explanation: 'Output even' },
-      },
-      {
-        id: 'n-odd',
-        type: 'output',
-        position: { x: 440, y: 430 },
-        data: { label: 'Print "Odd"', nodeType: 'output', subtitle: 'print("Odd")', pythonCode: 'print("Number is Odd")', status: 'idle', explanation: 'Output odd' },
-      },
-      {
-        id: 'n-end',
-        type: 'end',
-        position: { x: 260, y: 560 },
-        data: { label: 'END', nodeType: 'end', subtitle: 'Program ends here', pythonCode: '# End', status: 'idle', explanation: 'End' },
-      },
-    ],
-    edges: [
-      { id: 'e1', source: 'n-start', target: 'n-input', animated: true, style: { stroke: '#171717', strokeWidth: 2 }, markerEnd: { type: MarkerType.ArrowClosed, color: '#171717' } },
-      { id: 'e2', source: 'n-input', target: 'n-cond', animated: true, style: { stroke: '#171717', strokeWidth: 2 }, markerEnd: { type: MarkerType.ArrowClosed, color: '#171717' } },
-      { id: 'e3', source: 'n-cond', target: 'n-even', label: 'True', style: { stroke: '#287A52', strokeWidth: 2 }, markerEnd: { type: MarkerType.ArrowClosed, color: '#287A52' } },
-      { id: 'e4', source: 'n-cond', target: 'n-odd', label: 'False', style: { stroke: '#C94A45', strokeWidth: 2 }, markerEnd: { type: MarkerType.ArrowClosed, color: '#C94A45' } },
-      { id: 'e5', source: 'n-even', target: 'n-end', style: { stroke: '#171717', strokeWidth: 2 }, markerEnd: { type: MarkerType.ArrowClosed, color: '#171717' } },
-      { id: 'e6', source: 'n-odd', target: 'n-end', style: { stroke: '#171717', strokeWidth: 2 }, markerEnd: { type: MarkerType.ArrowClosed, color: '#171717' } },
-    ],
-  },
+
 };
 
 export const HeroReactFlowCanvas: React.FC = () => {
@@ -507,22 +453,22 @@ export const HeroReactFlowCanvas: React.FC = () => {
       className="relative w-full h-[600px] sm:h-[680px] lg:h-[760px] rounded-[4px] bg-white border border-[#171717]/30 shadow-[0_12px_40px_rgb(0,0,0,0.06)] overflow-hidden flex flex-col justify-between select-none"
     >
       {/* 1. Header Navigation Bar */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-3 p-3 z-30 border-b border-[#D8D4CC] bg-[#F4F1EA]/95 backdrop-blur-md">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-3 p-3 z-30 border-b border-[#D8D4CC] bg-[#F4F1EA]/95 backdrop-blur-md overflow-x-auto">
         {/* Top/Left: Diagram Title & Presets */}
         <div className="flex w-full md:w-auto items-center justify-between md:justify-start gap-2.5">
-          <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-[4px] border border-[#171717]/20 text-xs font-mono text-[#171717] shadow-xs">
+          <div className="flex items-center gap-2 bg-white px-3 h-9 rounded-[4px] border border-[#171717]/20 text-xs font-mono text-[#171717] shadow-xs whitespace-nowrap">
             <span className="w-2.5 h-2.5 rounded-full bg-[#287A52] animate-pulse shrink-0" />
             <span className="font-bold truncate">Python Flowchart</span>
-            <span className="text-[#806A55] hidden sm:inline shrink-0">• {nodes.length} Blocks</span>
+            <span className="text-[#806A55] hidden xl:inline shrink-0">• {nodes.length} Blocks</span>
           </div>
 
-          <div className="hidden sm:flex items-center gap-1 bg-white p-1 rounded-[4px] border border-[#D8D4CC] text-xs font-mono">
-            <span className="text-[11px] text-[#555555] px-2">Example:</span>
+          <div className="hidden sm:flex items-center gap-1 bg-white p-1 h-9 rounded-[4px] border border-[#D8D4CC] text-xs font-mono">
+            <span className="hidden lg:inline text-[11px] text-[#555555] px-2">Example:</span>
             {Object.entries(PYTHON_PRESETS).map(([key, val]) => (
               <button
                 key={key}
                 onClick={() => handleSelectPreset(key)}
-                className={`px-2.5 py-1 rounded-[3px] text-xs transition-all cursor-pointer ${
+                className={`px-2.5 h-full rounded-[3px] text-xs transition-all cursor-pointer whitespace-nowrap ${
                   selectedPresetKey === key
                     ? 'bg-[#F4F1EA] text-[#171717] font-bold border border-[#D8D4CC]'
                     : 'text-[#555555] hover:text-[#171717]'
@@ -535,10 +481,10 @@ export const HeroReactFlowCanvas: React.FC = () => {
         </div>
 
         {/* Center: View Mode (Visual Flowchart vs Python 3 Code vs Console) */}
-        <div className="flex w-full md:w-auto justify-center items-center bg-white p-1 rounded-[4px] border border-[#D8D4CC] text-xs font-mono">
+        <div className="flex w-full md:w-auto justify-center items-center bg-white p-1 h-9 rounded-[4px] border border-[#D8D4CC] text-xs font-mono">
           <button
             onClick={() => setActiveTab('canvas')}
-            className={`flex items-center justify-center gap-1.5 flex-1 md:flex-none px-3 py-1 rounded-[3px] transition-all cursor-pointer ${
+            className={`flex items-center justify-center gap-1.5 flex-1 md:flex-none px-3 h-full rounded-[3px] transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'canvas'
                 ? 'bg-[#171717] text-white font-bold'
                 : 'text-[#555555] hover:text-[#171717]'
@@ -549,7 +495,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
 
           <button
             onClick={() => setActiveTab('python')}
-            className={`flex items-center justify-center gap-1.5 flex-1 md:flex-none px-3 py-1 rounded-[3px] transition-all cursor-pointer ${
+            className={`flex items-center justify-center gap-1.5 flex-1 md:flex-none px-3 h-full rounded-[3px] transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'python'
                 ? 'bg-[#171717] text-white font-bold'
                 : 'text-[#555555] hover:text-[#171717]'
@@ -561,7 +507,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
 
           <button
             onClick={() => setActiveTab('terminal')}
-            className={`flex items-center justify-center gap-1.5 flex-1 md:flex-none px-3 py-1 rounded-[3px] transition-all cursor-pointer ${
+            className={`flex items-center justify-center gap-1.5 flex-1 md:flex-none px-3 h-full rounded-[3px] transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'terminal'
                 ? 'bg-[#171717] text-white font-bold'
                 : 'text-[#555555] hover:text-[#171717]'
@@ -576,8 +522,8 @@ export const HeroReactFlowCanvas: React.FC = () => {
         {/* Bottom/Right: Input Test Value & Run Python Button */}
         <div className="flex w-full md:w-auto items-center justify-between md:justify-end gap-2 relative">
           {/* User Input Test Box */}
-          <div className="flex items-center gap-1.5 bg-white px-2.5 py-1.5 rounded-[4px] border border-[#D8D4CC] text-xs font-mono">
-            <span className="text-[11px] text-[#555555]">guess =</span>
+          <div className="flex items-center gap-1.5 bg-white px-2.5 h-9 rounded-[4px] border border-[#D8D4CC] text-xs font-mono whitespace-nowrap">
+            <span className="hidden lg:inline text-[11px] text-[#555555]">guess =</span>
             <input
               type="number"
               value={userInputValue}
@@ -591,10 +537,10 @@ export const HeroReactFlowCanvas: React.FC = () => {
             {/* Add Python Block Palette */}
             <button
               onClick={() => setShowNodePalette(!showNodePalette)}
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-[4px] bg-white border border-[#D8D4CC] hover:bg-[#F4F1EA] text-[#171717] text-xs font-semibold shadow-xs transition-all cursor-pointer"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 h-9 rounded-[4px] bg-white border border-[#D8D4CC] hover:bg-[#F4F1EA] text-[#171717] text-xs font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap"
             >
               <Plus className="w-3.5 h-3.5 text-[#F26A3D]" />
-              <span className="hidden sm:inline">Add Block</span>
+              <span className="hidden lg:inline">Add Block</span>
             </button>
 
             {/* Dropdown for Python Statement Blocks */}
@@ -654,7 +600,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
               id="python-flow-run-btn"
               onClick={handleRunPython}
               disabled={isRunning}
-              className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-[#F26A3D] hover:bg-[#D9552A] active:scale-95 text-white font-bold text-xs sm:text-sm rounded-[4px] shadow-sm transition-all cursor-pointer disabled:opacity-50"
+              className="flex items-center gap-2 px-3 sm:px-4 h-9 bg-[#F26A3D] hover:bg-[#D9552A] active:scale-95 text-white font-bold text-xs sm:text-sm rounded-[4px] shadow-sm transition-all cursor-pointer disabled:opacity-50 whitespace-nowrap"
             >
               {isRunning ? (
                 <>
@@ -664,8 +610,8 @@ export const HeroReactFlowCanvas: React.FC = () => {
               ) : (
                 <>
                   <Play className="w-3.5 h-3.5 fill-white" />
-                  <span className="hidden sm:inline">Run Code</span>
-                  <span className="sm:hidden">Run</span>
+                  <span className="hidden lg:inline">Run Code</span>
+                  <span className="lg:hidden">Run</span>
                 </>
               )}
             </button>

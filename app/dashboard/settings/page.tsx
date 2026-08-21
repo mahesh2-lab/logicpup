@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { authClient, useSession } from "@/lib/auth-client";
 import { User, Lock, Trash2, LogOut, Save, AlertCircle, CheckCircle2, Settings2, Upload } from "lucide-react";
@@ -195,7 +196,7 @@ export default function SettingsPage() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
             <div className="relative group rounded-full shrink-0">
               {image ? (
-                <img src={image} alt="Avatar Preview" className="w-20 h-20 rounded-full object-cover border border-[#D8D4CC] shadow-sm" />
+                <Image src={image} alt={name ? `${name}'s profile picture preview` : "Profile picture preview"} width={80} height={80} className="w-20 h-20 rounded-full object-cover border border-[#D8D4CC] shadow-sm" />
               ) : (
                 <div className="w-20 h-20 rounded-full bg-[#F4F1EA] border border-[#D8D4CC] flex items-center justify-center shadow-sm">
                   <User size={32} className="text-[#888888]" />

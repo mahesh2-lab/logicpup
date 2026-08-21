@@ -15,9 +15,9 @@ import { UserAuthMenu } from '../visual-editor/components/UserAuthMenu';
 import { BrandLogo } from '@/components/ui/BrandLogo';
 
 interface HeaderProps {
-  onOpenIdePreferences: () => void;
-  onOpenAuthModal: (mode: 'login' | 'signup') => void;
-  onOpenDemo: () => void;
+  onOpenIdePreferences?: () => void;
+  onOpenAuthModal?: (mode: 'login' | 'signup') => void;
+  onOpenDemo?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
