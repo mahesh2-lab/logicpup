@@ -167,12 +167,12 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
   }
 
   return (
-    <header className="flex flex-col md:flex-row md:items-center justify-between px-3 md:px-4 py-3 md:py-0 md:h-[50px] border-b border-[#D8D4CC] bg-[#F4F1EA] shrink-0 z-30 font-sans gap-3 md:gap-0">
+    <header className="flex flex-col md:flex-row md:items-center justify-between px-3 md:px-4 py-3 md:py-0 md:h-12.5 border-b border-[#D8D4CC] bg-[#F4F1EA] shrink-0 z-30 font-sans gap-3 md:gap-0">
       {/* Left: Back Link + Project Title */}
       <div className="flex items-center gap-2 md:gap-3 w-full md:w-auto min-w-0">
         <Link
           href="/dashboard"
-          className="p-1.5 -ml-1.5 rounded-sm hover:bg-black/[0.04] text-[#888888] hover:text-[#171717] transition-colors flex items-center justify-center shrink-0"
+          className="p-1.5 -ml-1.5 rounded-sm hover:bg-black/4 text-[#888888] hover:text-[#171717] transition-colors flex items-center justify-center shrink-0"
           title="Back to Dashboard"
         >
           <ArrowLeft size={18} />
@@ -268,7 +268,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
       </nav>
 
       {/* Right: Autosave Status & Command Buttons */}
-      <div className="flex items-center justify-between md:justify-end gap-2 md:gap-[10px] w-full md:w-auto flex-wrap">
+      <div className="flex items-center justify-between md:justify-end gap-2 md:gap-2.5 w-full md:w-auto flex-wrap">
         {/* Offline & Sync Status Badge */}
         {mounted && (
           syncState === "offline" || !isOnline ? (
@@ -391,7 +391,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
           </button>
         )}
 
-        <div className="w-[1px] h-4 bg-[#D8D4CC] hidden md:block" />
+        <div className="w-px h-4 bg-[#D8D4CC] hidden md:block" />
         <div className="hidden md:block">
           <UserAuthMenu />
         </div>

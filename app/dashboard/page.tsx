@@ -273,7 +273,7 @@ export default function HomePage() {
 
             {recentProject ? (
               <div>
-                <h3 className="text-sm font-bold uppercase mb-1 line-clamp-2 break-words">
+                <h3 className="text-sm font-bold uppercase mb-1 line-clamp-2 wrap-break-word">
                   {recentProject.name}
                 </h3>
                 <p className="text-xs text-[#666666] line-clamp-3 mb-4">

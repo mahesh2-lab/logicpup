@@ -37,7 +37,7 @@ export function ReactFlowMobileWarning({ children }: ReactFlowMobileWarningProps
   }
 
   return (
-    <div className="flex-1 w-full h-full min-h-[400px] flex flex-col items-center justify-center p-6 bg-[#F4F1EA] text-[#171717] font-sans">
+    <div className="flex-1 w-full h-full min-h-100 flex flex-col items-center justify-center p-6 bg-[#F4F1EA] text-[#171717] font-sans">
       <div className="max-w-md w-full bg-white border border-[#D8D4CC] p-8 rounded shadow-sm text-center">
         <MonitorPlay className="w-12 h-12 text-[#F26A3D] mx-auto mb-4" />
         <h2 className="text-lg font-bold uppercase mb-2">Desktop Required</h2>

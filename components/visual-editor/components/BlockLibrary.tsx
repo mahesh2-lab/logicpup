@@ -97,7 +97,7 @@ export function BlockLibrary({ collapsed, onToggle }: BlockLibraryProps) {
 
   return (
     <aside
-      className="w-full lg:w-[210px] shrink-0 bg-white border-r border-[#D8D4CC] flex flex-col overflow-hidden h-full"
+      className="w-full lg:w-52.5 shrink-0 bg-white border-r border-[#D8D4CC] flex flex-col overflow-hidden h-full"
     >
       {/* Header */}
       <div

@@ -133,7 +133,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
         {/* Left: Brand + Breadcrumbs */}
         <div className="flex items-center gap-2 sm:gap-6">
           <button
-            className="lg:hidden p-1.5 -ml-1.5 rounded-sm hover:bg-black/[0.04] text-[#171717] focus:outline-none"
+            className="lg:hidden p-1.5 -ml-1.5 rounded-sm hover:bg-black/4 text-[#171717] focus:outline-none"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             title="Toggle Menu"
           >
@@ -198,7 +198,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
                   router.push("/dashboard/projects");
                 }
               }}
-              className="pl-8 pr-3 py-1.5 text-xs bg-[#FAF9F5] border border-[#D8D4CC] rounded focus:outline-none focus:border-[#F26A3D] transition-colors w-[190px]"
+              className="pl-8 pr-3 py-1.5 text-xs bg-[#FAF9F5] border border-[#D8D4CC] rounded focus:outline-none focus:border-[#F26A3D] transition-colors w-47.5"
             />
           </div>
 

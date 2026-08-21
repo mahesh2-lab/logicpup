@@ -89,7 +89,7 @@ export function ProjectRunsView({ project }: ProjectRunsViewProps) {
 
       {/* Selected Run Details Inspector */}
       <div
-        className="flex-1 min-h-[400px] md:min-h-0 bg-[#171717] text-[#FFFFFF] border border-[#D8D4CC] flex flex-col overflow-hidden shrink-0"
+        className="flex-1 min-h-100 md:min-h-0 bg-[#171717] text-[#FFFFFF] border border-[#D8D4CC] flex flex-col overflow-hidden shrink-0"
         style={{ borderRadius: 6 }}
       >
         {activeRun ? (
@@ -132,7 +132,7 @@ export function ProjectRunsView({ project }: ProjectRunsViewProps) {
               </div>
 
               {/* State Variables at run completion */}
-              <div className="w-full sm:w-56 p-4 bg-[#141414] overflow-auto shrink-0 min-h-[150px] sm:min-h-0">
+              <div className="w-full sm:w-56 p-4 bg-[#141414] overflow-auto shrink-0 min-h-37.5 sm:min-h-0">
                 <div
                   style={{
                     fontSize: 10,
