@@ -87,6 +87,9 @@ export const HowItWorksSection: React.FC = () => {
     
     // Step 1: Edges (Tubes) connecting blocks
     class CustomCurve extends THREE.Curve<THREE.Vector3> {
+      constructor() {
+        super();
+      }
       getPoint(t: number, optionalTarget = new THREE.Vector3()) {
         const x = -4.5 + (1 * t);
         const y = 0 + (1.5 * t);
