@@ -54,11 +54,11 @@ export const Header: React.FC<HeaderProps> = ({
             <a
               key={item.label}
               href={item.href}
-              className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-[#666666] hover:text-[#121212] hover:bg-black/[0.04] transition-all flex items-center gap-1.5"
+              className="px-3.5 py-1.5 rounded-sm text-xs font-semibold text-[#666666] hover:text-[#121212] hover:bg-black/[0.04] transition-all flex items-center gap-1.5"
             >
               {item.label}
               {item.badge && (
-                <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-[#356A9A]/10 text-[#356A9A]">
+                <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-sm bg-[#356A9A]/10 text-[#356A9A]">
                   {item.badge}
                 </span>
               )}
@@ -70,12 +70,12 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="hidden md:flex items-center gap-2.5">
 
           {isPending ? (
-            <div className="w-20 h-8 animate-pulse bg-black/5 rounded-lg"></div>
+            <div className="w-20 h-8 animate-pulse bg-black/5 rounded-sm"></div>
           ) : isLoggedIn ? (
             <div className="flex items-center gap-2">
               <button
                 onClick={() => { window.location.href = "/dashboard"; }}
-                className="px-4 py-1.5 rounded-lg text-xs font-semibold bg-[#171717] hover:bg-[#333333] active:scale-95 text-white shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-1.5 rounded-sm text-xs font-semibold bg-[#171717] hover:bg-[#333333] active:scale-95 text-white shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
               >
                 <span>Dashboard</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -88,7 +88,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 id="header-login-btn"
                 onClick={() => { window.location.href = "/login?mode=signin"; }}
-                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-[#121212] hover:bg-black/[0.04] transition-all cursor-pointer"
+                className="px-3.5 py-1.5 rounded-sm text-xs font-semibold text-[#121212] hover:bg-black/[0.04] transition-all cursor-pointer"
               >
                 Log In
               </button>
@@ -97,7 +97,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 id="header-primary-cta"
                 onClick={() => { window.location.href = "/login?mode=signup"; }}
-                className="px-4 py-1.5 rounded-lg text-xs font-semibold bg-[#F26A3D] hover:bg-[#D9552A] active:scale-95 text-white shadow-xs transition-all flex items-center gap-1 cursor-pointer"
+                className="px-4 py-1.5 rounded-sm text-xs font-semibold bg-[#F26A3D] hover:bg-[#D9552A] active:scale-95 text-white shadow-xs transition-all flex items-center gap-1 cursor-pointer"
               >
                 <span>Start Free</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -110,7 +110,7 @@ export const Header: React.FC<HeaderProps> = ({
         <button
           id="header-mobile-menu-toggle"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-lg text-[#121212] hover:bg-black/[0.04] focus:outline-none"
+          className="md:hidden p-2 rounded-sm text-[#121212] hover:bg-black/[0.04] focus:outline-none"
           aria-label="Toggle Navigation Menu"
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -129,7 +129,7 @@ export const Header: React.FC<HeaderProps> = ({
                 key={item.label}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-lg text-sm font-semibold text-[#121212] hover:bg-black/[0.04]"
+                className="block px-3 py-2 rounded-sm text-sm font-semibold text-[#121212] hover:bg-black/[0.04]"
               >
                 {item.label}
               </a>
@@ -144,7 +144,7 @@ export const Header: React.FC<HeaderProps> = ({
                   setMobileMenuOpen(false);
                   window.location.href = "/dashboard";
                 }}
-                className="w-full py-2 px-3 rounded-lg bg-[#171717] text-white text-xs font-semibold text-center"
+                className="w-full py-2 px-3 rounded-sm bg-[#171717] text-white text-xs font-semibold text-center"
               >
                 Go to Dashboard
               </button>
@@ -155,7 +155,7 @@ export const Header: React.FC<HeaderProps> = ({
                     setMobileMenuOpen(false);
                     window.location.href = "/login?mode=signin";
                   }}
-                  className="py-2 px-3 rounded-lg border border-black/[0.06] text-xs font-semibold text-[#121212] bg-white text-center"
+                  className="py-2 px-3 rounded-sm border border-black/[0.06] text-xs font-semibold text-[#121212] bg-white text-center"
                 >
                   Log In
                 </button>
@@ -164,7 +164,7 @@ export const Header: React.FC<HeaderProps> = ({
                     setMobileMenuOpen(false);
                     window.location.href = "/login?mode=signup";
                   }}
-                  className="py-2 px-3 rounded-lg bg-[#F26A3D] text-white text-xs font-semibold text-center"
+                  className="py-2 px-3 rounded-sm bg-[#F26A3D] text-white text-xs font-semibold text-center"
                 >
                   Start Free
                 </button>

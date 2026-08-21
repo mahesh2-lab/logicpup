@@ -199,7 +199,7 @@ const PYTHON_CHALLENGE = {
       source: 'n-retry',
       target: 'n-end',
       sourceHandle: 'bottom',
-      targetHandle: 'right',
+      targetHandle: 'top',
       animated: true,
       style: { stroke: '#171717', strokeWidth: 1.8 },
       markerEnd: { type: MarkerType.ArrowClosed, color: '#171717' },
@@ -328,7 +328,7 @@ export const InteractiveEditorDemo: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#D8D4CC] text-xs font-mono font-bold text-[#F26A3D] shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-sm bg-white border border-[#D8D4CC] text-xs font-mono font-bold text-[#F26A3D] shadow-xs">
             <Sparkles className="w-3.5 h-3.5" />
             <span>PYTHON FLOWCHART CODING PLATFORM</span>
           </div>
@@ -341,15 +341,15 @@ export const InteractiveEditorDemo: React.FC = () => {
         </div>
 
         {/* The IDE Container Window */}
-        <div className="rounded-[4px] border border-[#171717]/30 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+        <div className="rounded-sm border border-[#171717]/30 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
           {/* Top IDE Toolbar */}
           <div className="bg-[#F4F1EA] border-b border-[#D8D4CC] px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               {/* Window Controls */}
               <div className="flex items-center gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#171717]/20" />
-                <div className="w-2.5 h-2.5 rounded-full bg-[#171717]/20" />
-                <div className="w-2.5 h-2.5 rounded-full bg-[#171717]/20" />
+                <div className="w-2.5 h-2.5 rounded-sm bg-[#171717]/20" />
+                <div className="w-2.5 h-2.5 rounded-sm bg-[#171717]/20" />
+                <div className="w-2.5 h-2.5 rounded-sm bg-[#171717]/20" />
               </div>
               <div className="h-3.5 w-[1px] bg-[#D8D4CC] mx-1" />
 
@@ -357,7 +357,7 @@ export const InteractiveEditorDemo: React.FC = () => {
               <div className="flex items-center gap-2 text-xs font-mono text-[#171717] font-semibold">
                 <FileCode className="w-3.5 h-3.5 text-[#F26A3D]" />
                 <span>guess_game.py (Flowchart)</span>
-                <span className="text-[9px] px-1.5 py-0.2 rounded-[2px] bg-[#287A52]/10 text-[#287A52] font-mono">
+                <span className="text-[9px] px-1.5 py-0.2 rounded-sm bg-[#287A52]/10 text-[#287A52] font-mono">
                   Python 3.12
                 </span>
               </div>
@@ -365,19 +365,19 @@ export const InteractiveEditorDemo: React.FC = () => {
 
             {/* Right: Input test & Actions */}
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5 bg-white px-2 py-1 rounded-[3px] border border-[#D8D4CC] text-xs font-mono">
+              <div className="flex items-center gap-1.5 bg-white px-2 py-1 rounded-sm border border-[#D8D4CC] text-xs font-mono">
                 <span className="text-[11px] text-[#555555]">guess =</span>
                 <input
                   type="number"
                   value={testGuessInput}
                   onChange={(e) => setTestGuessInput(e.target.value)}
-                  className="w-10 text-center font-bold text-[#171717] bg-[#F4F1EA] rounded-[2px] border border-[#D8D4CC] outline-none"
+                  className="w-10 text-center font-bold text-[#171717] bg-[#F4F1EA] rounded-sm border border-[#D8D4CC] outline-none"
                 />
               </div>
 
               <button
                 onClick={handleReset}
-                className="px-2.5 py-1.5 rounded-[3px] hover:bg-black/[0.04] text-[#555555] text-xs font-mono transition-colors flex items-center gap-1 cursor-pointer"
+                className="px-2.5 py-1.5 rounded-sm hover:bg-black/[0.04] text-[#555555] text-xs font-mono transition-colors flex items-center gap-1 cursor-pointer"
                 title="Reset Playground"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
@@ -388,7 +388,7 @@ export const InteractiveEditorDemo: React.FC = () => {
                 id="demo-playground-run-btn"
                 onClick={handleRunExecution}
                 disabled={isRunning}
-                className="px-4 py-1.5 rounded-[3px] bg-[#F26A3D] hover:bg-[#D9552A] active:scale-95 text-white text-xs font-mono font-bold shadow-xs transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-1.5 rounded-sm bg-[#F26A3D] hover:bg-[#D9552A] active:scale-95 text-white text-xs font-mono font-bold shadow-xs transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 {isRunning ? (
                   <>
@@ -428,13 +428,13 @@ export const InteractiveEditorDemo: React.FC = () => {
                 className="bg-[#FAFAFA]"
               >
                 <Background variant={BackgroundVariant.Lines} gap={24} size={1} color="#E2E8F0" />
-                <Controls className="bg-white rounded-[3px] border border-[#171717]/20 shadow-xs text-[#171717]" />
+                <Controls className="bg-white rounded-sm border border-[#171717]/20 shadow-xs text-[#171717]" />
                 <MiniMap
                   nodeColor="#171717"
-                  className="bg-white rounded-[3px] border border-[#171717]/20 shadow-xs"
+                  className="bg-white rounded-sm border border-[#171717]/20 shadow-xs"
                 />
 
-                <Panel position="bottom-left" className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-[3px] border border-[#171717]/20 text-[10px] font-mono text-[#555555] shadow-xs flex items-center gap-2">
+                <Panel position="bottom-left" className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-sm border border-[#171717]/20 text-[10px] font-mono text-[#555555] shadow-xs flex items-center gap-2">
                   <Zap className="w-3 h-3 text-[#F26A3D]" />
                   <span>Click any Python node to inspect statement details</span>
                 </Panel>
@@ -449,7 +449,7 @@ export const InteractiveEditorDemo: React.FC = () => {
                   <span className="text-[10px] font-mono font-bold text-[#806A55] uppercase">
                     Python Block
                   </span>
-                  <span className="text-[9px] font-mono px-2 py-0.5 rounded-[3px] bg-[#171717] text-white font-bold uppercase">
+                  <span className="text-[9px] font-mono px-2 py-0.5 rounded-sm bg-[#171717] text-white font-bold uppercase">
                     {activeNode?.data?.nodeType}
                   </span>
                 </div>
@@ -459,7 +459,7 @@ export const InteractiveEditorDemo: React.FC = () => {
                   <p className="text-[11px] text-[#555555]">{activeNode?.data?.subtitle}</p>
                 </div>
 
-                <div className="rounded-[3px] bg-[#F4F1EA] p-2 border border-[#D8D4CC] font-mono text-xs text-[#171717]">
+                <div className="rounded-sm bg-[#F4F1EA] p-2 border border-[#D8D4CC] font-mono text-xs text-[#171717]">
                   <div className="text-[9px] text-[#806A55] mb-0.5 font-bold"># Python Equivalent</div>
                   <code className="text-[#356A9A] text-[11px]">{activeNode?.data?.pythonCode}</code>
                 </div>
@@ -498,12 +498,12 @@ export const InteractiveEditorDemo: React.FC = () => {
                 </div>
 
                 {hasCompleted && (
-                  <div className="mt-3 p-2.5 rounded-[3px] bg-[#287A52]/20 border border-[#287A52]/30 text-xs text-white flex items-center justify-between animate-in fade-in duration-200">
+                  <div className="mt-3 p-2.5 rounded-sm bg-[#287A52]/20 border border-[#287A52]/30 text-xs text-white flex items-center justify-between animate-in fade-in duration-200">
                     <span className="flex items-center gap-1.5 text-[11px]">
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#4ade80]" />
                       <strong>Python Flow Verified!</strong>
                     </span>
-                    <span className="text-[9px] bg-[#4ade80] text-black font-bold px-1.5 py-0.5 rounded-[3px]">
+                    <span className="text-[9px] bg-[#4ade80] text-black font-bold px-1.5 py-0.5 rounded-sm">
                       +100 XP
                     </span>
                   </div>

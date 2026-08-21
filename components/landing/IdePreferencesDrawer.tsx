@@ -45,7 +45,7 @@ export const IdePreferencesDrawer: React.FC<IdePreferencesDrawerProps> = ({
         <div className="space-y-6">
           <div className="flex items-center justify-between border-b border-black/[0.06] pb-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-[#356A9A] text-white flex items-center justify-center shadow-xs">
+              <div className="w-8 h-8 rounded-sm bg-[#356A9A] text-white flex items-center justify-center shadow-xs">
                 <Sliders className="w-4 h-4" />
               </div>
               <div>
@@ -59,7 +59,7 @@ export const IdePreferencesDrawer: React.FC<IdePreferencesDrawerProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-[#666666] hover:text-[#121212] hover:bg-black/[0.04] transition-colors cursor-pointer"
+              className="p-1.5 rounded-sm text-[#666666] hover:text-[#121212] hover:bg-black/[0.04] transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -84,7 +84,7 @@ export const IdePreferencesDrawer: React.FC<IdePreferencesDrawerProps> = ({
                     onClick={() =>
                       onUpdatePreferences({ theme: t.id as IdePreferencesState['theme'] })
                     }
-                    className={`p-3 rounded-xl border text-xs font-semibold flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
+                    className={`p-3 rounded-sm border text-xs font-semibold flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
                       isSelected
                         ? 'bg-white border-[#121212] shadow-sm text-[#121212] ring-2 ring-black/[0.04]'
                         : 'bg-white/60 border-black/[0.06] text-[#666666] hover:bg-white hover:text-[#121212]'
@@ -105,7 +105,7 @@ export const IdePreferencesDrawer: React.FC<IdePreferencesDrawerProps> = ({
             </label>
 
             {/* Auto Save */}
-            <div className="flex items-center justify-between p-3 bg-white rounded-xl border border-black/[0.06] shadow-xs">
+            <div className="flex items-center justify-between p-3 bg-white rounded-sm border border-black/[0.06] shadow-xs">
               <div>
                 <div className="font-bold text-xs text-[#121212]">
                   Auto-Save
@@ -118,12 +118,12 @@ export const IdePreferencesDrawer: React.FC<IdePreferencesDrawerProps> = ({
                 onClick={() =>
                   onUpdatePreferences({ autoSave: !preferences.autoSave })
                 }
-                className={`w-10 h-6 rounded-full transition-colors relative cursor-pointer ${
+                className={`w-10 h-6 rounded-sm transition-colors relative cursor-pointer ${
                   preferences.autoSave ? 'bg-[#287A52]' : 'bg-black/15'
                 }`}
               >
                 <div
-                  className={`w-4 h-4 rounded-full bg-white transition-transform absolute top-1 ${
+                  className={`w-4 h-4 rounded-sm bg-white transition-transform absolute top-1 ${
                     preferences.autoSave ? 'left-5' : 'left-1'
                   }`}
                 />
@@ -131,7 +131,7 @@ export const IdePreferencesDrawer: React.FC<IdePreferencesDrawerProps> = ({
             </div>
 
             {/* Format on Save */}
-            <div className="flex items-center justify-between p-3 bg-white rounded-xl border border-black/[0.06] shadow-xs">
+            <div className="flex items-center justify-between p-3 bg-white rounded-sm border border-black/[0.06] shadow-xs">
               <div>
                 <div className="font-bold text-xs text-[#121212]">
                   Format Node Graph on Save
@@ -146,12 +146,12 @@ export const IdePreferencesDrawer: React.FC<IdePreferencesDrawerProps> = ({
                     formatOnSave: !preferences.formatOnSave,
                   })
                 }
-                className={`w-10 h-6 rounded-full transition-colors relative cursor-pointer ${
+                className={`w-10 h-6 rounded-sm transition-colors relative cursor-pointer ${
                   preferences.formatOnSave ? 'bg-[#287A52]' : 'bg-black/15'
                 }`}
               >
                 <div
-                  className={`w-4 h-4 rounded-full bg-white transition-transform absolute top-1 ${
+                  className={`w-4 h-4 rounded-sm bg-white transition-transform absolute top-1 ${
                     preferences.formatOnSave ? 'left-5' : 'left-1'
                   }`}
                 />
@@ -159,7 +159,7 @@ export const IdePreferencesDrawer: React.FC<IdePreferencesDrawerProps> = ({
             </div>
 
             {/* Node Snap to Grid */}
-            <div className="flex items-center justify-between p-3 bg-white rounded-xl border border-black/[0.06] shadow-xs">
+            <div className="flex items-center justify-between p-3 bg-white rounded-sm border border-black/[0.06] shadow-xs">
               <div>
                 <div className="font-bold text-xs text-[#121212]">
                   Snap Nodes to 20px Grid
@@ -174,12 +174,12 @@ export const IdePreferencesDrawer: React.FC<IdePreferencesDrawerProps> = ({
                     nodeSnapToGrid: !preferences.nodeSnapToGrid,
                   })
                 }
-                className={`w-10 h-6 rounded-full transition-colors relative cursor-pointer ${
+                className={`w-10 h-6 rounded-sm transition-colors relative cursor-pointer ${
                   preferences.nodeSnapToGrid ? 'bg-[#287A52]' : 'bg-black/15'
                 }`}
               >
                 <div
-                  className={`w-4 h-4 rounded-full bg-white transition-transform absolute top-1 ${
+                  className={`w-4 h-4 rounded-sm bg-white transition-transform absolute top-1 ${
                     preferences.nodeSnapToGrid ? 'left-5' : 'left-1'
                   }`}
                 />
@@ -201,7 +201,7 @@ export const IdePreferencesDrawer: React.FC<IdePreferencesDrawerProps> = ({
                       keybindings: kb as IdePreferencesState['keybindings'],
                     })
                   }
-                  className={`py-2 px-3 rounded-lg text-xs font-mono capitalize transition-all cursor-pointer ${
+                  className={`py-2 px-3 rounded-sm text-xs font-mono capitalize transition-all cursor-pointer ${
                     (preferences.keybindings || 'standard') === kb
                       ? 'bg-[#121212] text-white font-bold'
                       : 'bg-white border border-black/[0.06] text-[#666666] hover:text-[#121212]'
@@ -219,7 +219,7 @@ export const IdePreferencesDrawer: React.FC<IdePreferencesDrawerProps> = ({
           {onResetPreferences && (
             <button
               onClick={onResetPreferences}
-              className="w-full py-2.5 px-4 rounded-xl border border-black/[0.08] hover:bg-black/[0.04] text-xs font-semibold text-[#666666] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+              className="w-full py-2.5 px-4 rounded-sm border border-black/[0.08] hover:bg-black/[0.04] text-xs font-semibold text-[#666666] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Reset to Factory Defaults</span>
@@ -228,7 +228,7 @@ export const IdePreferencesDrawer: React.FC<IdePreferencesDrawerProps> = ({
 
           <button
             onClick={onClose}
-            className="w-full py-2.5 px-4 rounded-xl bg-[#F26A3D] hover:bg-[#D9552A] active:scale-98 text-white font-bold text-xs shadow-xs transition-all cursor-pointer"
+            className="w-full py-2.5 px-4 rounded-sm bg-[#F26A3D] hover:bg-[#D9552A] active:scale-98 text-white font-bold text-xs shadow-xs transition-all cursor-pointer"
           >
             Apply & Close
           </button>

@@ -82,12 +82,15 @@ export default function App() {
           ? 'bg-[#000000] text-[#FFFFFF]'
           : 'bg-[#F4F1EA] text-[#171717]'
       }`}
+      style={{
+        '--theme-bg': idePreferences.theme === 'dark-slate' ? '#0F172A' : idePreferences.theme === 'high-contrast' ? '#000000' : '#F4F1EA'
+      } as React.CSSProperties}
     >
       {/* Toast Notification Banner */}
       {toastMessage && (
         <div
           id="teachflow-toast-notification"
-          className="fixed bottom-6 right-6 z-50 bg-[#121212] text-white px-4 py-3 rounded-xl border border-white/15 shadow-xl flex items-center gap-2.5 font-mono text-xs animate-in slide-in-from-bottom-5 duration-200"
+          className="fixed bottom-6 right-6 z-50 bg-[#121212] text-white px-4 py-3 rounded-sm border border-white/15 shadow-xl flex items-center gap-2.5 font-mono text-xs animate-in slide-in-from-bottom-5 duration-200"
         >
           <Sparkles className="w-4 h-4 text-[#F26A3D]" />
           <span>{toastMessage}</span>

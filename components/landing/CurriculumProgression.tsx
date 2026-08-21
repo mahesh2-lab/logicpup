@@ -134,7 +134,7 @@ export const CurriculumProgression: React.FC<CurriculumProgressionProps> = ({
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-black/[0.06] text-xs font-mono font-semibold text-[#287A52] shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-white border border-black/[0.06] text-xs font-mono font-semibold text-[#287A52] shadow-xs">
             <span>PYTHON MASTERY PATHWAY</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#121212] tracking-tight">
@@ -157,7 +157,7 @@ export const CurriculumProgression: React.FC<CurriculumProgressionProps> = ({
                 <div
                   key={lvl.levelNumber}
                   onClick={() => setSelectedLevelId(lvl.levelNumber)}
-                  className={`p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-4 select-none ${
+                  className={`p-4 rounded-sm border transition-all cursor-pointer flex items-center justify-between gap-4 select-none ${
                     isSelected
                       ? 'bg-white border-[#121212] shadow-md ring-2 ring-black/[0.04]'
                       : lvl.locked
@@ -169,15 +169,15 @@ export const CurriculumProgression: React.FC<CurriculumProgressionProps> = ({
                     {/* Status Icon */}
                     <div className="flex-shrink-0">
                       {lvl.completed ? (
-                        <div className="w-8 h-8 rounded-lg bg-[#287A52]/15 text-[#287A52] flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-sm bg-[#287A52]/15 text-[#287A52] flex items-center justify-center">
                           <CheckCircle2 className="w-4.5 h-4.5" />
                         </div>
                       ) : lvl.locked ? (
-                        <div className="w-8 h-8 rounded-lg bg-black/[0.05] text-[#806A55] flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-sm bg-black/[0.05] text-[#806A55] flex items-center justify-center">
                           <Lock className="w-4 h-4" />
                         </div>
                       ) : (
-                        <div className="w-8 h-8 rounded-lg bg-[#F26A3D]/15 text-[#F26A3D] flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-sm bg-[#F26A3D]/15 text-[#F26A3D] flex items-center justify-center">
                           <Sparkles className="w-4.5 h-4.5" />
                         </div>
                       )}
@@ -188,7 +188,7 @@ export const CurriculumProgression: React.FC<CurriculumProgressionProps> = ({
                         <span className="text-[10px] font-mono font-bold text-[#806A55]">
                           LEVEL 0{lvl.levelNumber}
                         </span>
-                        <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-black/[0.04] text-[#666666]">
+                        <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-sm bg-black/[0.04] text-[#666666]">
                           {lvl.tag}
                         </span>
                       </div>
@@ -211,16 +211,16 @@ export const CurriculumProgression: React.FC<CurriculumProgressionProps> = ({
 
           {/* Right 5 cols: Active Level Inspection Card */}
           <div className="lg:col-span-5 sticky top-24">
-            <div className="rounded-2xl border border-black/[0.08] bg-white p-6 sm:p-8 space-y-6 shadow-[0_8px_30px_rgb(0,0,0,0.03)]">
+            <div className="rounded-sm border border-black/[0.08] bg-white p-6 sm:p-8 space-y-6 shadow-[0_8px_30px_rgb(0,0,0,0.03)]">
               
               {/* Header with Level Pill */}
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-[#F26A3D]/10 text-[#F26A3D]">
+                <span className="text-xs font-mono font-bold px-3 py-1 rounded-sm bg-[#F26A3D]/10 text-[#F26A3D]">
                   LEVEL 0{activeLevel.levelNumber} • {activeLevel.tag}
                 </span>
 
                 <span
-                  className={`text-xs font-mono font-bold px-2.5 py-0.5 rounded-full ${
+                  className={`text-xs font-mono font-bold px-2.5 py-0.5 rounded-sm ${
                     activeLevel.completed
                       ? 'bg-[#287A52]/10 text-[#287A52]'
                       : activeLevel.locked
@@ -255,7 +255,7 @@ export const CurriculumProgression: React.FC<CurriculumProgressionProps> = ({
                   {activeLevel.skillsCovered.map((skill, i) => (
                     <span
                       key={i}
-                      className="text-xs font-mono px-2.5 py-1 rounded-lg bg-[#F8F6F0] border border-black/[0.06] text-[#121212]"
+                      className="text-xs font-mono px-2.5 py-1 rounded-sm bg-[#F8F6F0] border border-black/[0.06] text-[#121212]"
                     >
                       {skill}
                     </span>
@@ -265,11 +265,11 @@ export const CurriculumProgression: React.FC<CurriculumProgressionProps> = ({
 
               {/* Challenge Stats */}
               <div className="grid grid-cols-2 gap-3 pt-2">
-                <div className="p-3 rounded-xl bg-[#F8F6F0] border border-black/[0.04]">
+                <div className="p-3 rounded-sm bg-[#F8F6F0] border border-black/[0.04]">
                   <div className="text-[10px] font-mono text-[#888888] uppercase">Interactive Challenges</div>
                   <div className="text-base font-bold text-[#121212]">{activeLevel.challengesCount} Python Specs</div>
                 </div>
-                <div className="p-3 rounded-xl bg-[#F8F6F0] border border-black/[0.04]">
+                <div className="p-3 rounded-sm bg-[#F8F6F0] border border-black/[0.04]">
                   <div className="text-[10px] font-mono text-[#888888] uppercase">Experience XP</div>
                   <div className="text-base font-bold text-[#287A52]">+{activeLevel.xpReward} XP Points</div>
                 </div>
@@ -278,14 +278,14 @@ export const CurriculumProgression: React.FC<CurriculumProgressionProps> = ({
               {/* Primary Action Button */}
               <div className="pt-2">
                 {activeLevel.locked ? (
-                  <div className="p-3 rounded-xl bg-black/[0.04] text-xs text-[#806A55] flex items-center gap-2 font-mono">
+                  <div className="p-3 rounded-sm bg-black/[0.04] text-xs text-[#806A55] flex items-center gap-2 font-mono">
                     <Lock className="w-4 h-4 flex-shrink-0" />
                     <span>Complete Level 0{activeLevel.levelNumber - 1} challenges to unlock this gate.</span>
                   </div>
                 ) : (
                   <a
                     href="/login?mode=signup"
-                    className="w-full py-3 px-4 rounded-xl bg-[#F26A3D] hover:bg-[#D9552A] active:scale-98 text-white font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full py-3 px-4 rounded-sm bg-[#F26A3D] hover:bg-[#D9552A] active:scale-98 text-white font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>
                       {activeLevel.completed ? 'Replay Python Exercises' : 'Start Level 0' + activeLevel.levelNumber}

@@ -26,16 +26,16 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Dark Slate Minimalist Card */}
-        <div className="rounded-3xl bg-[#121212] text-white p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.2)]">
+        <div className="rounded-sm bg-[#121212] text-white p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.2)]">
           
           {/* Subtle Ambient Radial Lighting */}
-          <div className="absolute -right-20 -top-20 w-96 h-96 rounded-full bg-[#F26A3D]/20 blur-3xl pointer-events-none" />
-          <div className="absolute -left-20 -bottom-20 w-96 h-96 rounded-full bg-[#356A9A]/20 blur-3xl pointer-events-none" />
+          <div className="absolute -right-20 -top-20 w-96 h-96 rounded-sm bg-[#F26A3D]/20 blur-3xl pointer-events-none" />
+          <div className="absolute -left-20 -bottom-20 w-96 h-96 rounded-sm bg-[#356A9A]/20 blur-3xl pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto text-center space-y-6">
             
             {/* Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-xs font-mono font-semibold text-white/90">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-sm bg-white/10 backdrop-blur-md border border-white/10 text-xs font-mono font-semibold text-white/90">
               <Sparkles className="w-3.5 h-3.5 text-[#F26A3D]" />
               <span>Python 3.12 Flowchart Playground • No Install Required</span>
             </div>
@@ -58,7 +58,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
               <button
                 id="cta-start-free-btn"
                 onClick={() => { window.location.href = "/login?mode=signup"; }}
-                className="w-full sm:w-auto px-8 py-3.5 bg-[#F26A3D] hover:bg-[#D9552A] active:scale-98 text-white font-bold text-base rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group"
+                className="w-full sm:w-auto px-8 py-3.5 bg-[#F26A3D] hover:bg-[#D9552A] active:scale-98 text-white font-bold text-base rounded-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group"
               >
                 <span>Start Learning Python Free</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -67,7 +67,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
               <button
                 id="cta-open-playground-btn"
                 onClick={onExploreDemo}
-                className="w-full sm:w-auto px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-base rounded-xl border border-white/15 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-base rounded-sm border border-white/15 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Code2 className="w-4 h-4 text-[#60A5FA]" />
                 <span>Try Flowchart Playground</span>

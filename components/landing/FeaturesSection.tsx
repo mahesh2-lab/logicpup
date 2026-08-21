@@ -121,13 +121,13 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
   return (
     <section
       id="features"
-      className="py-16 md:py-24 border-b border-black/[0.06] relative"
+      className="py-16 md:py-24 border-b border-black/6 relative"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-black/[0.06] text-xs font-mono font-semibold text-[#121212] shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-white border border-black/6 text-xs font-mono font-semibold text-[#121212] shadow-xs">
             <span>VISUAL PYTHON LEARNING</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#121212] tracking-tight">
@@ -139,17 +139,20 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
         </div>
 
         {/* Feature Selector Tabs */}
-        <div className="flex items-center justify-start sm:justify-center gap-1.5 overflow-x-auto pb-4 mb-10 scrollbar-none">
-          {features.map((feat) => {
+        <div className="relative mb-10 -mx-4 sm:-mx-6 lg:-mx-8">
+          <div className="pointer-events-none absolute left-0 top-0 bottom-4 w-16 bg-linear-to-r from-(--theme-bg) to-transparent z-10" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-4 w-16 bg-linear-to-l from-(--theme-bg) to-transparent z-10" />
+          <div className="flex items-center justify-start xl:justify-center gap-1.5 overflow-x-auto pb-4 scrollbar-none px-4 sm:px-6 lg:px-8 before:content-[''] before:w-8 before:shrink-0 after:content-[''] after:w-8 after:shrink-0">
+            {features.map((feat) => {
             const isSelected = selectedFeature === feat.id;
             return (
               <button
                 key={feat.id}
                 onClick={() => setSelectedFeature(feat.id)}
-                className={`px-4 py-2.5 rounded-xl font-medium text-xs sm:text-sm whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
+                className={`px-4 py-2.5 rounded-sm font-medium text-xs sm:text-sm whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
                   isSelected
                     ? 'bg-[#121212] text-white shadow-xs'
-                    : 'bg-white text-[#666666] border border-black/[0.06] hover:text-[#121212] hover:bg-[#F8F6F0]'
+                    : 'bg-white text-[#666666] border border-black/6 hover:text-[#121212] hover:bg-[#F8F6F0]'
                 }`}
               >
                 {feat.id === 'node-editor' && <Boxes className="w-3.5 h-3.5 text-[#F26A3D]" />}
@@ -162,16 +165,17 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
             );
           })}
         </div>
+        </div>
 
         {/* Active Feature Deep Dive Showcase */}
-        <div className="rounded-2xl border border-black/[0.08] bg-white p-6 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.03)]">
+        <div className="rounded-sm border border-black/8 bg-white p-6 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.03)]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* Left 6 cols: Info & Capabilities */}
             <div className="lg:col-span-6 space-y-6">
               <div className="space-y-2">
                 <span
-                  className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded text-white inline-block"
+                  className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-sm text-white inline-block"
                   style={{ backgroundColor: current.accentColor }}
                 >
                   {current.tag.toUpperCase()}
@@ -204,7 +208,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
               <div className="pt-3 flex items-center gap-3">
                 <button
                 onClick={() => { window.location.href = "/login?mode=signup"; }}
-                className="px-5 py-2.5 rounded-xl bg-[#F26A3D] hover:bg-[#D9552A] active:scale-95 text-white font-semibold text-xs sm:text-sm shadow-xs transition-all flex items-center gap-2 cursor-pointer"
+                className="px-5 py-2.5 rounded-sm bg-[#F26A3D] hover:bg-[#D9552A] active:scale-95 text-white font-semibold text-xs sm:text-sm shadow-xs transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <span>Explore {current.title}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -214,7 +218,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
 
             {/* Right 6 cols: Dynamic Interactive Mock Visual */}
             <div className="lg:col-span-6">
-              <div className="rounded-xl border border-black/[0.06] bg-[#F8F6F0] p-5 space-y-4">
+              <div className="rounded-sm border border-black/[0.06] bg-[#F8F6F0] p-5 space-y-4">
                 
                 {/* Visual 1: Python Node Editor Preview */}
                 {current.id === 'node-editor' && (
@@ -223,32 +227,32 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                       <span>PYTHON FLOW: Number Guessing Game</span>
                       <span className="text-[#287A52] font-semibold">● 7 Blocks Synchronized</span>
                     </div>
-                    <div className="space-y-2.5 bg-white p-4 rounded-lg border border-black/[0.06]">
+                    <div className="space-y-2.5 bg-white p-4 rounded-sm border border-black/[0.06]">
                       {/* START Node */}
-                      <div className="p-2.5 bg-white rounded border border-[#171717] border-l-4 border-l-[#171717] flex items-center justify-between shadow-xs">
+                      <div className="p-2.5 bg-white rounded-sm border border-[#171717] border-l-4 border-l-[#171717] flex items-center justify-between shadow-xs">
                         <div>
                           <span className="text-[10px] font-mono font-bold uppercase text-[#171717]">START</span>
                           <div className="text-[11px] text-[#555555]">Program begins here</div>
                         </div>
-                        <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-black/5 text-[#171717]">Entry</span>
+                        <span className="text-[9px] font-mono px-2 py-0.5 rounded-sm bg-black/5 text-[#171717]">Entry</span>
                       </div>
 
                       {/* Process Node */}
-                      <div className="p-2.5 bg-white rounded border border-[#171717] flex items-center justify-between shadow-xs">
+                      <div className="p-2.5 bg-white rounded-sm border border-[#171717] flex items-center justify-between shadow-xs">
                         <div>
                           <div className="text-xs font-bold text-[#171717]">Set Secret Number</div>
                           <code className="text-[10px] font-mono text-[#356A9A]">secret_number = 7</code>
                         </div>
-                        <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-[#356A9A]/10 text-[#356A9A]">int assign</span>
+                        <span className="text-[9px] font-mono px-2 py-0.5 rounded-sm bg-[#356A9A]/10 text-[#356A9A]">int assign</span>
                       </div>
 
                       {/* Condition Node */}
-                      <div className="p-2.5 bg-white rounded border border-[#171717] flex items-center justify-between shadow-xs">
+                      <div className="p-2.5 bg-white rounded-sm border border-[#171717] flex items-center justify-between shadow-xs">
                         <div>
                           <div className="text-xs font-bold text-[#171717]">Check Match</div>
                           <code className="text-[10px] font-mono text-[#806A55]">if guess == secret_number:</code>
                         </div>
-                        <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-[#287A52]/10 text-[#287A52]">branch: True / False</span>
+                        <span className="text-[9px] font-mono px-2 py-0.5 rounded-sm bg-[#287A52]/10 text-[#287A52]">branch: True / False</span>
                       </div>
                     </div>
                   </div>
@@ -262,7 +266,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                       <span className="text-[#F26A3D] font-bold">Level 1 of 8</span>
                     </div>
                     <div className="space-y-2.5">
-                      <div className="p-3 rounded-xl bg-white border border-black/[0.06] flex items-center justify-between shadow-xs">
+                      <div className="p-3 rounded-sm bg-white border border-black/[0.06] flex items-center justify-between shadow-xs">
                         <div className="flex items-center gap-2.5">
                           <CheckCircle2 className="w-5 h-5 text-[#287A52]" />
                           <div>
@@ -270,10 +274,10 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                             <div className="text-[10px] font-mono text-[#888888]">4/4 Challenges Passed</div>
                           </div>
                         </div>
-                        <span className="text-[10px] font-mono font-bold text-[#287A52] bg-[#287A52]/10 px-2 py-0.5 rounded-full">UNLOCKED</span>
+                        <span className="text-[10px] font-mono font-bold text-[#287A52] bg-[#287A52]/10 px-2 py-0.5 rounded-sm">UNLOCKED</span>
                       </div>
 
-                      <div className="p-3 rounded-xl bg-white border border-[#F26A3D] flex items-center justify-between shadow-xs">
+                      <div className="p-3 rounded-sm bg-white border border-[#F26A3D] flex items-center justify-between shadow-xs">
                         <div className="flex items-center gap-2.5">
                           <Sparkles className="w-5 h-5 text-[#F26A3D]" />
                           <div>
@@ -281,10 +285,10 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                             <div className="text-[10px] font-mono text-[#F26A3D] font-semibold">Active in Progress</div>
                           </div>
                         </div>
-                        <span className="text-[10px] font-mono font-bold text-white bg-[#F26A3D] px-2 py-0.5 rounded-full">IN PROGRESS</span>
+                        <span className="text-[10px] font-mono font-bold text-white bg-[#F26A3D] px-2 py-0.5 rounded-sm">IN PROGRESS</span>
                       </div>
 
-                      <div className="p-3 rounded-xl bg-white/60 border border-black/[0.04] flex items-center justify-between opacity-60">
+                      <div className="p-3 rounded-sm bg-white/60 border border-black/[0.04] flex items-center justify-between opacity-60">
                         <div className="flex items-center gap-2.5">
                           <Lock className="w-5 h-5 text-[#806A55]" />
                           <div>
@@ -292,7 +296,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                             <div className="text-[10px] font-mono text-[#888888]">Requires Level 2 Completion</div>
                           </div>
                         </div>
-                        <span className="text-[10px] font-mono font-semibold text-[#806A55] bg-black/[0.04] px-2 py-0.5 rounded-full">LOCKED</span>
+                        <span className="text-[10px] font-mono font-semibold text-[#806A55] bg-black/[0.04] px-2 py-0.5 rounded-sm">LOCKED</span>
                       </div>
                     </div>
                   </div>
@@ -307,19 +311,19 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                     </div>
                     <div className="space-y-2.5 text-xs">
                       {/* Toggle Auto Save */}
-                      <div className="flex items-center justify-between p-2.5 bg-white rounded-lg border border-black/[0.06]">
+                      <div className="flex items-center justify-between p-2.5 bg-white rounded-sm border border-black/[0.06]">
                         <div>
                           <div className="font-bold text-[#121212]">Auto-Save to LocalStorage</div>
                           <div className="text-[10px] text-[#666666]">Persists flow & Python code on every connection</div>
                         </div>
                         <button
                           onClick={() => setDemoAutoSave(!demoAutoSave)}
-                          className={`w-9 h-5 rounded-full transition-colors relative cursor-pointer ${
+                          className={`w-9 h-5 rounded-sm transition-colors relative cursor-pointer ${
                             demoAutoSave ? 'bg-[#287A52]' : 'bg-black/15'
                           }`}
                         >
                           <div
-                            className={`w-3.5 h-3.5 rounded-full bg-white transition-transform absolute top-0.5 ${
+                            className={`w-3.5 h-3.5 rounded-sm bg-white transition-transform absolute top-0.5 ${
                               demoAutoSave ? 'left-4.5' : 'left-1'
                             }`}
                           />
@@ -327,19 +331,19 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                       </div>
 
                       {/* Toggle Format on Save */}
-                      <div className="flex items-center justify-between p-2.5 bg-white rounded-lg border border-black/[0.06]">
+                      <div className="flex items-center justify-between p-2.5 bg-white rounded-sm border border-black/[0.06]">
                         <div>
                           <div className="font-bold text-[#121212]">Format Python Code</div>
                           <div className="text-[10px] text-[#666666]">PEP 8 compliant formatting</div>
                         </div>
                         <button
                           onClick={() => setDemoFormatOnSave(!demoFormatOnSave)}
-                          className={`w-9 h-5 rounded-full transition-colors relative cursor-pointer ${
+                          className={`w-9 h-5 rounded-sm transition-colors relative cursor-pointer ${
                             demoFormatOnSave ? 'bg-[#287A52]' : 'bg-black/15'
                           }`}
                         >
                           <div
-                            className={`w-3.5 h-3.5 rounded-full bg-white transition-transform absolute top-0.5 ${
+                            className={`w-3.5 h-3.5 rounded-sm bg-white transition-transform absolute top-0.5 ${
                               demoFormatOnSave ? 'left-4.5' : 'left-1'
                             }`}
                           />
@@ -357,21 +361,21 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                       <span className="text-[#806A55] font-semibold">Python 3.12</span>
                     </div>
                     <div className="space-y-2">
-                      <div className="p-2.5 rounded-lg bg-white border border-black/[0.06] flex items-center justify-between text-xs shadow-xs">
+                      <div className="p-2.5 rounded-sm bg-white border border-black/[0.06] flex items-center justify-between text-xs shadow-xs">
                         <div className="flex items-center gap-2">
                           <PlayCircle className="w-4 h-4 text-[#287A52]" />
                           <span className="font-bold text-[#121212]">guess_game.py</span>
                         </div>
                         <span className="text-[#287A52] font-mono font-semibold">Victory (7 blocks)</span>
                       </div>
-                      <div className="p-2.5 rounded-lg bg-white border border-black/[0.06] flex items-center justify-between text-xs shadow-xs">
+                      <div className="p-2.5 rounded-sm bg-white border border-black/[0.06] flex items-center justify-between text-xs shadow-xs">
                         <div className="flex items-center gap-2">
                           <PlayCircle className="w-4 h-4 text-[#287A52]" />
                           <span className="font-bold text-[#121212]">even_odd_checker.py</span>
                         </div>
                         <span className="text-[#287A52] font-mono font-semibold">Verified</span>
                       </div>
-                      <div className="p-2.5 rounded-lg bg-white border border-black/[0.06] flex items-center justify-between text-xs shadow-xs">
+                      <div className="p-2.5 rounded-sm bg-white border border-black/[0.06] flex items-center justify-between text-xs shadow-xs">
                         <div className="flex items-center gap-2">
                           <PlayCircle className="w-4 h-4 text-[#356A9A]" />
                           <span className="font-bold text-[#121212]">fizzbuzz_loop.py</span>
@@ -389,24 +393,24 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                       <span>STUDENT PYTHON PROFILE</span>
                       <span className="text-[#F26A3D] font-bold">Python Scholar</span>
                     </div>
-                    <div className="flex items-center gap-3 p-3 bg-white rounded-xl border border-black/[0.06] shadow-xs">
-                      <div className="w-10 h-10 rounded-full bg-[#F26A3D] text-white flex items-center justify-center font-bold text-sm">
+                    <div className="flex items-center gap-3 p-3 bg-white rounded-sm border border-black/[0.06] shadow-xs">
+                      <div className="w-10 h-10 rounded-sm bg-[#F26A3D] text-white flex items-center justify-center font-bold text-sm">
                         PY
                       </div>
                       <div className="flex-1">
                         <h5 className="font-bold text-xs text-[#121212]">Alex Reynolds</h5>
                         <p className="text-[11px] font-mono text-[#666666]">alex@python.edu • 1,450 XP</p>
                       </div>
-                      <span className="px-2 py-0.5 rounded-full bg-[#287A52]/10 text-[#287A52] text-[10px] font-mono font-bold">
+                      <span className="px-2 py-0.5 rounded-sm bg-[#287A52]/10 text-[#287A52] text-[10px] font-mono font-bold">
                         Active
                       </span>
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                      <div className="p-2.5 bg-white rounded-lg border border-black/[0.06]">
+                      <div className="p-2.5 bg-white rounded-sm border border-black/[0.06]">
                         <div className="text-[#888888] text-[9px]">FLOWCHARTS WIRED</div>
                         <div className="font-bold text-[#121212] text-sm">18 Programs</div>
                       </div>
-                      <div className="p-2.5 bg-white rounded-lg border border-black/[0.06]">
+                      <div className="p-2.5 bg-white rounded-sm border border-black/[0.06]">
                         <div className="text-[#888888] text-[9px]">PYTHON RUNS EXECUTED</div>
                         <div className="font-bold text-[#121212] text-sm">340 Runs</div>
                       </div>

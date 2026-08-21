@@ -54,20 +54,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     >
       <div
         id="auth-modal-card"
-        className="w-full max-w-md rounded-2xl bg-white border border-black/[0.08] shadow-2xl p-6 sm:p-8 space-y-6 text-left relative animate-in fade-in zoom-in-95 duration-150"
+        className="w-full max-w-md rounded-sm bg-white border border-black/[0.08] shadow-2xl p-6 sm:p-8 space-y-6 text-left relative animate-in fade-in zoom-in-95 duration-150"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 rounded-lg text-[#666666] hover:text-[#121212] hover:bg-black/[0.04] transition-colors cursor-pointer"
+          className="absolute top-4 right-4 p-1.5 rounded-sm text-[#666666] hover:text-[#121212] hover:bg-black/[0.04] transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Modal Header */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#F26A3D] text-white flex items-center justify-center shadow-xs">
+          <div className="w-10 h-10 rounded-sm bg-[#F26A3D] text-white flex items-center justify-center shadow-xs">
             <Boxes className="w-5 h-5" />
           </div>
           <div>
@@ -84,7 +84,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
         {submitted ? (
           <div className="py-8 text-center space-y-3">
-            <div className="w-12 h-12 rounded-full bg-[#287A52]/10 text-[#287A52] flex items-center justify-center mx-auto">
+            <div className="w-12 h-12 rounded-sm bg-[#287A52]/10 text-[#287A52] flex items-center justify-center mx-auto">
               <CheckCircle2 className="w-6 h-6" />
             </div>
             <h4 className="font-bold text-lg text-[#121212]">
@@ -108,7 +108,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-black/[0.08] bg-[#F8F6F0] text-sm text-[#121212] font-medium focus:outline-none focus:ring-2 focus:ring-[#F26A3D] focus:border-transparent transition-all"
+                    className="w-full pl-10 pr-3.5 py-2.5 rounded-sm border border-black/[0.08] bg-[#F8F6F0] text-sm text-[#121212] font-medium focus:outline-none focus:ring-2 focus:ring-[#F26A3D] focus:border-transparent transition-all"
                     placeholder="Alex Reynolds"
                   />
                 </div>
@@ -126,7 +126,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-black/[0.08] bg-[#F8F6F0] text-sm text-[#121212] font-medium focus:outline-none focus:ring-2 focus:ring-[#F26A3D] focus:border-transparent transition-all"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-sm border border-black/[0.08] bg-[#F8F6F0] text-sm text-[#121212] font-medium focus:outline-none focus:ring-2 focus:ring-[#F26A3D] focus:border-transparent transition-all"
                   placeholder="alex@learner.dev"
                 />
               </div>
@@ -143,7 +143,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-black/[0.08] bg-[#F8F6F0] text-sm text-[#121212] font-medium focus:outline-none focus:ring-2 focus:ring-[#F26A3D] focus:border-transparent transition-all"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-sm border border-black/[0.08] bg-[#F8F6F0] text-sm text-[#121212] font-medium focus:outline-none focus:ring-2 focus:ring-[#F26A3D] focus:border-transparent transition-all"
                   placeholder="••••••••••••"
                 />
               </div>
@@ -152,7 +152,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3 px-4 rounded-xl bg-[#F26A3D] hover:bg-[#D9552A] active:scale-98 text-white font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-2"
+              className="w-full py-3 px-4 rounded-sm bg-[#F26A3D] hover:bg-[#D9552A] active:scale-98 text-white font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-2"
             >
               <span>
                 {isSubmitting

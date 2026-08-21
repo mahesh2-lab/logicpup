@@ -70,28 +70,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       {/* Ambient Parallax Gradient Orbs */}
       <motion.div
         style={{ y: orb1Y }}
-        className="absolute top-10 left-1/4 w-96 h-96 rounded-full bg-[#F26A3D]/[0.035] blur-3xl pointer-events-none -z-10"
+        className="absolute top-10 left-1/4 w-96 h-96 rounded-sm bg-[#F26A3D]/[0.035] blur-3xl pointer-events-none -z-10"
       />
       <motion.div
         style={{ y: orb2Y }}
-        className="absolute bottom-20 right-1/4 w-96 h-96 rounded-full bg-[#356A9A]/[0.035] blur-3xl pointer-events-none -z-10"
+        className="absolute bottom-20 right-1/4 w-96 h-96 rounded-sm bg-[#356A9A]/[0.035] blur-3xl pointer-events-none -z-10"
       />
 
       {/* Floating Background Parallax Code Chips */}
       <motion.div
         style={{ y: floatNode1Y, rotate: floatNode1Rotate }}
-        className="hidden xl:flex absolute left-8 top-32 z-0 items-center gap-2 px-3 py-2 rounded-[3px] bg-white/90 backdrop-blur-md border border-[#D8D4CC] shadow-xs text-xs font-mono text-[#171717] pointer-events-none"
+        className="hidden xl:flex absolute left-8 top-32 z-0 items-center gap-2 px-3 py-2 rounded-sm bg-white/90 backdrop-blur-md border border-[#D8D4CC] shadow-xs text-xs font-mono text-[#171717] pointer-events-none"
       >
-        <span className="w-2 h-2 rounded-full bg-[#F26A3D]" />
+        <span className="w-2 h-2 rounded-sm bg-[#F26A3D]" />
         <span className="text-[#806A55]">if guess == secret_number:</span>
-        <span className="text-[10px] text-[#287A52] font-semibold bg-[#287A52]/10 px-1.5 py-0.5 rounded-[3px]">
+        <span className="text-[10px] text-[#287A52] font-semibold bg-[#287A52]/10 px-1.5 py-0.5 rounded-sm">
           Python 3.12
         </span>
       </motion.div>
 
       <motion.div
         style={{ y: floatNode2Y, rotate: floatNode2Rotate }}
-        className="hidden xl:flex absolute right-8 top-40 z-0 items-center gap-2 px-3 py-2 rounded-[3px] bg-white/90 backdrop-blur-md border border-[#D8D4CC] shadow-xs text-xs font-mono text-[#171717] pointer-events-none"
+        className="hidden xl:flex absolute right-8 top-40 z-0 items-center gap-2 px-3 py-2 rounded-sm bg-white/90 backdrop-blur-md border border-[#D8D4CC] shadow-xs text-xs font-mono text-[#171717] pointer-events-none"
       >
         <Code2 className="w-3.5 h-3.5 text-[#356A9A]" />
         <span className="text-[#555555]">Python Flow Engine:</span>
@@ -104,7 +104,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Minimal Tag Pill with Parallax */}
           <motion.div
             style={{ y: tagY }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-[#D8D4CC] text-xs font-semibold text-[#171717] shadow-xs"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-sm bg-white/90 backdrop-blur-md border border-[#D8D4CC] text-xs font-semibold text-[#171717] shadow-xs"
           >
             <Workflow className="w-3.5 h-3.5 text-[#F26A3D]" />
             <span>Visual Flowchart Coding for Python</span>
@@ -127,7 +127,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 Learn Python Code <br className="hidden sm:inline" />
                 <span className="text-[#F26A3D] relative inline-block">
                   Through Visual Flowcharts.
-                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-[#F26A3D]/20 rounded-full" />
+                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-[#F26A3D]/20 rounded-sm" />
                 </span>
               </h1>
             </MagneticWrapper>
@@ -157,7 +157,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <button
                 id="hero-start-learning-cta"
                 onClick={() => { window.location.href = "/login?mode=signup"; }}
-                className="w-full sm:w-auto px-6 py-3.5 bg-[#F26A3D] hover:bg-[#D9552A] active:scale-98 text-white font-semibold text-sm sm:text-base rounded-[3px] shadow-[0_4px_14px_rgba(242,106,61,0.25)] hover:shadow-[0_6px_20px_rgba(242,106,61,0.35)] transition-all duration-150 flex items-center justify-center gap-2.5 cursor-pointer group"
+                className="w-full sm:w-auto px-6 py-3.5 bg-[#F26A3D] hover:bg-[#D9552A] active:scale-98 text-white font-semibold text-sm sm:text-base rounded-sm shadow-[0_4px_14px_rgba(242,106,61,0.25)] hover:shadow-[0_6px_20px_rgba(242,106,61,0.35)] transition-all duration-150 flex items-center justify-center gap-2.5 cursor-pointer group"
               >
                 <span>Start Learning Python for Free</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-200" />
@@ -175,7 +175,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <button
                 id="hero-view-demo-cta"
                 onClick={onExploreDemo}
-                className="w-full sm:w-auto px-6 py-3.5 bg-white hover:bg-[#F4F1EA] text-[#171717] font-semibold text-sm sm:text-base rounded-[3px] border border-[#D8D4CC] shadow-xs hover:border-[#806A55]/40 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3.5 bg-white hover:bg-[#F4F1EA] text-[#171717] font-semibold text-sm sm:text-base rounded-sm border border-[#D8D4CC] shadow-xs hover:border-[#806A55]/40 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Terminal className="w-4 h-4 text-[#356A9A]" />
                 <span>Try Python Flowchart Playground</span>

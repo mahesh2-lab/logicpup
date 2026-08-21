@@ -19,7 +19,7 @@ export const Footer: React.FC = () => {
           {/* Brand Col (4 cols) */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-[#F26A3D] text-white flex items-center justify-center shadow-xs">
+              <div className="w-8 h-8 rounded-sm bg-[#F26A3D] text-white flex items-center justify-center shadow-xs">
                 <Boxes className="w-4.5 h-4.5" />
               </div>
               <span className="font-bold text-lg text-[#121212] tracking-tight">
