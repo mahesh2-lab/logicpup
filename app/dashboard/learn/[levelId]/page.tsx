@@ -84,7 +84,7 @@ export default function LevelDetailPage({ params }: LevelPageProps) {
           </Link>
           {prevLevel && (
             <Link
-              href={`/learn/${prevLevel.id}`}
+              href={`/dashboard/learn/${prevLevel.id}`}
               className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold uppercase rounded no-underline transition-colors shadow-xs"
             >
               <span>Go to Level 0{prevLevel.levelNumber}</span>

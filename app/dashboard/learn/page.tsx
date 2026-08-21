@@ -140,7 +140,7 @@ export default function LearnHubPage() {
 
                   {unlocked ? (
                     <Link
-                      href={`/learn/${lvl.id}`}
+                      href={`/dashboard/learn/${lvl.id}`}
                       className="px-4 py-2 bg-[#171717] hover:bg-[#F26A3D] text-white text-xs font-bold uppercase rounded no-underline flex items-center gap-1.5 transition-colors"
                     >
                       <span>{mastered ? "Review" : "Open"}</span>
