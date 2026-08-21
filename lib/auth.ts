@@ -8,6 +8,7 @@ const pool = new Pool({
 
 export const auth = betterAuth({
   database: pool,
+  baseURL: env.BETTER_AUTH_URL,
   emailAndPassword: {
     enabled: true,
   },
