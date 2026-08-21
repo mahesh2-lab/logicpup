@@ -8,7 +8,7 @@ const securityHeaders = [
   {
     key: "Content-Security-Policy",
     // FIXME: Update CSP with exact required domains
-    value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: https:; font-src 'self'; connect-src 'self' https: ws: wss:;",
+    value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.posthog.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: https:; font-src 'self'; connect-src 'self' https: ws: wss:; worker-src blob:;",
   },
 ];
 

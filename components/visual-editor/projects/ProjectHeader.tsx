@@ -12,6 +12,7 @@ import { UserAuthMenu } from "../components/UserAuthMenu";
 import type { Project } from "./types";
 import { useMounted } from "@/lib/useMounted";
 import { BrandLogo } from "@/components/ui/BrandLogo";
+import posthog from "posthog-js";
 
 interface ProjectHeaderProps {
   project: Project;
@@ -117,6 +118,12 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
               error: result.finalState.error,
             });
           }
+          posthog.capture(result.finalState.error ? "program_run_failed" : "program_run_completed", {
+            project_id: project.id,
+            duration_ms: duration,
+            node_count: nodes.length,
+            output_count: result.finalState.output.length,
+          });
           return;
         }
         const step = result.steps[stepIdx++];
@@ -151,6 +158,11 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
           error: errMsg,
         });
       }
+      posthog.capture("program_run_failed", {
+        project_id: project.id,
+        duration_ms: duration,
+        node_count: nodes.length,
+      });
     }
   }
 

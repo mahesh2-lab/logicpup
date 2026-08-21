@@ -24,13 +24,13 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
       className="py-16 md:py-24 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Light Minimalist Card */}
+        {/* The big, beautiful call-to-action box at the bottom of the page */}
         <div className="rounded-sm bg-white text-[#171717] p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-[#D8D4CC]">
-          {/* Subtle Ambient Radial Lighting */}
+          {/* Some soft glowing lights to make things feel magical */}
           <div className="absolute -right-20 -top-20 w-96 h-96 rounded-sm bg-[#F26A3D]/20 blur-3xl pointer-events-none" />
           <div className="absolute -left-20 -bottom-20 w-96 h-96 rounded-sm bg-[#356A9A]/20 blur-3xl pointer-events-none" />
 
-          {/* Flickering Grid Background */}
+          {/* That cool techy background grid that flickers */}
           <FlickeringGrid
             className="absolute inset-0 z-0 size-full"
             squareSize={4}
@@ -41,7 +41,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
           />
 
           <div className="relative z-10 max-w-3xl mx-auto text-center space-y-6">
-            {/* Pill */}
+            {/* A tiny little badge to grab attention */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-sm bg-[#F4F1EA] backdrop-blur-md border border-[#D8D4CC] text-xs font-mono font-semibold text-[#171717]">
               <Sparkles className="w-3.5 h-3.5 text-[#F26A3D]" />
               <span>
@@ -49,20 +49,20 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
               </span>
             </div>
 
-            {/* Headline */}
+            {/* The big bold message! */}
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#171717] leading-tight">
               Master Python Logic Without <br />
               <span className="text-[#F26A3D]">Barking at Syntax Errors.</span>
             </h2>
 
-            {/* Paragraph */}
+            {/* A quick explainer of what they're getting into */}
             <p className="text-base sm:text-lg text-[#555555] max-w-xl mx-auto leading-relaxed">
               Connect variables, inputs, conditionals, and loops to visually
               build and run real Python 3 programs right in your browser. Good
               boy, clean code.
             </p>
 
-            {/* CTA Buttons */}
+            {/* Time for action! The big sign-up buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-4">
               <button
                 id="cta-start-free-btn"
@@ -85,7 +85,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
               </button>
             </div>
 
-            {/* Guarantee Pills */}
+            {/* A few promises to make them feel safe and warm */}
             <div className="pt-6 flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-[#555555]">
               <span className="flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-[#4ADE80]" /> 100% Free

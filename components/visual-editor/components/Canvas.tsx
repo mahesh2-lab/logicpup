@@ -16,6 +16,12 @@ import "@xyflow/react/dist/style.css";
 import { useEditorStore, type BlockNode } from "../state/editorStore";
 import { nodeTypes, BLOCK_TYPE_TO_NODE_TYPE } from "../blocks/blockTypes";
 import { BLOCK_MAP } from "../blocks/definitions";
+import TrailEdge from "../../flow/TrailEdge";
+import { playAddBlockSound, playConnectSound, playDeleteBlockSound } from "../../../lib/soundEffects";
+
+const edgeTypes = {
+  default: TrailEdge,
+};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Canvas — Editorial Engineering Workspace Canvas
@@ -35,7 +41,10 @@ export function Canvas() {
   } = useEditorStore();
 
   const onConnect: OnConnect = useCallback(
-    (connection) => storeConnect(connection),
+    (connection) => {
+      playConnectSound();
+      storeConnect(connection);
+    },
     [storeConnect]
   );
 
@@ -43,6 +52,10 @@ export function Canvas() {
     (_, node) => setSelectedNodeId(node.id),
     [setSelectedNodeId]
   );
+
+  const onNodesDelete = useCallback(() => {
+    playDeleteBlockSound();
+  }, []);
 
   const onPaneClick = useCallback(() => {
     setSelectedNodeId(null);
@@ -114,6 +127,7 @@ export function Canvas() {
           values: { ...def.defaultData },
         },
       };
+      playAddBlockSound();
       addNode(newNode);
     },
     [addNode]
@@ -137,6 +151,7 @@ export function Canvas() {
         values: { ...def.defaultData },
       },
     };
+    playAddBlockSound();
     addNode(newNode);
   }
 
@@ -238,10 +253,12 @@ export function Canvas() {
           edges={renderedEdges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
+          onNodesDelete={onNodesDelete}
           onConnect={onConnect}
           onNodeClick={onNodeClick}
           onPaneClick={onPaneClick}
           nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
           defaultViewport={{ x: 120, y: 50, zoom: 1 }}
           minZoom={0.2}
           maxZoom={2}

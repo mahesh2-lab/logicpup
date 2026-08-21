@@ -37,10 +37,14 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { pythonNodeTypes } from './CustomNodes';
+import TrainEdge from './TrainEdge';
+import { playPopSound, playConnectSound, playRunSound } from '@/lib/sound';
 import { CustomNodeData, PythonNodeType, PythonPreset, PythonConsoleLog, PythonVariable } from './types';
 import { generatePythonFromFlow } from './CodeGenerator';
 
-// Presets for Python Code Flowcharts
+const edgeTypes = { default: TrainEdge, train: TrainEdge };
+
+// Here are a few ready-made examples so you can hit the ground running with some neat Python scripts!
 const PYTHON_PRESETS: Record<string, PythonPreset> = {
   guessingGame: {
     id: 'guessingGame',
@@ -235,14 +239,14 @@ export const HeroReactFlowCanvas: React.FC = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(PYTHON_PRESETS.guessingGame.nodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(PYTHON_PRESETS.guessingGame.edges);
 
-  // Inspector & View tabs
+  // Keep track of what we're looking at right now—like the flowchart, code, or terminal tabs.
   const [selectedNodeId, setSelectedNodeId] = useState<string>('node-secret');
   const [activeTab, setActiveTab] = useState<'canvas' | 'python' | 'terminal'>('canvas');
   const [isInspectorOpen, setIsInspectorOpen] = useState<boolean>(true);
   const [showNodePalette, setShowNodePalette] = useState<boolean>(false);
   const [copiedCode, setCopiedCode] = useState<boolean>(false);
 
-  // User input simulation state
+  // What did the user type into the test box? We'll hold it right here.
   const [userInputValue, setUserInputValue] = useState<string>('7');
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [consoleLogs, setConsoleLogs] = useState<PythonConsoleLog[]>([
@@ -255,9 +259,10 @@ export const HeroReactFlowCanvas: React.FC = () => {
     { name: 'is_match', value: true, type: 'bool' },
   ]);
 
-  // Handle Connections
+  // When someone draws a wire between blocks, this is where we plug them together!
   const onConnect = useCallback(
     (params: Connection) => {
+      playConnectSound();
       const edge: Edge = {
         id: `e-${params.source}-${params.target}-${Date.now()}`,
         source: params.source,
@@ -286,7 +291,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
     [setNodes, setEdges]
   );
 
-  // Bind node callbacks
+  // Give our blocks some superpowers by hooking them up to our state up top.
   const processedNodes = useMemo(() => {
     return nodes.map((node) => ({
       ...node,
@@ -298,7 +303,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
     }));
   }, [nodes, handleInspectNode, handleDeleteNode]);
 
-  // Preset Selection
+  // Time to switch gears! Load up a whole new example flowchart when a preset is picked.
   const handleSelectPreset = (key: string) => {
     setSelectedPresetKey(key);
     const preset = PYTHON_PRESETS[key];
@@ -313,8 +318,9 @@ export const HeroReactFlowCanvas: React.FC = () => {
     }
   };
 
-  // Add Python Node from Palette
+  // Pop! Drop a shiny new block onto the canvas when they click the "Add Block" menu.
   const handleAddPythonNode = (nodeType: PythonNodeType, label: string, code: string, subtitle: string) => {
+    playPopSound();
     const id = `node-${Date.now().toString().slice(-4)}`;
     const newNode: Node<CustomNodeData> = {
       id,
@@ -335,9 +341,10 @@ export const HeroReactFlowCanvas: React.FC = () => {
     setShowNodePalette(false);
   };
 
-  // Step-by-Step Python Execution Simulator
+  // This is where the magic happens! Let's pretend to be the Python interpreter and run through the blocks step-by-step.
   const handleRunPython = () => {
     if (isRunning) return;
+    playRunSound();
     setIsRunning(true);
     setActiveTab('terminal');
     setConsoleLogs([]);
@@ -345,7 +352,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
     const parsedGuess = parseInt(userInputValue, 10) || 7;
     const isMatch = parsedGuess === 7;
 
-    // Reset status
+    // Scrub everything clean so we're ready for a fresh run.
     setNodes((nds) =>
       nds.map((n) => ({
         ...n,
@@ -353,7 +360,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
       }))
     );
 
-    // Flow path sequence
+    // Follow the wires to figure out the exact path we're taking through the flowchart.
     const executionPath = isMatch
       ? ['node-start', 'node-secret', 'node-guess', 'node-check', 'node-victory', 'node-end']
       : ['node-start', 'node-secret', 'node-guess', 'node-check', 'node-retry', 'node-end'];
@@ -364,7 +371,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
         const nodeId = executionPath[step];
         const currentNode = nodes.find((n) => n.id === nodeId);
 
-        // Highlight active node
+        // Put a nice spotlight on the current block so you know exactly what's running right now.
         setNodes((nds) =>
           nds.map((n) => ({
             ...n,
@@ -376,7 +383,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
         );
         setSelectedNodeId(nodeId);
 
-        // Append log corresponding to the node
+        // Jot down what just happened and show it in the console.
         let logText = '';
         if (nodeId === 'node-start') {
           logText = '>>> [START] Executing Python Script: main.py';
@@ -434,7 +441,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
     }, 550);
   };
 
-  // Generate Python code
+  // Translating all those blocks and wires into actual, runnable Python 3 code.
   const generatedPythonCode = useMemo(() => {
     return generatePythonFromFlow(nodes, edges);
   }, [nodes, edges]);
@@ -452,9 +459,9 @@ export const HeroReactFlowCanvas: React.FC = () => {
       id="python-flowchart-ide"
       className="relative w-full h-[600px] sm:h-[680px] lg:h-[760px] rounded-[4px] bg-white border border-[#171717]/30 shadow-[0_12px_40px_rgb(0,0,0,0.06)] overflow-hidden flex flex-col justify-between select-none"
     >
-      {/* 1. Header Navigation Bar */}
+      {/* Our sleek top navigation bar for the canvas */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-3 p-3 z-30 border-b border-[#D8D4CC] bg-[#F4F1EA]/95 backdrop-blur-md overflow-x-auto">
-        {/* Top/Left: Diagram Title & Presets */}
+        {/* Left side: Let's show the title and our handy preset buttons */}
         <div className="flex w-full md:w-auto items-center justify-between md:justify-start gap-2.5">
           <div className="flex items-center gap-2 bg-white px-3 h-9 rounded-[4px] border border-[#171717]/20 text-xs font-mono text-[#171717] shadow-xs whitespace-nowrap">
             <span className="w-2.5 h-2.5 rounded-full bg-[#287A52] animate-pulse shrink-0" />
@@ -480,7 +487,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
           </div>
         </div>
 
-        {/* Center: View Mode (Visual Flowchart vs Python 3 Code vs Console) */}
+        {/* Middle: The big toggle switches between Flowchart, Code, and Console views */}
         <div className="flex w-full md:w-auto justify-center items-center bg-white p-1 h-9 rounded-[4px] border border-[#D8D4CC] text-xs font-mono">
           <button
             onClick={() => setActiveTab('canvas')}
@@ -519,9 +526,9 @@ export const HeroReactFlowCanvas: React.FC = () => {
           </button>
         </div>
 
-        {/* Bottom/Right: Input Test Value & Run Python Button */}
+        {/* Right side: Where you type your guesses and smash that Run button! */}
         <div className="flex w-full md:w-auto items-center justify-between md:justify-end gap-2 relative">
-          {/* User Input Test Box */}
+          {/* A tiny little box to feed numbers into your code */}
           <div className="flex items-center gap-1.5 bg-white px-2.5 h-9 rounded-[4px] border border-[#D8D4CC] text-xs font-mono whitespace-nowrap">
             <span className="hidden lg:inline text-[11px] text-[#555555]">guess =</span>
             <input
@@ -534,7 +541,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Add Python Block Palette */}
+            {/* Click this to see all the cool new blocks you can drop in */}
             <button
               onClick={() => setShowNodePalette(!showNodePalette)}
               className="flex items-center gap-1.5 px-2.5 sm:px-3 h-9 rounded-[4px] bg-white border border-[#D8D4CC] hover:bg-[#F4F1EA] text-[#171717] text-xs font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap"
@@ -543,7 +550,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
               <span className="hidden lg:inline">Add Block</span>
             </button>
 
-            {/* Dropdown for Python Statement Blocks */}
+            {/* The actual popup menu full of shiny blocks */}
             {showNodePalette && (
               <div className="absolute top-12 right-0 w-64 bg-white rounded-[4px] border border-[#171717]/20 shadow-2xl p-2.5 z-40 space-y-1 animate-in fade-in duration-150">
                 <div className="px-2 py-1 text-[10px] font-mono font-bold text-[#806A55] uppercase border-b border-[#D8D4CC]">
@@ -595,7 +602,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
               </div>
             )}
 
-            {/* Run Python Execution Button */}
+            {/* Let's go! The big orange button that brings the code to life */}
             <button
               id="python-flow-run-btn"
               onClick={handleRunPython}
@@ -619,9 +626,9 @@ export const HeroReactFlowCanvas: React.FC = () => {
         </div>
       </div>
 
-      {/* 2. Middle Canvas & Code View */}
+      {/* The main stage: where all the action happens */}
       <div className="relative flex-1 flex flex-col lg:flex-row overflow-hidden">
-        {/* Visual Flowchart Canvas */}
+        {/* The giant drag-and-drop board for your Python blocks */}
         {activeTab === 'canvas' && (
           <div className="relative flex-1 h-full min-h-[300px]">
             <ReactFlow
@@ -631,6 +638,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
               onEdgesChange={onEdgesChange}
               onConnect={onConnect}
               nodeTypes={pythonNodeTypes}
+              edgeTypes={edgeTypes}
               fitView
               snapToGrid={true}
               snapGrid={[20, 20]}
@@ -644,7 +652,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
               }}
               className="bg-[#FAFAFA]"
             >
-              {/* Square grid background matching user screenshot */}
+              {/* A nice little dot-grid background to keep everything looking tidy */}
               <Background variant={BackgroundVariant.Lines} gap={24} size={1} color="#E2E8F0" />
               <Controls className="bg-white rounded-[4px] border border-[#171717]/20 shadow-xs text-[#171717]" />
               <MiniMap
@@ -653,7 +661,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
                 maskColor="rgba(244, 241, 234, 0.7)"
               />
 
-              {/* Bottom Canvas Overlay Helper */}
+              {/* A subtle little hint sitting at the bottom of the board */}
               <Panel position="bottom-left" className="hidden sm:flex bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-[4px] border border-[#171717]/20 text-[11px] font-mono text-[#555555] shadow-xs items-center gap-3">
                 <span className="flex items-center gap-1.5 font-bold text-[#171717]">
                   <Zap className="w-3.5 h-3.5 text-[#F26A3D]" />
@@ -666,7 +674,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
           </div>
         )}
 
-        {/* Python 3 Code View */}
+        {/* The "under-the-hood" view showing raw Python code */}
         {activeTab === 'python' && (
           <div className="relative flex-1 h-full bg-[#1E1E1E] text-white p-5 font-mono overflow-y-auto flex flex-col justify-between">
             <div className="space-y-3">
@@ -696,7 +704,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
           </div>
         )}
 
-        {/* Python Console & Variables Terminal */}
+        {/* Our trusty output terminal and memory inspector */}
         {activeTab === 'terminal' && (
           <div className="relative flex-1 h-full bg-[#1E1E1E] text-white p-4 font-mono overflow-y-auto flex flex-col justify-between">
             <div className="space-y-4">
@@ -710,7 +718,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
                 </span>
               </div>
 
-              {/* Real-time Variable Memory Watch Table */}
+              {/* Watch variables change right before your eyes! */}
               <div className="bg-black/30 p-2.5 rounded-[4px] border border-white/10">
                 <div className="text-[10px] text-white/50 font-bold mb-1.5 uppercase tracking-wider">
                   Python Memory Scope (Variables Watch)
@@ -724,7 +732,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
                 </div>
               </div>
 
-              {/* Console stdout lines */}
+              {/* The print statements that your code yells out */}
               <div className="space-y-1.5 text-xs">
                 {consoleLogs.map((log) => (
                   <div
@@ -750,7 +758,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
           </div>
         )}
 
-        {/* Right Node Inspector Panel */}
+        {/* If you need more room to inspect a block, this panel slides right in */}
         {isInspectorOpen && selectedNode && (
           <div className="hidden lg:flex w-72 h-full bg-white border-l border-[#D8D4CC] p-4 flex-col justify-between overflow-y-auto z-40 shrink-0">
             <div className="space-y-4">

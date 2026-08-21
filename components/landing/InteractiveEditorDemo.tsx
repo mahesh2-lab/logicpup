@@ -327,7 +327,7 @@ export const InteractiveEditorDemo: React.FC = () => {
       className="hidden lg:block py-16 md:py-24 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        {/* Section Header */}
+        {/* The big title introducing the IDE section */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-sm bg-white border border-[#D8D4CC] text-xs font-mono font-bold text-[#F26A3D] shadow-xs">
             <Sparkles className="w-3.5 h-3.5" />
@@ -341,12 +341,12 @@ export const InteractiveEditorDemo: React.FC = () => {
           </p>
         </div>
 
-        {/* The IDE Container Window */}
+        {/* The fake browser window that holds our flowchart editor */}
         <div className="rounded-sm border border-[#171717]/30 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
-          {/* Top IDE Toolbar */}
+          {/* The top bar of our fake editor window */}
           <div className="bg-[#F4F1EA] border-b border-[#D8D4CC] px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              {/* Window Controls */}
+              {/* The classic red, yellow, and green window buttons */}
               <div className="flex items-center gap-1.5">
                 <div className="w-2.5 h-2.5 rounded-sm bg-[#171717]/20" />
                 <div className="w-2.5 h-2.5 rounded-sm bg-[#171717]/20" />
@@ -354,7 +354,7 @@ export const InteractiveEditorDemo: React.FC = () => {
               </div>
               <div className="h-3.5 w-[1px] bg-[#D8D4CC] mx-1" />
 
-              {/* Project Title */}
+              {/* The name of the file we're pretending to edit */}
               <div className="flex items-center gap-2 text-xs font-mono text-[#171717] font-semibold">
                 <FileCode className="w-3.5 h-3.5 text-[#F26A3D]" />
                 <span>guess_game.py (Flowchart)</span>
@@ -364,7 +364,7 @@ export const InteractiveEditorDemo: React.FC = () => {
               </div>
             </div>
 
-            {/* Right: Input test & Actions */}
+            {/* The right side where you'd normally hit run or save */}
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1.5 bg-white px-2 py-1 rounded-sm border border-[#D8D4CC] text-xs font-mono">
                 <span className="text-[11px] text-[#555555]">guess =</span>
@@ -406,9 +406,9 @@ export const InteractiveEditorDemo: React.FC = () => {
             </div>
           </div>
 
-          {/* Main IDE Workspace */}
+          {/* The meat of the editor: where the actual coding happens! */}
           <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
-            {/* Left 8 Cols: Visual Python Flowchart */}
+            {/* The left side is reserved for our drag-and-drop flowchart */}
             <div className="lg:col-span-8 h-[500px] relative">
               <ReactFlowMobileWarning>
                 <ReactFlow
@@ -444,9 +444,9 @@ export const InteractiveEditorDemo: React.FC = () => {
               </ReactFlowMobileWarning>
             </div>
 
-            {/* Right 4 Cols: Inspector & Live Python Code / Terminal */}
+            {/* The right side shows what's happening under the hood */}
             <div className="lg:col-span-4 bg-[#F4F1EA]/40 border-t lg:border-t-0 lg:border-l border-[#D8D4CC] flex flex-col justify-between">
-              {/* Python Block Inspector */}
+              {/* This panel lets you peek inside a single block to see how it works */}
               <div className="p-4 border-b border-[#D8D4CC] space-y-2.5 bg-white">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono font-bold text-[#806A55] uppercase">
@@ -468,7 +468,7 @@ export const InteractiveEditorDemo: React.FC = () => {
                 </div>
               </div>
 
-              {/* Real-time Python Console Output */}
+              {/* The terminal where all the python print statements show up! */}
               <div className="p-4 bg-[#1E1E1E] text-white flex-1 flex flex-col justify-between font-mono">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-[11px] text-white/50 border-b border-white/10 pb-1.5">

@@ -5,6 +5,7 @@ import { X, ArrowRight, Code2 } from "lucide-react";
 import { PROJECT_TEMPLATES, useProjectsStore } from "../projects/projectStore";
 import { DynamicIcon } from "../components/IconRenderer";
 import { useRouter } from "next/navigation";
+import posthog from "posthog-js";
 
 interface CreateProjectModalProps {
   isOpen: boolean;
@@ -28,6 +29,10 @@ export function CreateProjectModal({ isOpen, onClose }: CreateProjectModalProps)
     const projectDesc = description.trim() || template?.description || "";
 
     const newProject = createProject(selectedTemplate, projectName, projectDesc);
+    posthog.capture("project_created", {
+      project_id: newProject.id,
+      template_id: selectedTemplate,
+    });
     onClose();
     router.push(`/projects/${newProject.id}/editor`);
   }

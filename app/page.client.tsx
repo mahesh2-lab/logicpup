@@ -17,7 +17,7 @@ import { Sparkles } from 'lucide-react';
 export default function App() {
   const router = useRouter();
 
-  // Global IDE Preferences State
+  // Keep track of how the user likes their editor set up
   const [idePreferences, setIdePreferences] = useState<IdePreferencesState>({
     theme: 'warm-paper',
     autoSave: true,
@@ -28,10 +28,10 @@ export default function App() {
     keybindings: 'standard',
   });
 
-  // Modal & Drawer UI State
+  // Are the popups open or closed? Let's keep track here
   const [isIdeDrawerOpen, setIsIdeDrawerOpen] = useState<boolean>(false);
 
-  // Toast Notification state
+  // Those little messages that slide in to say hello
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
@@ -61,7 +61,7 @@ export default function App() {
   };
 
   const handleOpenAuth = (mode: 'login' | 'signup') => {
-    // Redirect directly to actual login page for better-auth
+    // Send them straight to the login page so they can get started!
     router.push(`/login?mode=${mode}`);
   };
 
@@ -86,7 +86,7 @@ export default function App() {
         '--theme-bg': idePreferences.theme === 'dark-slate' ? '#0F172A' : idePreferences.theme === 'high-contrast' ? '#000000' : '#F4F1EA'
       } as React.CSSProperties}
     >
-      {/* Toast Notification Banner */}
+      {/* The popup message that slides down from the top */}
       {toastMessage && (
         <div
           id="logicpup-toast-notification"
@@ -97,49 +97,49 @@ export default function App() {
         </div>
       )}
 
-      {/* Background 3D Scroll Track Models */}
+      {/* All the cool 3D shapes floating in the background */}
       <Scroll3DBackgroundTrack />
 
-      {/* Navigation Header */}
+      {/* The top bar to get around the site */}
       <Header
         onOpenIdePreferences={() => setIsIdeDrawerOpen(true)}
         onOpenAuthModal={handleOpenAuth}
         onOpenDemo={() => handleScrollToSection('interactive-demo-playground')}
       />
 
-      {/* Main Page Content Sections */}
+      {/* The meat and potatoes of the page */}
       <main className="flex-1">
-        {/* 1. Hero Section with 3D WebGL Living Logic Graph & React Flow Node Canvas */}
+        {/* 1. The big intro with the interactive flowchart */}
         <HeroSection
           onStartLearning={() => handleOpenAuth('signup')}
           onExploreDemo={() => handleScrollToSection('interactive-demo-playground')}
         />
 
-        {/* 3. Interactive In-Browser Node Playground */}
+        {/* 3. Where they can actually play with the editor */}
         <InteractiveEditorDemo />
 
-        {/* 4. 5 Key Features Showcase */}
+        {/* 4. Showing off all the cool things we can do */}
         <FeaturesSection
           onOpenIdePreferences={() => setIsIdeDrawerOpen(true)}
           onStartLearning={() => handleOpenAuth('signup')}
         />
 
-        {/* 5. Curriculum Progression & Locked-Level Track */}
+        {/* 5. The learning path they'll take */}
         <CurriculumProgression
           onStartLearning={() => handleOpenAuth('signup')}
         />
 
-        {/* 6. Call to Action Banner */}
+        {/* 6. The final push to get them to sign up! */}
         <CtaSection
           onStartLearning={() => handleOpenAuth('signup')}
           onExploreDemo={() => handleScrollToSection('interactive-demo-playground')}
         />
       </main>
 
-      {/* Footer */}
+      {/* The boring but necessary links at the bottom */}
       <Footer />
 
-      {/* In-Browser IDE Preferences Modal */}
+      {/* The popup where they can tweak their editor settings */}
       <IdePreferencesDrawer
         isOpen={isIdeDrawerOpen}
         onClose={() => setIsIdeDrawerOpen(false)}

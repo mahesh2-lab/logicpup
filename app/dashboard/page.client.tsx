@@ -23,6 +23,7 @@ import {
 import { CODING_LEVELS } from "@/components/visual-editor/learning/levelsData";
 import { IconRenderer } from "@/components/visual-editor/components/IconRenderer";
 import { useMounted } from "@/lib/useMounted";
+import posthog from "posthog-js";
 
 export default function HomePage() {
   const router = useRouter();
@@ -56,6 +57,11 @@ export default function HomePage() {
   function handleCreateFromTemplate(templateId: string) {
     const tmpl = PROJECT_TEMPLATES.find((t) => t.id === templateId);
     const newProj = createProject(templateId, tmpl?.name, tmpl?.description);
+    posthog.capture("project_created", {
+      project_id: newProj.id,
+      template_id: templateId,
+      creation_source: "dashboard",
+    });
     router.push(`/projects/${newProj.id}/editor`);
   }
 

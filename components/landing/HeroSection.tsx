@@ -30,20 +30,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 }) => {
   const heroRef = useRef<HTMLElement>(null);
 
-  // Scroll Progress for Parallax
+  // Keep an eye on how far down they scroll so we can do cool 3D effects
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
   });
 
-  // Spring physics for organic fluid motion
+  // Add a little bounce and smoothness so it feels alive
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 90,
     damping: 24,
     restDelta: 0.001,
   });
 
-  // Parallax transforms for various elements
+  // Moving pieces around at different speeds as they scroll
   const tagY = useTransform(smoothProgress, [0, 1], [0, -25]);
   const headlineY = useTransform(smoothProgress, [0, 1], [0, -45]);
   const headlineScale = useTransform(smoothProgress, [0, 1], [1, 0.98]);
@@ -53,7 +53,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const canvasY = useTransform(smoothProgress, [0, 1], [0, 35]);
   const canvasScale = useTransform(smoothProgress, [0, 1], [1, 0.99]);
 
-  // Floating background ambient depth elements transforms
+  // Gently floating the background stuff to give a sense of deep space
   const floatNode1Y = useTransform(smoothProgress, [0, 1], [0, -130]);
   const floatNode1Rotate = useTransform(smoothProgress, [0, 1], [-2, 6]);
   const floatNode2Y = useTransform(smoothProgress, [0, 1], [0, -160]);
@@ -67,7 +67,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       id="logicpup-hero-section"
       className="relative pt-6 pb-16 md:pt-12 md:pb-24 overflow-hidden"
     >
-      {/* Ambient Parallax Gradient Orbs */}
+      {/* Floating glowing orbs to set the mood */}
       <motion.div
         style={{ y: orb1Y }}
         className="absolute top-10 left-1/4 w-96 h-96 rounded-sm bg-[#F26A3D]/[0.035] blur-3xl pointer-events-none -z-10"
@@ -77,7 +77,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         className="absolute bottom-20 right-1/4 w-96 h-96 rounded-sm bg-[#356A9A]/[0.035] blur-3xl pointer-events-none -z-10"
       />
 
-      {/* Floating Background Parallax Code Chips */}
+      {/* Some cute little code snippets floating in the background */}
       <motion.div
         style={{ y: floatNode1Y, rotate: floatNode1Rotate }}
         className="hidden xl:flex absolute left-8 top-32 z-0 items-center gap-2 px-3 py-2 rounded-sm bg-white/90 backdrop-blur-md border border-[#D8D4CC] shadow-xs text-xs font-mono text-[#171717] pointer-events-none"
@@ -99,9 +99,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </motion.div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-8">
-        {/* Top Header & Value Proposition */}
+        {/* The main event: Our big promise to the user */}
         <div className="max-w-4xl mx-auto text-center space-y-4">
-          {/* Minimal Tag Pill with Parallax */}
+          {/* A little badge floating up top */}
           <motion.div
             style={{ y: tagY }}
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-sm bg-white/90 backdrop-blur-md border border-[#D8D4CC] text-xs font-semibold text-[#171717] shadow-xs"
@@ -111,7 +111,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <span className="hidden sm:inline text-[#806A55] font-mono">• No Leash, No Syntax Bites 🐶</span>
           </motion.div>
 
-          {/* Primary Heading with Magnetic Cursor Drift Effect */}
+          {/* The giant hero text that slightly follows their mouse! */}
           <motion.div
             style={{ y: headlineY, scale: headlineScale }}
             className="perspective-1000"
@@ -133,7 +133,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </MagneticWrapper>
           </motion.div>
 
-          {/* Subheadline with Parallax */}
+          {/* The supporting text explaining how awesome this is */}
           <motion.p
             style={{ y: subheadlineY }}
             className="text-sm sm:text-xl text-[#555555] leading-relaxed max-w-2xl mx-auto pt-3 sm:pt-0"
@@ -141,12 +141,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             Connect blocks, branch decisions, and let LogicPup fetch real executable Python 3 code in real-time. Because chasing bugs should feel like a fun game of fetch — not barking up the wrong tree.
           </motion.p>
 
-          {/* Primary Action Buttons with Magnetic Cursor Drift & Parallax */}
+          {/* The buttons they absolutely need to click */}
           <motion.div
             style={{ y: buttonsY }}
             className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2"
           >
-            {/* Magnetic Primary Call to Action */}
+            {/* The big orange "Start Learning" button that sticks to the cursor a bit */}
             <MagneticWrapper
               id="hero-magnetic-cta-wrapper"
               strength={0.38}
@@ -164,7 +164,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </button>
             </MagneticWrapper>
 
-            {/* Magnetic Secondary Action Button */}
+            {/* The backup button just in case they want to play first */}
             <MagneticWrapper
               id="hero-magnetic-demo-wrapper"
               strength={0.25}
@@ -183,7 +183,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </MagneticWrapper>
           </motion.div>
 
-          {/* Minimal Key Feature Badges with Parallax */}
+          {/* Little badges showing off our best features */}
           <motion.div
             style={{ y: badgesY }}
             className="hidden sm:flex pt-1 flex-wrap items-center justify-center gap-6 text-xs font-mono text-[#555555]"
@@ -200,7 +200,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </motion.div>
         </div>
 
-        {/* Hero Interactive React Flow Canvas Display with Framer Motion Depth Layer */}
+        {/* The giant interactive flowchart board taking up the bottom half */}
         <motion.div
           style={{
             y: canvasY,

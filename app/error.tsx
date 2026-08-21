@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import { AlertTriangle, RotateCcw } from "lucide-react";
+import posthog from "posthog-js";
 
 export default function GlobalError({
   error,
@@ -11,6 +12,7 @@ export default function GlobalError({
   reset: () => void;
 }) {
   useEffect(() => {
+    posthog.captureException(error);
     console.error("Global application error:", error);
   }, [error]);
 

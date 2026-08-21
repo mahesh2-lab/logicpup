@@ -28,6 +28,7 @@ import {
   findChallengeById,
 } from "../learning/levelsData";
 import type { Project, LevelChallenge, TestCase } from "../projects/types";
+import posthog from "posthog-js";
 
 export interface TestCaseResult {
   testCaseId: string;
@@ -262,6 +263,12 @@ function matchOutput(actualOutputs: string[], expectedOutputs: string[]): boolea
 
     setTestResults(results);
     setIsRunningTests(false);
+    posthog.capture("challenge_tests_run", {
+      challenge_id: activeChallenge.id,
+      level_id: activeLevelId,
+      test_count: results.length,
+      passed_test_count: results.filter((result) => result.passed).length,
+    });
   }
 
   const allPassed =
@@ -272,6 +279,11 @@ function matchOutput(actualOutputs: string[], expectedOutputs: string[]): boolea
   function handleSubmit() {
     if (!activeChallenge) return;
     completeChallenge(activeChallenge.id);
+    posthog.capture("challenge_completed", {
+      challenge_id: activeChallenge.id,
+      level_id: activeLevelId,
+      points: activeChallenge.points,
+    });
     setSubmitted(true);
     setShowCelebration(true);
   }

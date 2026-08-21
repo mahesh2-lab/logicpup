@@ -8,6 +8,7 @@ import { LevelDetailView } from "@/components/visual-editor/components/LevelDeta
 import { useProjectsStore } from "@/components/visual-editor/projects/projectStore";
 import { CODING_LEVELS } from "@/components/visual-editor/learning/levelsData";
 import { useMounted } from "@/lib/useMounted";
+import posthog from "posthog-js";
 
 interface LevelPageProps {
   params: Promise<{
@@ -97,6 +98,11 @@ export default function LevelDetailPage({ params }: LevelPageProps) {
   function handleStartChallenge(challengeId: string) {
     if (!unlocked) return;
     const project = startLevelChallenge(level!.id, challengeId);
+    posthog.capture("challenge_started", {
+      challenge_id: challengeId,
+      level_id: level!.id,
+      project_id: project.id,
+    });
     router.push(`/projects/${project.id}/editor?level=${level!.id}&challenge=${challengeId}`);
   }
 

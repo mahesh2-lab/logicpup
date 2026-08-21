@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { Search, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Search, X, ChevronDown, ChevronRight, FileQuestionMark, HelpCircle } from "lucide-react";
 import {
   BLOCK_DEFINITIONS,
   CATEGORY_META,
@@ -361,30 +361,18 @@ function BlockPaletteItem({
       >
         {def.label}
       </span>
-      <button
+      {/* <button
         type="button"
         onClick={(e) => {
           e.stopPropagation();
           openHelp(def.type);
         }}
-        style={{
-          fontSize: 9,
-          color: "#555555",
-          background: "#FFFFFF",
-          border: "1px solid #D8D4CC",
-          borderRadius: 3,
-          padding: "1px 4px",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          gap: 2,
-          flexShrink: 0,
-        }}
-        className="hover:border-[#F26A3D] hover:text-[#F26A3D]"
-        title={`🔬 Explain "${def.label}" (Concept, Terminology & Syntax)`}
+       
+        className="hover:text-[#F26A3D] text-[#171717]"
+        title={`Explain "${def.label}" (Concept, Terminology & Syntax)`}
       >
-        <span style={{ fontSize: 9 }}>🔬</span>
-      </button>
+            <HelpCircle size={13} strokeWidth={1.5} />
+      </button> */}
     </div>
   );
 }

@@ -125,7 +125,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
+        {/* The big title introducing all our cool features */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-white border border-black/6 text-xs font-mono font-semibold text-[#121212] shadow-xs">
             <span>LEASH-FREE VISUAL LEARNING 🐾</span>
@@ -138,7 +138,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
           </p>
         </div>
 
-        {/* Feature Selector Tabs */}
+        {/* The row of buttons to click through the different features */}
         <div className="relative mb-10 -mx-4 sm:-mx-6 lg:-mx-8">
           <div className="pointer-events-none absolute left-0 top-0 bottom-4 w-16 bg-linear-to-r from-(--theme-bg) to-transparent z-10" />
           <div className="pointer-events-none absolute right-0 top-0 bottom-4 w-16 bg-linear-to-l from-(--theme-bg) to-transparent z-10" />
@@ -167,11 +167,11 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
         </div>
         </div>
 
-        {/* Active Feature Deep Dive Showcase */}
+        {/* This box changes depending on which feature tab you clicked */}
         <div className="rounded-sm border border-black/8 bg-white p-6 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.03)]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            {/* Left 6 cols: Info & Capabilities */}
+            {/* Left side: The text explaining why this feature is awesome */}
             <div className="lg:col-span-6 space-y-6">
               <div className="space-y-2">
                 <span
@@ -192,7 +192,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                 {current.description}
               </p>
 
-              {/* Bullet Checklist */}
+              {/* A quick rundown of what you get */}
               <div className="space-y-2.5 pt-1">
                 {current.capabilities.map((cap, i) => (
                   <div key={i} className="flex items-start gap-2.5 text-sm text-[#121212]">
@@ -216,11 +216,11 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
               </div>
             </div>
 
-            {/* Right 6 cols: Dynamic Interactive Mock Visual */}
+            {/* Right side: A fun little interactive preview of the feature */}
             <div className="lg:col-span-6">
               <div className="rounded-sm border border-black/[0.06] bg-[#F8F6F0] p-5 space-y-4">
                 
-                {/* Visual 1: Python Node Editor Preview */}
+                {/* Preview 1: Our drag-and-drop flowchart builder */}
                 {current.id === 'node-editor' && (
                   <div className="space-y-3">
                     <div className="flex items-center justify-between border-b border-black/[0.06] pb-2 text-xs font-mono text-[#666666]">
@@ -228,7 +228,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                       <span className="text-[#287A52] font-semibold">● 7 Blocks Synchronized</span>
                     </div>
                     <div className="space-y-2.5 bg-white p-4 rounded-sm border border-black/[0.06]">
-                      {/* START Node */}
+                      {/* The green block where it all begins */}
                       <div className="p-2.5 bg-white rounded-sm border border-[#171717] border-l-4 border-l-[#171717] flex items-center justify-between shadow-xs">
                         <div>
                           <span className="text-[10px] font-mono font-bold uppercase text-[#171717]">START</span>
@@ -237,7 +237,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                         <span className="text-[9px] font-mono px-2 py-0.5 rounded-sm bg-black/5 text-[#171717]">Entry</span>
                       </div>
 
-                      {/* Process Node */}
+                      {/* A regular block doing some math or logic */}
                       <div className="p-2.5 bg-white rounded-sm border border-[#171717] flex items-center justify-between shadow-xs">
                         <div>
                           <div className="text-xs font-bold text-[#171717]">Set Secret Number</div>
@@ -246,7 +246,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                         <span className="text-[9px] font-mono px-2 py-0.5 rounded-sm bg-[#356A9A]/10 text-[#356A9A]">int assign</span>
                       </div>
 
-                      {/* Condition Node */}
+                      {/* The block that makes a decision (IF/ELSE) */}
                       <div className="p-2.5 bg-white rounded-sm border border-[#171717] flex items-center justify-between shadow-xs">
                         <div>
                           <div className="text-xs font-bold text-[#171717]">Check Match</div>
@@ -258,7 +258,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                   </div>
                 )}
 
-                {/* Visual 2: Curriculum Progression Preview */}
+                {/* Preview 2: The learning path with levels */}
                 {current.id === 'curriculum' && (
                   <div className="space-y-3">
                     <div className="flex items-center justify-between border-b border-black/[0.06] pb-2 text-xs font-mono text-[#666666]">
@@ -302,7 +302,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                   </div>
                 )}
 
-                {/* Visual 3: In-Browser IDE Experience Preview */}
+                {/* Preview 3: The slick coding environment */}
                 {current.id === 'ide-experience' && (
                   <div className="space-y-3">
                     <div className="flex items-center justify-between border-b border-black/[0.06] pb-2 text-xs font-mono text-[#666666]">
@@ -310,7 +310,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                       <span className="text-[#356A9A] font-semibold">Local-First</span>
                     </div>
                     <div className="space-y-2.5 text-xs">
-                      {/* Toggle Auto Save */}
+                      {/* A fake switch to toggle saving */}
                       <div className="flex items-center justify-between p-2.5 bg-white rounded-sm border border-black/[0.06]">
                         <div>
                           <div className="font-bold text-[#121212]">Auto-Save to LocalStorage</div>
@@ -330,7 +330,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                         </button>
                       </div>
 
-                      {/* Toggle Format on Save */}
+                      {/* A fake switch to format code */}
                       <div className="flex items-center justify-between p-2.5 bg-white rounded-sm border border-black/[0.06]">
                         <div>
                           <div className="font-bold text-[#121212]">Format Python Code</div>
@@ -353,7 +353,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                   </div>
                 )}
 
-                {/* Visual 4: Project Management */}
+                {/* Preview 4: How projects are organized */}
                 {current.id === 'project-management' && (
                   <div className="space-y-3">
                     <div className="flex items-center justify-between border-b border-black/[0.06] pb-2 text-xs font-mono text-[#666666]">
@@ -386,7 +386,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                   </div>
                 )}
 
-                {/* Visual 5: Robust User Hub */}
+                {/* Preview 5: Where the user hangs out */}
                 {current.id === 'user-hub' && (
                   <div className="space-y-3">
                     <div className="flex items-center justify-between border-b border-black/[0.06] pb-2 text-xs font-mono text-[#666666]">

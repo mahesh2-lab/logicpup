@@ -6,14 +6,45 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { User, LogOut, LogIn, ChevronDown, Settings } from "lucide-react";
 import { useSession, signOut } from "@/lib/auth-client";
+import posthog from "posthog-js";
 
 export function UserAuthMenu() {
   const router = useRouter();
   const { data: session, isPending } = useSession();
   const [isOpen, setIsOpen] = useState(false);
+  const identifiedUserId = React.useRef<string | null>(null);
+
+  React.useEffect(() => {
+    if (isPending) return;
+
+    const user = session?.user;
+    if (!user) {
+      if (identifiedUserId.current) {
+        posthog.reset();
+        identifiedUserId.current = null;
+      }
+      return;
+    }
+
+    if (identifiedUserId.current === user.id) return;
+
+    if (identifiedUserId.current) {
+      posthog.reset();
+    }
+
+    posthog.identify(user.id, {
+      email: user.email,
+      name: user.name,
+    });
+    identifiedUserId.current = user.id;
+  }, [isPending, session]);
 
   async function handleSignOut() {
-    await signOut();
+    const result = await signOut();
+    if (result.error) return;
+
+    posthog.reset();
+    identifiedUserId.current = null;
     setIsOpen(false);
     router.push("/login");
     router.refresh();

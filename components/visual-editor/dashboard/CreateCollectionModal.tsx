@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { X, Folder, FolderCode, FolderArchive, Layers, Star } from "lucide-react";
+import posthog from "posthog-js";
 
 interface CreateCollectionModalProps {
   isOpen: boolean;
@@ -28,6 +29,9 @@ export function CreateCollectionModal({ isOpen, onClose, onCreate }: CreateColle
     e.preventDefault();
     if (!name.trim()) return;
     onCreate(name.trim(), desc.trim(), selectedIcon);
+    posthog.capture("collection_created", {
+      icon: selectedIcon,
+    });
     setName("");
     setDesc("");
     onClose();

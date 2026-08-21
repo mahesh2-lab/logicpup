@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import posthog from "posthog-js";
 import { Copy, Download, Archive, RotateCcw, Trash2, Check } from "lucide-react";
 import { useProjectsStore } from "./projectStore";
 import type { Project } from "./types";
@@ -37,6 +38,9 @@ export function ProjectSettingsView({ project }: ProjectSettingsViewProps) {
     a.download = `${project.name.toLowerCase().replace(/\s+/g, "_")}.teachflow.json`;
     a.click();
     URL.revokeObjectURL(url);
+    posthog.capture("project_exported", {
+      export_format: "json",
+    });
   }
 
   function handleExportPython() {
@@ -49,11 +53,18 @@ export function ProjectSettingsView({ project }: ProjectSettingsViewProps) {
     a.download = `${project.name.toLowerCase().replace(/\s+/g, "_")}.py`;
     a.click();
     URL.revokeObjectURL(url);
+    posthog.capture("project_exported", {
+      export_format: "python",
+    });
   }
 
   function handleDuplicate() {
     const copy = duplicateProject(project.id);
     if (copy) {
+      posthog.capture("project_duplicated", {
+        source_project_id: project.id,
+        project_id: copy.id,
+      });
       router.push(`/projects/${copy.id}/overview`);
     }
   }
@@ -61,14 +72,23 @@ export function ProjectSettingsView({ project }: ProjectSettingsViewProps) {
   function handleArchiveToggle() {
     if (project.status === "archived") {
       restoreProject(project.id);
+      posthog.capture("project_restored", {
+        project_id: project.id,
+      });
     } else {
       archiveProject(project.id);
+      posthog.capture("project_archived", {
+        project_id: project.id,
+      });
     }
   }
 
   function handleDelete() {
     if (confirm(`Are you sure you want to permanently delete "${project.name}"? This action cannot be undone.`)) {
       deleteProject(project.id);
+      posthog.capture("project_deleted", {
+        project_id: project.id,
+      });
       router.push("/dashboard/projects");
     }
   }
