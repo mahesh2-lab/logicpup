@@ -323,7 +323,7 @@ function BlockPaletteItem({
         category: def.category,
         color: catColor,
         icon: def.icon,
-        values: def.defaultValues || {},
+        values: def.defaultData || {},
       },
     });
 

@@ -141,7 +141,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
           </button>
           
           <BrandLogo size="sm" href="/dashboard" className="hidden sm:flex mr-2" />
-          <BrandLogo size="sm" href="/dashboard" showText={false} className="flex sm:hidden" />
+          <BrandLogo size="sm" href="/dashboard" className="flex sm:hidden" />
 
           <div className="hidden sm:flex items-center gap-4 text-xs font-mono text-[#888888]">
             <span>/</span>
