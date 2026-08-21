@@ -29,12 +29,12 @@ export function ProjectRunsView({ project }: ProjectRunsViewProps) {
 
   return (
     <div
-      className="flex-1 flex overflow-hidden max-w-6xl mx-auto w-full p-6 gap-6"
+      className="flex-1 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden max-w-6xl mx-auto w-full p-4 md:p-6 gap-4 md:gap-6"
       style={{ fontFamily: "var(--font-sans)", color: "#171717" }}
     >
       {/* Runs History Table Left Column */}
       <div
-        className="w-80 bg-[#FFFFFF] border border-[#D8D4CC] flex flex-col shrink-0 overflow-hidden"
+        className="w-full md:w-80 h-64 md:h-auto bg-[#FFFFFF] border border-[#D8D4CC] flex flex-col shrink-0 overflow-hidden"
         style={{ borderRadius: 6 }}
       >
         <div className="p-3 border-b border-[#E5E2DA] flex items-center justify-between">
@@ -89,7 +89,7 @@ export function ProjectRunsView({ project }: ProjectRunsViewProps) {
 
       {/* Selected Run Details Inspector */}
       <div
-        className="flex-1 bg-[#171717] text-[#FFFFFF] border border-[#D8D4CC] flex flex-col overflow-hidden"
+        className="flex-1 min-h-[400px] md:min-h-0 bg-[#171717] text-[#FFFFFF] border border-[#D8D4CC] flex flex-col overflow-hidden shrink-0"
         style={{ borderRadius: 6 }}
       >
         {activeRun ? (
@@ -112,9 +112,9 @@ export function ProjectRunsView({ project }: ProjectRunsViewProps) {
             </div>
 
             {/* Output & Environment */}
-            <div className="flex-1 flex overflow-hidden font-mono text-xs">
+            <div className="flex-1 flex flex-col sm:flex-row overflow-hidden font-mono text-xs">
               {/* Stdout Console */}
-              <div className="flex-1 p-4 overflow-auto leading-relaxed border-r border-[#2B2B2B]">
+              <div className="flex-1 p-4 overflow-auto leading-relaxed border-b sm:border-b-0 sm:border-r border-[#2B2B2B]">
                 <div className="text-[#666666] mb-3">$ python main.py</div>
 
                 {activeRun.output.map((line, i) => (
@@ -132,7 +132,7 @@ export function ProjectRunsView({ project }: ProjectRunsViewProps) {
               </div>
 
               {/* State Variables at run completion */}
-              <div className="w-56 p-4 bg-[#141414] overflow-auto">
+              <div className="w-full sm:w-56 p-4 bg-[#141414] overflow-auto shrink-0 min-h-[150px] sm:min-h-0">
                 <div
                   style={{
                     fontSize: 10,

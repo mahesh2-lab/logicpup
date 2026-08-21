@@ -237,7 +237,7 @@ while True:
         {/* Console View */}
         <div className={`absolute inset-0 bg-[#171717] flex flex-col md:flex-row transition-opacity duration-300 ${activeTab === 'console' ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
           <div className="flex-1 p-4 font-mono text-sm overflow-auto">
-            <div className="text-[#888888] mb-2">TeachFlow Python Console v1.0</div>
+            <div className="text-[#888888] mb-2">LogicPup Python Console v1.4 🐾</div>
             {consoleOutput.map((line, i) => (
               <div key={i} className={line.startsWith('>') ? 'text-[#356A9A]' : line.includes('Error') ? 'text-[#C94A45]' : 'text-white'}>
                 {line}

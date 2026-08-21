@@ -54,7 +54,7 @@ export default function TutorialsPage() {
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       {/* Header Strip */}
-      <div className="flex items-center justify-between pb-4 border-b border-[#D8D4CC]">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#D8D4CC]">
         <div>
           <div className="flex items-center gap-2">
             <BookOpen size={20} color="#F26A3D" />
@@ -69,7 +69,7 @@ export default function TutorialsPage() {
 
         <Link
           href="/dashboard/learn"
-          className="px-4 py-2 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold uppercase rounded no-underline flex items-center gap-1.5 shadow-xs transition-colors"
+          className="w-full sm:w-auto px-4 py-2 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold uppercase rounded no-underline flex items-center justify-center gap-1.5 shadow-xs transition-colors"
         >
           <span>Go to 10 Coding Levels</span>
           <ArrowRight size={13} />
@@ -77,7 +77,7 @@ export default function TutorialsPage() {
       </div>
 
       {/* Guide Cards Grid */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {guides.map((guide) => (
           <div
             key={guide.id}

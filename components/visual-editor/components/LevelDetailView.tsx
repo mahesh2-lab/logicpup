@@ -65,14 +65,14 @@ export function LevelDetailView({
           <span>Back to All Levels</span>
         </button>
 
-        <div className="bg-[#FFFFFF] border border-[#D8D4CC] p-6 rounded-lg shadow-sm flex items-start justify-between gap-6">
+        <div className="bg-[#FFFFFF] border border-[#D8D4CC] p-4 md:p-6 rounded-lg shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6">
           <div className="flex items-start gap-4">
             <div className="w-14 h-14 rounded-lg bg-[#F4F1EA] border border-[#D8D4CC] flex items-center justify-center text-[#F26A3D] shrink-0">
               <DynamicIcon name={level.icon} size={28} color="#F26A3D" />
             </div>
 
             <div>
-              <div className="flex items-center gap-2 mb-1">
+              <div className="flex flex-wrap items-center gap-2 mb-1">
                 <span className="text-[11px] font-bold font-mono uppercase bg-[#F26A3D]/10 text-[#F26A3D] px-2 py-0.5 rounded">
                   LEVEL 0{level.levelNumber}
                 </span>
@@ -87,11 +87,11 @@ export function LevelDetailView({
               </div>
 
               <h1 className="text-xl font-bold text-[#171717]">{level.title}</h1>
-              <p className="text-xs text-[#666] mt-1">{level.subtitle} • {level.description}</p>
+              <p className="text-xs text-[#666] mt-1 hidden md:block">{level.subtitle} • {level.description}</p>
             </div>
           </div>
 
-          <div className="text-right shrink-0">
+          <div className="shrink-0 w-full md:w-auto md:text-right pt-4 md:pt-0 border-t md:border-t-0 border-[#E5E2DA]">
             <div className="text-sm font-bold text-[#171717]">
               {completedCount}/{level.challenges.length} Solved
             </div>
@@ -155,7 +155,7 @@ export function LevelDetailView({
           </div>
 
           {/* Visual Blocks & Python Code Side-by-Side */}
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Visual Blocks Guide */}
             <div className="bg-[#FFFFFF] border border-[#D8D4CC] p-5 rounded-lg space-y-3">
               <div className="font-bold text-xs uppercase tracking-wider text-[#171717] flex items-center gap-1.5">
@@ -201,7 +201,7 @@ export function LevelDetailView({
               <AlertTriangle size={15} />
               <span>Common Mistakes & How to Fix Them</span>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {level.learning.commonMistakes.map((m, idx) => (
                 <div key={idx} className="p-3 bg-[#FFF8F8] border border-[#C94A45]/30 rounded text-xs space-y-1.5">
                   <div className="text-[#C94A45] font-bold">❌ Mistake: {m.mistake}</div>
@@ -213,7 +213,7 @@ export function LevelDetailView({
           </div>
 
           {/* Takeaways & Action */}
-          <div className="bg-[#F4F1EA] border border-[#D8D4CC] p-5 rounded-lg flex items-center justify-between">
+          <div className="bg-[#F4F1EA] border border-[#D8D4CC] p-5 rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="text-xs font-bold uppercase text-[#171717] flex items-center gap-1">
                 <Lightbulb size={14} color="#F26A3D" />
@@ -226,7 +226,7 @@ export function LevelDetailView({
 
             <button
               onClick={() => setActiveTab("challenges")}
-              className="py-2.5 px-5 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold rounded uppercase tracking-wider flex items-center gap-2 border-none cursor-pointer"
+              className="w-full md:w-auto py-2.5 px-5 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold rounded uppercase tracking-wider flex items-center justify-center gap-2 border-none cursor-pointer shrink-0"
             >
               <span>Start Challenges</span>
               <ChevronRight size={14} />
@@ -239,7 +239,7 @@ export function LevelDetailView({
       {activeTab === "challenges" && (
         <div className="space-y-4 overflow-y-auto pb-8">
           {/* Filter Pills */}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {(["all", "easy", "medium", "hard"] as const).map((diff) => (
               <button
                 key={diff}
@@ -256,7 +256,7 @@ export function LevelDetailView({
           </div>
 
           {/* Challenges Grid */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredChallenges.map((ch, idx) => {
               const isDone = completedChallengeIds.includes(ch.id);
 

@@ -167,23 +167,17 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
   }
 
   return (
-    <header
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0 16px",
-        height: 50,
-        borderBottom: "1px solid #D8D4CC",
-        background: "#F4F1EA",
-        flexShrink: 0,
-        zIndex: 30,
-        fontFamily: "var(--font-sans)",
-      }}
-    >
+    <header className="flex flex-col md:flex-row md:items-center justify-between px-3 md:px-4 py-3 md:py-0 md:h-[50px] border-b border-[#D8D4CC] bg-[#F4F1EA] shrink-0 z-30 font-sans gap-3 md:gap-0">
       {/* Left: Back Link + Project Title */}
-      <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-        <div style={{ paddingRight: 12, borderRight: "1px solid #D8D4CC" }}>
+      <div className="flex items-center gap-2 md:gap-3 w-full md:w-auto min-w-0">
+        <Link
+          href="/dashboard"
+          className="p-1.5 -ml-1.5 rounded-sm hover:bg-black/[0.04] text-[#888888] hover:text-[#171717] transition-colors flex items-center justify-center shrink-0"
+          title="Back to Dashboard"
+        >
+          <ArrowLeft size={18} />
+        </Link>
+        <div className="pr-3 border-r border-[#D8D4CC] shrink-0 hidden sm:block">
           <BrandLogo size="sm" href="/dashboard" />
         </div>
 
@@ -219,26 +213,13 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
         ) : (
           <div
             onClick={() => setIsEditingTitle(true)}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              cursor: "pointer",
-            }}
+            className="flex items-center gap-1.5 cursor-pointer min-w-0 truncate"
             title="Click to rename"
           >
-            <span
-              style={{
-                fontSize: 13,
-                fontWeight: 700,
-                letterSpacing: "0.02em",
-                textTransform: "uppercase",
-                color: "#171717",
-              }}
-            >
+            <span className="text-[13px] font-bold tracking-[0.02em] uppercase text-[#171717] truncate">
               {project.name}
             </span>
-            <Edit2 size={11} color="#888888" />
+            <Edit2 size={11} color="#888888" className="shrink-0" />
           </div>
         )}
 
@@ -260,7 +241,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
       </div>
 
       {/* Center: Navigation Sub-tabs */}
-      <nav style={{ display: "flex", alignItems: "center", gap: 2 }}>
+      <nav className="flex items-center gap-1 md:gap-2 w-full md:w-auto overflow-x-auto no-scrollbar border-b border-[#D8D4CC] md:border-none pb-1 md:pb-0">
         {tabs.map((t) => {
           const isActive = pathname.endsWith(t.id);
           return (
@@ -287,7 +268,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
       </nav>
 
       {/* Right: Autosave Status & Command Buttons */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <div className="flex items-center justify-between md:justify-end gap-2 md:gap-[10px] w-full md:w-auto flex-wrap">
         {/* Offline & Sync Status Badge */}
         {mounted && (
           syncState === "offline" || !isOnline ? (
@@ -410,8 +391,10 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
           </button>
         )}
 
-        <div style={{ width: 1, height: 16, background: "#D8D4CC" }} />
-        <UserAuthMenu />
+        <div className="w-[1px] h-4 bg-[#D8D4CC] hidden md:block" />
+        <div className="hidden md:block">
+          <UserAuthMenu />
+        </div>
       </div>
     </header>
   );

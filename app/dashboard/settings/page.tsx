@@ -192,7 +192,7 @@ export default function SettingsPage() {
         
         <form onSubmit={handleUpdateProfile} className="space-y-6 max-w-md">
           {/* Professional Avatar Section */}
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
             <div className="relative group rounded-full shrink-0">
               {image ? (
                 <img src={image} alt="Avatar Preview" className="w-20 h-20 rounded-full object-cover border border-[#D8D4CC] shadow-sm" />
@@ -423,7 +423,7 @@ export default function SettingsPage() {
                 required
                 className="w-full p-2 bg-[#FAF9F5] border border-[#D8D4CC] rounded text-sm text-[#171717] focus:outline-none focus:border-[#C94A45] mb-4"
               />
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <button
                   type="submit"
                   disabled={isLoading || !deletePassword}
@@ -437,7 +437,7 @@ export default function SettingsPage() {
                     setIsDeleteModalOpen(false);
                     setDeletePassword("");
                   }}
-                  className="px-4 py-2 bg-transparent text-[#555555] rounded text-xs font-bold hover:bg-[#F4F1EA] transition-colors"
+                  className="px-4 py-2 bg-transparent text-[#555555] border border-[#D8D4CC] sm:border-none rounded text-xs font-bold hover:bg-[#F4F1EA] transition-colors text-center"
                 >
                   Cancel
                 </button>

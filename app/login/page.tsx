@@ -9,7 +9,7 @@ import { BrandLogo } from "@/components/ui/BrandLogo";
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<MiniLoader fullScreen label="Loading CodeFlow…" />}>
+    <Suspense fallback={<MiniLoader fullScreen label="Fetching LogicPup treats… 🐾" />}>
       <LoginForm />
     </Suspense>
   );
@@ -60,7 +60,7 @@ function LoginForm() {
         if (res.error) {
           setError(res.error.message || "Failed to create account.");
         } else {
-          setSuccessMsg("Account created! Redirecting...");
+          setSuccessMsg("Welcome to the pack! Redirecting... 🐾");
           setTimeout(() => {
             router.push(callbackUrl);
             router.refresh();
@@ -112,14 +112,14 @@ function LoginForm() {
               color: "#555555",
             }}
           >
-            {mode === "signin" ? "AUTHENTICATION" : "NEW ACCOUNT"}
+            {mode === "signin" ? "AUTHENTICATION" : "JOIN THE PACK"}
           </span>
           <h1 style={{ fontSize: 18, fontWeight: 700, textTransform: "uppercase", marginTop: 2 }}>
-            {mode === "signin" ? "Sign In to CodeFlow" : "Create Developer Account"}
+            {mode === "signin" ? "Sign In to LogicPup 🐾" : "Create LogicPup Account"}
           </h1>
           <p style={{ fontSize: 12, color: "#666666", marginTop: 2 }}>
             {mode === "signin"
-              ? "Access your visual programming projects and saved workspaces."
+              ? "Access your visual Python projects and saved workspaces."
               : "Start building Python programs with interactive visual blocks."}
           </p>
         </div>

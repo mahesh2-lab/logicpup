@@ -33,6 +33,7 @@ import {
   Sparkles,
   Sliders,
   ChevronRight,
+  X,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { pythonNodeTypes } from './CustomNodes';
@@ -299,8 +300,8 @@ export const HeroReactFlowCanvas: React.FC = () => {
   const [userInputValue, setUserInputValue] = useState<string>('7');
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [consoleLogs, setConsoleLogs] = useState<PythonConsoleLog[]>([
-    { id: '1', type: 'system', text: 'TeachFlow Python 3.12 Flowchart Interpreter ready.', timestamp: '00:00.00' },
-    { id: '2', type: 'system', text: 'Loaded diagram: Number Guessing Game', timestamp: '00:00.01' },
+    { id: '1', type: 'system', text: 'LogicPup Python 3.12 Flowchart Interpreter ready. 🐾', timestamp: '00:00.00' },
+    { id: '2', type: 'system', text: 'Loaded diagram: Number Guessing Game (Ready to fetch)', timestamp: '00:00.01' },
   ]);
   const [variables, setVariables] = useState<PythonVariable[]>([
     { name: 'secret_number', value: 7, type: 'int' },
@@ -506,13 +507,13 @@ export const HeroReactFlowCanvas: React.FC = () => {
       className="relative w-full h-[600px] sm:h-[680px] lg:h-[760px] rounded-[4px] bg-white border border-[#171717]/30 shadow-[0_12px_40px_rgb(0,0,0,0.06)] overflow-hidden flex flex-col justify-between select-none"
     >
       {/* 1. Header Navigation Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-3 z-30 border-b border-[#D8D4CC] bg-[#F4F1EA]/95 backdrop-blur-md">
-        {/* Left: Diagram Title & Presets */}
-        <div className="flex items-center gap-2.5">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-3 p-3 z-30 border-b border-[#D8D4CC] bg-[#F4F1EA]/95 backdrop-blur-md">
+        {/* Top/Left: Diagram Title & Presets */}
+        <div className="flex w-full md:w-auto items-center justify-between md:justify-start gap-2.5">
           <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-[4px] border border-[#171717]/20 text-xs font-mono text-[#171717] shadow-xs">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#287A52] animate-pulse" />
-            <span className="font-bold">Python Code Flowchart</span>
-            <span className="text-[#806A55]">• {nodes.length} Blocks</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-[#287A52] animate-pulse shrink-0" />
+            <span className="font-bold truncate">Python Flowchart</span>
+            <span className="text-[#806A55] hidden sm:inline shrink-0">• {nodes.length} Blocks</span>
           </div>
 
           <div className="hidden sm:flex items-center gap-1 bg-white p-1 rounded-[4px] border border-[#D8D4CC] text-xs font-mono">
@@ -534,45 +535,46 @@ export const HeroReactFlowCanvas: React.FC = () => {
         </div>
 
         {/* Center: View Mode (Visual Flowchart vs Python 3 Code vs Console) */}
-        <div className="flex items-center bg-white p-1 rounded-[4px] border border-[#D8D4CC] text-xs font-mono">
+        <div className="flex w-full md:w-auto justify-center items-center bg-white p-1 rounded-[4px] border border-[#D8D4CC] text-xs font-mono">
           <button
             onClick={() => setActiveTab('canvas')}
-            className={`flex items-center gap-1.5 px-3 py-1 rounded-[3px] transition-all cursor-pointer ${
+            className={`flex items-center justify-center gap-1.5 flex-1 md:flex-none px-3 py-1 rounded-[3px] transition-all cursor-pointer ${
               activeTab === 'canvas'
                 ? 'bg-[#171717] text-white font-bold'
                 : 'text-[#555555] hover:text-[#171717]'
             }`}
           >
-            <span>Visual Flowchart</span>
+            <span>Flowchart</span>
           </button>
 
           <button
             onClick={() => setActiveTab('python')}
-            className={`flex items-center gap-1.5 px-3 py-1 rounded-[3px] transition-all cursor-pointer ${
+            className={`flex items-center justify-center gap-1.5 flex-1 md:flex-none px-3 py-1 rounded-[3px] transition-all cursor-pointer ${
               activeTab === 'python'
                 ? 'bg-[#171717] text-white font-bold'
                 : 'text-[#555555] hover:text-[#171717]'
             }`}
           >
-            <Code2 className="w-3.5 h-3.5 text-[#356A9A]" />
-            <span>Python 3 Code</span>
+            <Code2 className={`w-3.5 h-3.5 ${activeTab === 'python' ? 'text-white' : 'text-[#356A9A]'}`} />
+            <span className="hidden sm:inline">Code</span>
           </button>
 
           <button
             onClick={() => setActiveTab('terminal')}
-            className={`flex items-center gap-1.5 px-3 py-1 rounded-[3px] transition-all cursor-pointer ${
+            className={`flex items-center justify-center gap-1.5 flex-1 md:flex-none px-3 py-1 rounded-[3px] transition-all cursor-pointer ${
               activeTab === 'terminal'
                 ? 'bg-[#171717] text-white font-bold'
                 : 'text-[#555555] hover:text-[#171717]'
             }`}
           >
-            <Terminal className="w-3.5 h-3.5 text-[#287A52]" />
-            <span>Python Console ({consoleLogs.length})</span>
+            <Terminal className={`w-3.5 h-3.5 ${activeTab === 'terminal' ? 'text-white' : 'text-[#287A52]'}`} />
+            <span className="hidden sm:inline">Console</span>
+            <span className="sm:hidden text-[10px]">({consoleLogs.length})</span>
           </button>
         </div>
 
-        {/* Right: Input Test Value & Run Python Button */}
-        <div className="flex items-center gap-2 relative">
+        {/* Bottom/Right: Input Test Value & Run Python Button */}
+        <div className="flex w-full md:w-auto items-center justify-between md:justify-end gap-2 relative">
           {/* User Input Test Box */}
           <div className="flex items-center gap-1.5 bg-white px-2.5 py-1.5 rounded-[4px] border border-[#D8D4CC] text-xs font-mono">
             <span className="text-[11px] text-[#555555]">guess =</span>
@@ -580,99 +582,102 @@ export const HeroReactFlowCanvas: React.FC = () => {
               type="number"
               value={userInputValue}
               onChange={(e) => setUserInputValue(e.target.value)}
-              className="w-10 text-center font-bold text-[#171717] bg-[#F4F1EA] rounded-[2px] border border-[#D8D4CC] outline-none"
-              title="Test input value for input() node"
+              className="w-8 sm:w-10 text-center font-bold text-[#171717] bg-[#F4F1EA] rounded-[2px] border border-[#D8D4CC] outline-none"
+              title="Test input value"
             />
           </div>
 
-          {/* Add Python Block Palette */}
-          <button
-            onClick={() => setShowNodePalette(!showNodePalette)}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-[4px] bg-white border border-[#D8D4CC] hover:bg-[#F4F1EA] text-[#171717] text-xs font-semibold shadow-xs transition-all cursor-pointer"
-          >
-            <Plus className="w-3.5 h-3.5 text-[#F26A3D]" />
-            <span>Add Block</span>
-          </button>
+          <div className="flex items-center gap-2">
+            {/* Add Python Block Palette */}
+            <button
+              onClick={() => setShowNodePalette(!showNodePalette)}
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-[4px] bg-white border border-[#D8D4CC] hover:bg-[#F4F1EA] text-[#171717] text-xs font-semibold shadow-xs transition-all cursor-pointer"
+            >
+              <Plus className="w-3.5 h-3.5 text-[#F26A3D]" />
+              <span className="hidden sm:inline">Add Block</span>
+            </button>
 
-          {/* Dropdown for Python Statement Blocks */}
-          {showNodePalette && (
-            <div className="absolute top-12 right-0 w-64 bg-white rounded-[4px] border border-[#171717]/20 shadow-2xl p-2.5 z-40 space-y-1 animate-in fade-in duration-150">
-              <div className="px-2 py-1 text-[10px] font-mono font-bold text-[#806A55] uppercase border-b border-[#D8D4CC]">
-                Add Python Block
+            {/* Dropdown for Python Statement Blocks */}
+            {showNodePalette && (
+              <div className="absolute top-12 right-0 w-64 bg-white rounded-[4px] border border-[#171717]/20 shadow-2xl p-2.5 z-40 space-y-1 animate-in fade-in duration-150">
+                <div className="px-2 py-1 text-[10px] font-mono font-bold text-[#806A55] uppercase border-b border-[#D8D4CC]">
+                  Add Python Block
+                </div>
+                <button
+                  onClick={() => handleAddPythonNode('process', 'Set Variable', 'x = 10', 'x = 10')}
+                  className="w-full px-2.5 py-2 rounded-[3px] text-left text-xs hover:bg-[#F4F1EA] flex items-center justify-between transition-colors cursor-pointer"
+                >
+                  <div>
+                    <div className="font-bold text-[#171717]">Variable Assignment</div>
+                    <div className="text-[10px] text-[#555555] font-mono">x = 10</div>
+                  </div>
+                  <Plus className="w-3.5 h-3.5 text-[#555555]" />
+                </button>
+
+                <button
+                  onClick={() => handleAddPythonNode('input', 'Ask for Input', 'val = input("Enter: ")', 'val = input()')}
+                  className="w-full px-2.5 py-2 rounded-[3px] text-left text-xs hover:bg-[#F4F1EA] flex items-center justify-between transition-colors cursor-pointer"
+                >
+                  <div>
+                    <div className="font-bold text-[#171717]">User Input</div>
+                    <div className="text-[10px] text-[#555555] font-mono">input("Prompt: ")</div>
+                  </div>
+                  <Plus className="w-3.5 h-3.5 text-[#555555]" />
+                </button>
+
+                <button
+                  onClick={() => handleAddPythonNode('condition', 'Check Condition', 'if val > 0:', 'if val > 0')}
+                  className="w-full px-2.5 py-2 rounded-[3px] text-left text-xs hover:bg-[#F4F1EA] flex items-center justify-between transition-colors cursor-pointer"
+                >
+                  <div>
+                    <div className="font-bold text-[#171717]">If / Else Condition</div>
+                    <div className="text-[10px] text-[#555555] font-mono">if condition:</div>
+                  </div>
+                  <Plus className="w-3.5 h-3.5 text-[#555555]" />
+                </button>
+
+                <button
+                  onClick={() => handleAddPythonNode('output', 'Print Message', 'print("Hello Python!")', 'print()')}
+                  className="w-full px-2.5 py-2 rounded-[3px] text-left text-xs hover:bg-[#F4F1EA] flex items-center justify-between transition-colors cursor-pointer"
+                >
+                  <div>
+                    <div className="font-bold text-[#171717]">Print Output</div>
+                    <div className="text-[10px] text-[#555555] font-mono">print("Message")</div>
+                  </div>
+                  <Plus className="w-3.5 h-3.5 text-[#555555]" />
+                </button>
               </div>
-              <button
-                onClick={() => handleAddPythonNode('process', 'Set Variable', 'x = 10', 'x = 10')}
-                className="w-full px-2.5 py-2 rounded-[3px] text-left text-xs hover:bg-[#F4F1EA] flex items-center justify-between transition-colors cursor-pointer"
-              >
-                <div>
-                  <div className="font-bold text-[#171717]">Variable Assignment</div>
-                  <div className="text-[10px] text-[#555555] font-mono">x = 10</div>
-                </div>
-                <Plus className="w-3.5 h-3.5 text-[#555555]" />
-              </button>
-
-              <button
-                onClick={() => handleAddPythonNode('input', 'Ask for Input', 'val = input("Enter: ")', 'val = input()')}
-                className="w-full px-2.5 py-2 rounded-[3px] text-left text-xs hover:bg-[#F4F1EA] flex items-center justify-between transition-colors cursor-pointer"
-              >
-                <div>
-                  <div className="font-bold text-[#171717]">User Input</div>
-                  <div className="text-[10px] text-[#555555] font-mono">input("Prompt: ")</div>
-                </div>
-                <Plus className="w-3.5 h-3.5 text-[#555555]" />
-              </button>
-
-              <button
-                onClick={() => handleAddPythonNode('condition', 'Check Condition', 'if val > 0:', 'if val > 0')}
-                className="w-full px-2.5 py-2 rounded-[3px] text-left text-xs hover:bg-[#F4F1EA] flex items-center justify-between transition-colors cursor-pointer"
-              >
-                <div>
-                  <div className="font-bold text-[#171717]">If / Else Condition</div>
-                  <div className="text-[10px] text-[#555555] font-mono">if condition:</div>
-                </div>
-                <Plus className="w-3.5 h-3.5 text-[#555555]" />
-              </button>
-
-              <button
-                onClick={() => handleAddPythonNode('output', 'Print Message', 'print("Hello Python!")', 'print()')}
-                className="w-full px-2.5 py-2 rounded-[3px] text-left text-xs hover:bg-[#F4F1EA] flex items-center justify-between transition-colors cursor-pointer"
-              >
-                <div>
-                  <div className="font-bold text-[#171717]">Print Output</div>
-                  <div className="text-[10px] text-[#555555] font-mono">print("Message")</div>
-                </div>
-                <Plus className="w-3.5 h-3.5 text-[#555555]" />
-              </button>
-            </div>
-          )}
-
-          {/* Run Python Execution Button */}
-          <button
-            id="python-flow-run-btn"
-            onClick={handleRunPython}
-            disabled={isRunning}
-            className="flex items-center gap-2 px-4 py-2 bg-[#F26A3D] hover:bg-[#D9552A] active:scale-95 text-white font-bold text-xs sm:text-sm rounded-[4px] shadow-sm transition-all cursor-pointer disabled:opacity-50"
-          >
-            {isRunning ? (
-              <>
-                <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                <span>Running Python...</span>
-              </>
-            ) : (
-              <>
-                <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Run Python Code</span>
-              </>
             )}
-          </button>
+
+            {/* Run Python Execution Button */}
+            <button
+              id="python-flow-run-btn"
+              onClick={handleRunPython}
+              disabled={isRunning}
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-[#F26A3D] hover:bg-[#D9552A] active:scale-95 text-white font-bold text-xs sm:text-sm rounded-[4px] shadow-sm transition-all cursor-pointer disabled:opacity-50"
+            >
+              {isRunning ? (
+                <>
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                  <span className="hidden sm:inline">Running...</span>
+                </>
+              ) : (
+                <>
+                  <Play className="w-3.5 h-3.5 fill-white" />
+                  <span className="hidden sm:inline">Run Code</span>
+                  <span className="sm:hidden">Run</span>
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* 2. Middle Canvas & Code View */}
-      <div className="relative flex-1 flex overflow-hidden">
+      <div className="relative flex-1 flex flex-col lg:flex-row overflow-hidden">
         {/* Visual Flowchart Canvas */}
         {activeTab === 'canvas' && (
-          <div className="relative flex-1 h-full">
+          <div className="relative flex-1 h-full min-h-[300px]">
             <ReactFlow
               nodes={processedNodes}
               edges={edges}
@@ -683,6 +688,9 @@ export const HeroReactFlowCanvas: React.FC = () => {
               fitView
               snapToGrid={true}
               snapGrid={[20, 20]}
+              preventScrolling={false}
+              panOnScroll={true}
+              zoomOnScroll={false}
               defaultEdgeOptions={{
                 animated: true,
                 style: { stroke: '#171717', strokeWidth: 1.8 },
@@ -695,12 +703,12 @@ export const HeroReactFlowCanvas: React.FC = () => {
               <Controls className="bg-white rounded-[4px] border border-[#171717]/20 shadow-xs text-[#171717]" />
               <MiniMap
                 nodeColor="#171717"
-                className="bg-white rounded-[4px] border border-[#171717]/20 shadow-xs"
+                className="hidden lg:block bg-white rounded-[4px] border border-[#171717]/20 shadow-xs"
                 maskColor="rgba(244, 241, 234, 0.7)"
               />
 
               {/* Bottom Canvas Overlay Helper */}
-              <Panel position="bottom-left" className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-[4px] border border-[#171717]/20 text-[11px] font-mono text-[#555555] shadow-xs flex items-center gap-3">
+              <Panel position="bottom-left" className="hidden sm:flex bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-[4px] border border-[#171717]/20 text-[11px] font-mono text-[#555555] shadow-xs items-center gap-3">
                 <span className="flex items-center gap-1.5 font-bold text-[#171717]">
                   <Zap className="w-3.5 h-3.5 text-[#F26A3D]" />
                   <span>Python 3.12 AST Simulator</span>
@@ -798,7 +806,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
 
         {/* Right Node Inspector Panel */}
         {isInspectorOpen && selectedNode && (
-          <div className="w-72 bg-white border-l border-[#D8D4CC] p-4 flex flex-col justify-between overflow-y-auto z-20">
+          <div className="hidden lg:flex w-72 h-full bg-white border-l border-[#D8D4CC] p-4 flex-col justify-between overflow-y-auto z-40 shrink-0">
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-[#D8D4CC] pb-2.5">
                 <div>
@@ -807,9 +815,18 @@ export const HeroReactFlowCanvas: React.FC = () => {
                   </span>
                   <h4 className="text-xs font-bold text-[#171717]">{selectedNode.data?.label}</h4>
                 </div>
-                <span className="text-[9px] font-mono px-2 py-0.5 rounded-[3px] bg-[#171717] text-white font-bold uppercase">
-                  {selectedNode.data?.nodeType}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[9px] font-mono px-2 py-0.5 rounded-[3px] bg-[#171717] text-white font-bold uppercase">
+                    {selectedNode.data?.nodeType}
+                  </span>
+                  <button 
+                    className="lg:hidden p-1 rounded hover:bg-black/5 text-[#555]"
+                    onClick={() => setIsInspectorOpen(false)}
+                    title="Close"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
               <div className="space-y-1">
@@ -826,7 +843,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
                 </p>
               </div>
 
-              <div className="space-y-1 pt-2 border-t border-[#D8D4CC]">
+              <div className="hidden lg:block space-y-1 pt-2 border-t border-[#D8D4CC]">
                 <label className="text-[10px] font-mono text-[#555555] font-bold">NODE POSITION</label>
                 <div className="text-[10px] font-mono text-[#555555]">
                   x: {Math.round(selectedNode.position?.x || 0)}, y: {Math.round(selectedNode.position?.y || 0)}
@@ -834,7 +851,7 @@ export const HeroReactFlowCanvas: React.FC = () => {
               </div>
             </div>
 
-            <div className="pt-3 border-t border-[#D8D4CC] text-[10px] font-mono text-[#555555] text-center">
+            <div className="hidden lg:block pt-3 border-t border-[#D8D4CC] text-[10px] font-mono text-[#555555] text-center mt-4">
               Click & drag connecting handles to redirect flow
             </div>
           </div>

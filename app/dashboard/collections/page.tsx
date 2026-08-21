@@ -38,7 +38,7 @@ export default function CollectionsPage() {
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       {/* Header Strip */}
-      <div className="flex items-center justify-between pb-4 border-b border-[#D8D4CC]">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#D8D4CC]">
         <div>
           <div className="flex items-center gap-2">
             <FolderArchive size={20} color="#F26A3D" />
@@ -58,7 +58,7 @@ export default function CollectionsPage() {
 
         <button
           onClick={() => setIsCreateOpen(true)}
-          className="px-4 py-2 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold uppercase rounded border-none cursor-pointer flex items-center gap-1.5 shadow-xs transition-colors"
+          className="w-full sm:w-auto px-4 py-2 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold uppercase rounded border-none cursor-pointer flex items-center justify-center gap-1.5 shadow-xs transition-colors"
         >
           <Plus size={13} />
           <span>+ New Collection</span>
@@ -67,7 +67,7 @@ export default function CollectionsPage() {
 
       {/* Collections Grid */}
       {!mounted ? (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[1, 2, 3].map((n) => (
             <div
               key={n}
@@ -84,7 +84,7 @@ export default function CollectionsPage() {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {userCollections.map((col) => {
             const projsInCol = projects.filter((p) => col.projectIds.includes(p.id));
 

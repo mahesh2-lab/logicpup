@@ -31,7 +31,7 @@ export default function LearnHubPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Header Banner */}
-      <div className="flex items-center justify-between pb-4 border-b border-[#D8D4CC]">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#D8D4CC]">
         <div>
           <div className="flex items-center gap-2">
             <Trophy size={20} color="#F26A3D" />
@@ -45,8 +45,8 @@ export default function LearnHubPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="text-right">
+        <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+          <div className="text-left sm:text-right">
             <div className="font-mono text-xl font-bold text-[#F26A3D]">
               ⭐ {totalPoints} XP
             </div>
@@ -78,7 +78,7 @@ export default function LearnHubPage() {
                   : "border-[#E5E2DA] opacity-60 bg-[#FAF9F5]"
               }`}
             >
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-6">
                 <div className="flex items-start gap-4">
                   <div
                     className={`w-12 h-12 rounded flex items-center justify-center shrink-0 border ${
@@ -119,11 +119,11 @@ export default function LearnHubPage() {
                       {lvl.description}
                     </p>
 
-                    <div className="flex items-center gap-4 mt-3 text-[11px] font-mono text-[#888]">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 mt-3 text-[10px] sm:text-[11px] font-mono text-[#888]">
                       <span>
                         Challenges: <strong>{completedCount}</strong> / {lvl.challenges.length} completed
                       </span>
-                      <span>•</span>
+                      <span className="hidden sm:inline">•</span>
                       <span>
                         {lvl.levelNumber === 1 || unlocked
                           ? `Complete all ${lvl.challenges.length} challenges to unlock Level ${lvl.levelNumber + 1}`
@@ -133,7 +133,7 @@ export default function LearnHubPage() {
                   </div>
                 </div>
 
-                <div className="flex flex-col items-end justify-between shrink-0 h-full">
+                <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center w-full sm:w-auto shrink-0 mt-4 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-0 border-[#E5E2DA]">
                   <span className="text-xs font-mono font-bold text-[#888]">
                     {masteryPercent}%
                   </span>
@@ -141,13 +141,13 @@ export default function LearnHubPage() {
                   {unlocked ? (
                     <Link
                       href={`/learn/${lvl.id}`}
-                      className="mt-4 px-4 py-2 bg-[#171717] hover:bg-[#F26A3D] text-white text-xs font-bold uppercase rounded no-underline flex items-center gap-1.5 transition-colors"
+                      className="px-4 py-2 bg-[#171717] hover:bg-[#F26A3D] text-white text-xs font-bold uppercase rounded no-underline flex items-center gap-1.5 transition-colors"
                     >
-                      <span>{mastered ? "Review Level" : "Open Level"}</span>
+                      <span>{mastered ? "Review" : "Open"}</span>
                       <ChevronRight size={13} />
                     </Link>
                   ) : (
-                    <div className="mt-4 px-3 py-1.5 bg-[#E5E2DA] text-[#888] text-xs font-mono uppercase rounded flex items-center gap-1">
+                    <div className="px-3 py-1.5 bg-[#E5E2DA] text-[#888] text-xs font-mono uppercase rounded flex items-center gap-1">
                       <Lock size={12} />
                       <span>Locked</span>
                     </div>

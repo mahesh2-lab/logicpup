@@ -45,6 +45,14 @@ body {
   color: var(--cf-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+/* ── Form elements minimum size for mobile (iOS zoom fix) ───────────── */
+@media screen and (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
 }
 
 /* ── React Flow overrides for light theme ────────────────────────────── */

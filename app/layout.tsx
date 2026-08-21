@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -16,9 +16,90 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "https://logicpup.com";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  maximumScale: 1,
+};
+
 export const metadata: Metadata = {
-  title: "CodeFlow — Visual Python Editor",
-  description: "A visual Python programming environment for learners aged 15–20.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "LogicPup — Visual Python Flowchart IDE & Learning Playground",
+    template: "%s | LogicPup",
+  },
+  description:
+    "The leash-free visual Python programming environment where logic meets fun. Connect flowchart blocks, fetch real Python 3 code, and chase zero bugs without getting tangled in syntax.",
+  applicationName: "LogicPup",
+  authors: [{ name: "LogicPup Team", url: siteUrl }],
+  generator: "Next.js",
+  keywords: [
+    "visual python editor",
+    "python flowchart programming",
+    "learn python for beginners",
+    "python for kids and students",
+    "block based python",
+    "interactive python playground",
+    "python AST compiler",
+    "flowchart to python code",
+    "python 3.12 learning track",
+    "coding curriculum",
+    "logic pup",
+  ],
+  referrer: "origin-when-cross-origin",
+  creator: "LogicPup Inc.",
+  publisher: "LogicPup Inc.",
+  category: "education",
+  classification: "Educational Technology & Programming",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "LogicPup — Visual Python Flowchart IDE & Learning Playground",
+    description:
+      "Connect flowchart blocks, fetch real Python 3 code, and chase zero bugs. The visual Python playground made for future developers.",
+    url: siteUrl,
+    siteName: "LogicPup",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "LogicPup — Visual Python Flowchart IDE",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "LogicPup — Visual Python Flowchart IDE & Learning Playground",
+    description:
+      "Connect flowchart blocks, fetch real Python 3 code, and chase zero bugs. Good boy, clean code! 🐾",
+    creator: "@logicpup",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
@@ -26,12 +107,39 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "LogicPup",
+    url: siteUrl,
+    description:
+      "The leash-free visual Python programming playground where logic meets fun. Connect flowchart blocks, fetch real Python 3 code, and master programming.",
+    applicationCategory: "EducationalApplication",
+    operatingSystem: "All",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    author: {
+      "@type": "Organization",
+      name: "LogicPup Inc.",
+      url: siteUrl,
+    },
+  };
+
   return (
     <html
       lang="en"
       suppressHydrationWarning
       className={`h-full ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body suppressHydrationWarning className="min-h-full flex flex-col font-sans antialiased">
         {children}
       </body>

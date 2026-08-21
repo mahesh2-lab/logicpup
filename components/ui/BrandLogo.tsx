@@ -1,5 +1,5 @@
 import React from 'react';
-import { Boxes } from 'lucide-react';
+import { Dog } from 'lucide-react';
 import Link from 'next/link';
 
 interface BrandLogoProps {
@@ -29,22 +29,22 @@ export function BrandLogo({ size = 'md', href = '/', className = '' }: BrandLogo
   const content = (
     <>
       <div className={boxWrapperClasses}>
-        <Boxes className={iconClasses} strokeWidth={isSmall ? 2.5 : 2} />
+        <Dog className={iconClasses} strokeWidth={isSmall ? 2.5 : 2} />
       </div>
       
       <div className="flex flex-col justify-center">
         <span className={`font-bold ${textSize} text-[#121212] tracking-tight leading-none flex items-center gap-1.5`}>
-          TeachFlow
+          LogicPup
           {!isSmall && (
             <span className="text-[9px] font-mono font-medium px-1.5 py-0.5 rounded-full bg-[#287A52]/10 text-[#287A52]">
-              v1.4
+              v1.4 🐾
             </span>
           )}
         </span>
         
         {isLarge && (
           <span className="text-[11px] text-[#666666] font-medium mt-0.5 leading-none">
-            Visual Logic IDE
+            Visual Python IDE
           </span>
         )}
       </div>
@@ -53,7 +53,7 @@ export function BrandLogo({ size = 'md', href = '/', className = '' }: BrandLogo
 
   if (href) {
     return (
-      <Link href={href} className={containerClasses} aria-label="TeachFlow Home">
+      <Link href={href} className={containerClasses} aria-label="LogicPup Home">
         {content}
       </Link>
     );

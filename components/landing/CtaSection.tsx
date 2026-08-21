@@ -20,7 +20,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
 }) => {
   return (
     <section
-      id="teachflow-final-cta"
+      id="logicpup-final-cta"
       className="py-16 md:py-24 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -37,20 +37,20 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
             {/* Pill */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-sm bg-white/10 backdrop-blur-md border border-white/10 text-xs font-mono font-semibold text-white/90">
               <Sparkles className="w-3.5 h-3.5 text-[#F26A3D]" />
-              <span>Python 3.12 Flowchart Playground • No Install Required</span>
+              <span>LogicPup Python Playground • No Leash, No Install Required 🐾</span>
             </div>
 
             {/* Headline */}
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
-              Master Python Logic Through <br />
+              Master Python Logic Without <br />
               <span className="text-[#F26A3D]">
-                Interactive Visual Flowcharts.
+                Barking at Syntax Errors.
               </span>
             </h2>
 
             {/* Paragraph */}
             <p className="text-base sm:text-lg text-white/70 max-w-xl mx-auto leading-relaxed">
-              Connect variables, inputs, conditionals, and loops to visually build and run real Python 3 programs in your browser.
+              Connect variables, inputs, conditionals, and loops to visually build and run real Python 3 programs right in your browser. Good boy, clean code.
             </p>
 
             {/* CTA Buttons */}
@@ -60,7 +60,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
                 onClick={() => { window.location.href = "/login?mode=signup"; }}
                 className="w-full sm:w-auto px-8 py-3.5 bg-[#F26A3D] hover:bg-[#D9552A] active:scale-98 text-white font-bold text-base rounded-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group"
               >
-                <span>Start Learning Python Free</span>
+                <span>Start Learning Free (No Bones About It)</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
@@ -70,7 +70,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
                 className="w-full sm:w-auto px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-base rounded-sm border border-white/15 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Code2 className="w-4 h-4 text-[#60A5FA]" />
-                <span>Try Flowchart Playground</span>
+                <span>Try Flowchart Playground 🐾</span>
               </button>
             </div>
 
@@ -83,7 +83,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
                 <ShieldCheck className="w-4 h-4 text-[#4ADE80]" /> Instant Python 3 Code Emission
               </span>
               <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-[#4ADE80]" /> Live Memory Variable Watch
+                <ShieldCheck className="w-4 h-4 text-[#4ADE80]" /> Live Variable Sniffing & Inspection
               </span>
             </div>
 

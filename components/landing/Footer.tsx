@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Boxes,
+  Dog,
   BookOpen,
   Terminal,
   Heart,
@@ -9,7 +9,7 @@ import {
 export const Footer: React.FC = () => {
   return (
     <footer
-      id="teachflow-footer"
+      id="logicpup-footer"
       className="border-t border-black/[0.06] bg-white/60 py-12 md:py-16 text-[#666666]"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,18 +20,17 @@ export const Footer: React.FC = () => {
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-sm bg-[#F26A3D] text-white flex items-center justify-center shadow-xs">
-                <Boxes className="w-4.5 h-4.5" />
+                <Dog className="w-4.5 h-4.5" />
               </div>
               <span className="font-bold text-lg text-[#121212] tracking-tight">
-                TeachFlow
+                LogicPup
               </span>
             </div>
             <p className="text-xs sm:text-sm text-[#666666] leading-relaxed max-w-sm">
-              The modern interactive learning environment for visual logic programming,
-              AST compilation, and asynchronous workflows.
+              The playful interactive learning environment where visual logic flowcharts fetch real Python 3 code. Built with ❤️, logic, and zero syntax errors.
             </p>
             <div className="flex items-center gap-3 pt-1 text-xs font-mono text-[#888888]">
-              <span>Made for Developers & Learners</span>
+              <span>Made with love for future developers 🐾</span>
             </div>
           </div>
 
@@ -129,7 +128,7 @@ export const Footer: React.FC = () => {
         {/* Bottom copyright line */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#888888]">
           <div>
-            © {new Date().getFullYear()} TeachFlow Inc. All rights reserved.
+            © {new Date().getFullYear()} LogicPup Inc. All rights reserved. 🐶
           </div>
           <div className="flex items-center gap-4">
             <a href="#" className="hover:text-[#121212] transition-colors">

@@ -33,7 +33,7 @@ export function ProjectOverviewView({ project }: ProjectOverviewViewProps) {
         className="bg-[#FFFFFF] border border-[#D8D4CC] p-6 mb-6 shadow-sm"
         style={{ borderRadius: 6 }}
       >
-        <div className="flex items-start justify-between mb-4 pb-4 border-b border-[#E5E2DA]">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-4 pb-4 border-b border-[#E5E2DA]">
           <div>
             <div
               style={{
@@ -58,7 +58,7 @@ export function ProjectOverviewView({ project }: ProjectOverviewViewProps) {
             </h1>
             <p style={{ fontSize: 13, color: "#555555", marginTop: 4 }}>
               {project.description ||
-                "Python visual programming project built with CodeFlow."}
+                "Python visual programming project built with LogicPup. 🐾"}
             </p>
           </div>
 
@@ -78,18 +78,19 @@ export function ProjectOverviewView({ project }: ProjectOverviewViewProps) {
               textDecoration: "none",
               borderRadius: 4,
             }}
+            className="w-full md:w-auto justify-center"
           >
             OPEN EDITOR <ArrowRight size={13} />
           </Link>
         </div>
 
         {/* Quick Stats Grid */}
-        <div className="grid grid-cols-3 gap-4 text-xs">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs">
           <div className="border border-[#E5E2DA] p-3 bg-[#FBFCFF]">
             <div className="text-[#888888] font-mono text-[10px] uppercase">
               LANGUAGE
             </div>
-            <div className="font-bold text-sm text-[#171717] mt-1 capitalize">
+            <div className="font-bold text-sm text-[#171717] mt-1 capitalize truncate">
               {project.language}
             </div>
           </div>
@@ -97,22 +98,22 @@ export function ProjectOverviewView({ project }: ProjectOverviewViewProps) {
             <div className="text-[#888888] font-mono text-[10px] uppercase">
               VISUAL BLOCKS
             </div>
-            <div className="font-bold text-sm text-[#171717] mt-1">
+            <div className="font-bold text-sm text-[#171717] mt-1 truncate">
               {project.visualProgram.nodes.length} Blocks
             </div>
           </div>
-          <div className="border border-[#E5E2DA] p-3 bg-[#FBFCFF]">
+          <div className="border border-[#E5E2DA] p-3 bg-[#FBFCFF] col-span-2 sm:col-span-1">
             <div className="text-[#888888] font-mono text-[10px] uppercase">
               TOTAL RUNS
             </div>
-            <div className="font-bold text-sm text-[#171717] mt-1">
+            <div className="font-bold text-sm text-[#171717] mt-1 truncate">
               {project.runs.length} Executions
             </div>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Left 2 Cols: Workspace Actions & Details */}
         <div className="col-span-2 space-y-6">
           <div
@@ -133,7 +134,7 @@ export function ProjectOverviewView({ project }: ProjectOverviewViewProps) {
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Link
                 href={`/projects/${project.id}/editor`}
                 className="p-4 border border-[#E5E2DA] bg-[#FBFCFF] hover:border-[#F26A3D] transition-colors rounded block no-underline"

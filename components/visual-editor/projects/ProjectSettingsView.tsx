@@ -158,24 +158,24 @@ export function ProjectSettingsView({ project }: ProjectSettingsViewProps) {
           Export & Duplication
         </h2>
 
-        <div className="flex gap-3 text-xs">
+        <div className="flex flex-col sm:flex-row gap-3 text-xs">
           <button
             onClick={handleExportPython}
-            className="flex items-center gap-2 px-3 py-2 border border-[#D8D4CC] rounded hover:bg-[#F4F1EA] font-bold"
+            className="flex items-center justify-center sm:justify-start gap-2 px-3 py-2 border border-[#D8D4CC] rounded hover:bg-[#F4F1EA] font-bold w-full sm:w-auto"
           >
-            <Download size={13} /> Export Python (.py)
+            <Download size={13} className="shrink-0" /> Export Python (.py)
           </button>
           <button
             onClick={handleExportJson}
-            className="flex items-center gap-2 px-3 py-2 border border-[#D8D4CC] rounded hover:bg-[#F4F1EA] font-bold"
+            className="flex items-center justify-center sm:justify-start gap-2 px-3 py-2 border border-[#D8D4CC] rounded hover:bg-[#F4F1EA] font-bold w-full sm:w-auto"
           >
-            <Download size={13} /> Export Project (.json)
+            <Download size={13} className="shrink-0" /> Export Project (.json)
           </button>
           <button
             onClick={handleDuplicate}
-            className="flex items-center gap-2 px-3 py-2 border border-[#D8D4CC] rounded hover:bg-[#F4F1EA] font-bold"
+            className="flex items-center justify-center sm:justify-start gap-2 px-3 py-2 border border-[#D8D4CC] rounded hover:bg-[#F4F1EA] font-bold w-full sm:w-auto"
           >
-            <Copy size={13} /> Duplicate Project
+            <Copy size={13} className="shrink-0" /> Duplicate Project
           </button>
         </div>
       </div>
@@ -186,7 +186,7 @@ export function ProjectSettingsView({ project }: ProjectSettingsViewProps) {
           Danger Zone
         </h2>
 
-        <div className="flex items-center justify-between py-2 border-b border-[#E5E2DA] text-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between py-3 border-b border-[#E5E2DA] text-xs gap-3 sm:gap-0">
           <div>
             <div className="font-bold text-[#171717]">
               {project.status === "archived" ? "Restore Project" : "Archive Project"}
@@ -199,14 +199,14 @@ export function ProjectSettingsView({ project }: ProjectSettingsViewProps) {
           </div>
           <button
             onClick={handleArchiveToggle}
-            className="flex items-center gap-1.5 px-3 py-1.5 border border-[#D8D4CC] rounded text-[11px] font-bold uppercase hover:bg-[#F4F1EA]"
+            className="flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 border border-[#D8D4CC] rounded text-[11px] font-bold uppercase hover:bg-[#F4F1EA] w-full sm:w-auto shrink-0"
           >
             {project.status === "archived" ? <RotateCcw size={12} /> : <Archive size={12} />}
             <span>{project.status === "archived" ? "Restore" : "Archive"}</span>
           </button>
         </div>
 
-        <div className="flex items-center justify-between pt-3 text-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-4 pb-1 text-xs gap-3 sm:gap-0">
           <div>
             <div className="font-bold text-[#C94A45]">Delete Project Permanently</div>
             <div className="text-[11px] text-[#666]">
@@ -215,7 +215,7 @@ export function ProjectSettingsView({ project }: ProjectSettingsViewProps) {
           </div>
           <button
             onClick={handleDelete}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#C94A45] text-white rounded text-[11px] font-bold uppercase hover:bg-[#A33818]"
+            className="flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 bg-[#C94A45] text-white rounded text-[11px] font-bold uppercase hover:bg-[#A33818] w-full sm:w-auto shrink-0"
           >
             <Trash2 size={12} />
             <span>Delete</span>

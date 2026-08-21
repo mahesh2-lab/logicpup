@@ -32,13 +32,13 @@ export const Header: React.FC<HeaderProps> = ({
   const navItems: NavItem[] = [
     { label: 'Editor & Nodes', href: '#features' },
     { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Curriculum Progression', href: '#curriculum', badge: 'Levels 1-8' },
+    { label: 'Curriculum Progression', href: '#curriculum', badge: 'Levels 1-8 🐾' },
     { label: 'In-Browser IDE', href: '#interactive-demo-playground' },
   ];
 
   return (
     <header
-      id="teachflow-main-header"
+      id="logicpup-main-header"
       className="sticky top-0 z-50 bg-[#F4F1EA]/90 backdrop-blur-xl border-b border-[#D8D4CC] transition-colors"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -47,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Desktop Navigation Links */}
         <nav
-          id="teachflow-desktop-nav"
+          id="logicpup-desktop-nav"
           className="hidden md:flex items-center gap-1 lg:gap-2"
         >
           {navItems.map((item) => (
@@ -120,7 +120,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Mobile Dropdown Menu */}
       {mobileMenuOpen && (
         <div
-          id="teachflow-mobile-menu"
+          id="logicpup-mobile-menu"
           className="md:hidden px-4 pt-3 pb-6 bg-[#F8F6F0] border-b border-black/[0.06] space-y-3"
         >
           <div className="space-y-1">
@@ -129,7 +129,7 @@ export const Header: React.FC<HeaderProps> = ({
                 key={item.label}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-sm text-sm font-semibold text-[#121212] hover:bg-black/[0.04]"
+                className="block px-3 py-3 rounded-sm text-sm font-semibold text-[#121212] hover:bg-black/[0.04]"
               >
                 {item.label}
               </a>
@@ -144,7 +144,7 @@ export const Header: React.FC<HeaderProps> = ({
                   setMobileMenuOpen(false);
                   window.location.href = "/dashboard";
                 }}
-                className="w-full py-2 px-3 rounded-sm bg-[#171717] text-white text-xs font-semibold text-center"
+                className="w-full py-3 px-3 rounded-sm bg-[#171717] text-white text-xs font-semibold text-center"
               >
                 Go to Dashboard
               </button>
@@ -155,7 +155,7 @@ export const Header: React.FC<HeaderProps> = ({
                     setMobileMenuOpen(false);
                     window.location.href = "/login?mode=signin";
                   }}
-                  className="py-2 px-3 rounded-sm border border-black/[0.06] text-xs font-semibold text-[#121212] bg-white text-center"
+                  className="py-3 px-3 rounded-sm border border-black/[0.06] text-xs font-semibold text-[#121212] bg-white text-center"
                 >
                   Log In
                 </button>
@@ -164,7 +164,7 @@ export const Header: React.FC<HeaderProps> = ({
                     setMobileMenuOpen(false);
                     window.location.href = "/login?mode=signup";
                   }}
-                  className="py-2 px-3 rounded-sm bg-[#F26A3D] text-white text-xs font-semibold text-center"
+                  className="py-3 px-3 rounded-sm bg-[#F26A3D] text-white text-xs font-semibold text-center"
                 >
                   Start Free
                 </button>

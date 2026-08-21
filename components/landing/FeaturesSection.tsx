@@ -32,34 +32,34 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
     {
       id: 'node-editor',
       title: 'Visual Python Flowchart Editor',
-      tagline: 'Connect Blocks -> Generate Executable Python 3 Code',
+      tagline: 'Connect Blocks -> LogicPup Fetches Executable Python 3',
       description:
-        'Construct conditional branching, input prompts, loops, and variable assignments with intuitive 4-port visual blocks matching standard algorithmic flowchart diagrams.',
+        'Construct conditional branching, input prompts, loops, and variable assignments with intuitive 4-port visual blocks. No syntax bite marks, zero tangled leashes.',
       iconName: 'Boxes',
       accentColor: '#F26A3D',
       tag: 'Core Flow Engine',
       capabilities: [
-        'Clean 4-directional handles (Top, Bottom, Left, Right) on every block',
+        'Clean 4-directional snap handles (Top, Bottom, Left, Right) on every block',
         'Direct 1:1 synchronization with Python 3.12 syntax',
-        'Interactive Step-by-Step Python AST runtime simulation',
-        'Live Variable Watch Scope (Memory inspection during execution)',
+        'Interactive Step-by-Step AST runtime simulation (watch your logic trot in real-time)',
+        'Live Variable Watch Scope (sniff out bugs before they run away)',
       ],
       mockVisualType: 'node-editor',
     },
     {
       id: 'curriculum',
       title: 'Structured 8-Level Python Track',
-      tagline: 'From Variables to Loops & Algorithms',
+      tagline: 'From Puppy Steps to Alpha Python Developer',
       description:
-        'Master Python systematically through gamified flow challenges: Start with Variables and Input/Output, master If/Else decision branches, build while loops, and conquer search algorithms.',
+        'Master Python systematically through gamified flow challenges: Start with Variables and Input/Output, master If/Else decision branches, build loops, and conquer search algorithms.',
       iconName: 'Lock',
       accentColor: '#287A52',
       tag: 'Python Curriculum',
       capabilities: [
-        'Locked-level progression (pass level test suites to advance)',
+        'Locked-level progression (fetch passing test suites to advance)',
         'Classic algorithmic problems (Number Guessing Game, Even/Odd, Factorial)',
         'Earn XP, unlock certificates, and track mastery badges',
-        'Visual execution highlights explaining where conditions branch',
+        'Visual execution highlights explaining exactly where conditions branch',
       ],
       mockVisualType: 'curriculum',
     },
@@ -68,7 +68,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
       title: 'In-Browser Python IDE Sandbox',
       tagline: 'Instant Code Generation & Local-First Persistence',
       description:
-        'Switch instantly between the Visual Flowchart, Generated Python 3 Code tab, and the Interactive REPL Terminal. Everything is saved automatically in your browser.',
+        'Switch instantly between the Visual Flowchart, Generated Python 3 Code tab, and the Interactive REPL Terminal. Everything auto-saves in your browser — no projects buried in the backyard.',
       iconName: 'Sliders',
       accentColor: '#356A9A',
       tag: 'Developer UX',
@@ -85,7 +85,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
       title: 'Python Script & Challenge Manager',
       tagline: 'Multi-Project Flowchart Workspaces',
       description:
-        'Organize distinct Python algorithms (Guessing Game, FizzBuzz, Grade Calculator), save revisions, and inspect complete execution histories.',
+        'Organize distinct Python algorithms (Guessing Game, FizzBuzz, Grade Calculator), save revisions, and inspect complete execution histories without losing a single line of logic.',
       iconName: 'PlayCircle',
       accentColor: '#806A55',
       tag: 'Workspaces',
@@ -93,16 +93,16 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
         'Switch between multiple isolated flowchart project files',
         'Execute test runs with step-by-step memory inspections',
         'Export flowchart JSON diagrams and clean Python scripts',
-        'Full test suite assertion logs',
+        'Full test suite assertion logs and execution traces',
       ],
       mockVisualType: 'run-terminal',
     },
     {
       id: 'user-hub',
       title: 'Student Profile & Achievements',
-      tagline: 'Custom Avatars, Badges & Python Certificates',
+      tagline: 'Custom Avatars, Treat Badges & Python Certificates',
       description:
-        'Track your Python learning streak, cumulative XP earned from solved logic puzzles, and generate downloadable completion certificates.',
+        'Track your Python learning streak, cumulative XP earned from solved logic puzzles, and generate downloadable completion certificates to show off to the pack.',
       iconName: 'UserCheck',
       accentColor: '#F26A3D',
       tag: 'Student Hub',
@@ -128,13 +128,13 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-white border border-black/6 text-xs font-mono font-semibold text-[#121212] shadow-xs">
-            <span>VISUAL PYTHON LEARNING</span>
+            <span>LEASH-FREE VISUAL LEARNING 🐾</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#121212] tracking-tight">
-            5 Pillars of the TeachFlow Python Platform
+            5 Pillars of the LogicPup Python Platform
           </h2>
           <p className="text-base sm:text-lg text-[#666666]">
-            Bridge the gap between mental logic flowcharts and real executable Python 3 code.
+            Bridge the gap between mental logic flowcharts and real executable Python 3 code — no syntax bites attached.
           </p>
         </div>
 

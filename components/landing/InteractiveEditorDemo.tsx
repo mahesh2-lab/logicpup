@@ -32,6 +32,7 @@ import confetti from 'canvas-confetti';
 import { pythonNodeTypes } from '../flow/CustomNodes';
 import { CustomNodeData, PythonNodeType } from '../flow/types';
 import { generatePythonFromFlow } from '../flow/CodeGenerator';
+import { ReactFlowMobileWarning } from '../ui/ReactFlowMobileWarning';
 
 const PYTHON_CHALLENGE = {
   id: 'ch-py-1',
@@ -323,20 +324,20 @@ export const InteractiveEditorDemo: React.FC = () => {
   return (
     <section
       id="interactive-demo-playground"
-      className="py-16 md:py-24 relative overflow-hidden"
+      className="hidden lg:block py-16 md:py-24 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-sm bg-white border border-[#D8D4CC] text-xs font-mono font-bold text-[#F26A3D] shadow-xs">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>PYTHON FLOWCHART CODING PLATFORM</span>
+            <span>INTERACTIVE PLAYGROUND • SIT, STAY, CODE 🐾</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#171717] tracking-tight">
-            Learn Python Logic Visually
+            Test-Drive The LogicPup Engine
           </h2>
           <p className="text-base sm:text-lg text-[#555555]">
-            Every Python program—from conditionals to loops and variables—can be understood as an intuitive visual flowchart. Connect blocks to generate and run real Python 3 code.
+            Connect blocks, click Run, and watch LogicPup translate your diagram into Python 3 code faster than a retriever chasing a tennis ball.
           </p>
         </div>
 
@@ -409,36 +410,38 @@ export const InteractiveEditorDemo: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
             {/* Left 8 Cols: Visual Python Flowchart */}
             <div className="lg:col-span-8 h-[500px] relative">
-              <ReactFlow
-                nodes={nodes}
-                edges={edges}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onConnect={onConnect}
-                onNodeClick={handleNodeClick}
-                nodeTypes={pythonNodeTypes}
-                fitView
-                snapToGrid={true}
-                snapGrid={[20, 20]}
-                defaultEdgeOptions={{
-                  animated: true,
-                  style: { stroke: '#171717', strokeWidth: 1.8 },
-                  markerEnd: { type: MarkerType.ArrowClosed, color: '#171717' },
-                }}
-                className="bg-[#FAFAFA]"
-              >
-                <Background variant={BackgroundVariant.Lines} gap={24} size={1} color="#E2E8F0" />
-                <Controls className="bg-white rounded-sm border border-[#171717]/20 shadow-xs text-[#171717]" />
-                <MiniMap
-                  nodeColor="#171717"
-                  className="bg-white rounded-sm border border-[#171717]/20 shadow-xs"
-                />
+              <ReactFlowMobileWarning>
+                <ReactFlow
+                  nodes={nodes}
+                  edges={edges}
+                  onNodesChange={onNodesChange}
+                  onEdgesChange={onEdgesChange}
+                  onConnect={onConnect}
+                  onNodeClick={handleNodeClick}
+                  nodeTypes={pythonNodeTypes}
+                  fitView
+                  snapToGrid={true}
+                  snapGrid={[20, 20]}
+                  defaultEdgeOptions={{
+                    animated: true,
+                    style: { stroke: '#171717', strokeWidth: 1.8 },
+                    markerEnd: { type: MarkerType.ArrowClosed, color: '#171717' },
+                  }}
+                  className="bg-[#FAFAFA]"
+                >
+                  <Background variant={BackgroundVariant.Lines} gap={24} size={1} color="#E2E8F0" />
+                  <Controls className="bg-white rounded-sm border border-[#171717]/20 shadow-xs text-[#171717]" />
+                  <MiniMap
+                    nodeColor="#171717"
+                    className="bg-white rounded-sm border border-[#171717]/20 shadow-xs"
+                  />
 
-                <Panel position="bottom-left" className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-sm border border-[#171717]/20 text-[10px] font-mono text-[#555555] shadow-xs flex items-center gap-2">
-                  <Zap className="w-3 h-3 text-[#F26A3D]" />
-                  <span>Click any Python node to inspect statement details</span>
-                </Panel>
-              </ReactFlow>
+                  <Panel position="bottom-left" className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-sm border border-[#171717]/20 text-[10px] font-mono text-[#555555] shadow-xs flex items-center gap-2">
+                    <Zap className="w-3 h-3 text-[#F26A3D]" />
+                    <span>Click any Python node to inspect statement details</span>
+                  </Panel>
+                </ReactFlow>
+              </ReactFlowMobileWarning>
             </div>
 
             {/* Right 4 Cols: Inspector & Live Python Code / Terminal */}

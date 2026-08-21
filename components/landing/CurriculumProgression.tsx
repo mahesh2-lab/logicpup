@@ -135,13 +135,13 @@ export const CurriculumProgression: React.FC<CurriculumProgressionProps> = ({
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-white border border-black/[0.06] text-xs font-mono font-semibold text-[#287A52] shadow-xs">
-            <span>PYTHON MASTERY PATHWAY</span>
+            <span>PYTHON MASTERY PATHWAY 🐾</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#121212] tracking-tight">
             8-Level Python Coding Curriculum
           </h2>
           <p className="text-base sm:text-lg text-[#666666]">
-            Every level teaches core Python concepts through visual flowcharts and verified test runs before unlocking the next challenge.
+            From your very first variable to full game loops: master Python step-by-step with interactive flowcharts and automated test assertions. Treat yourself to real coding skills!
           </p>
         </div>
 

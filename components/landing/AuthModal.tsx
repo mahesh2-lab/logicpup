@@ -91,7 +91,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               {mode === 'signup' ? 'Account Created!' : 'Logged In!'}
             </h4>
             <p className="text-xs font-mono text-[#666666]">
-              Redirecting to TeachFlow Workspace...
+              Redirecting to LogicPup Workspace... 🐾
             </p>
           </div>
         ) : (

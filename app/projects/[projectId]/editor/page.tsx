@@ -10,6 +10,7 @@ import { InputDialog } from "@/components/visual-editor/components/InputDialog";
 import { ChallengeRunnerPanel } from "@/components/visual-editor/components/ChallengeRunnerPanel";
 import { useEditorStore } from "@/components/visual-editor/state/editorStore";
 import { useProjectsStore } from "@/components/visual-editor/projects/projectStore";
+import { ReactFlowMobileWarning } from "@/components/ui/ReactFlowMobileWarning";
 
 export default function ProjectEditorPage() {
   const params = useParams();
@@ -46,47 +47,49 @@ export default function ProjectEditorPage() {
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
-      {/* Workspace columns */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Block Library (Left Tool Drawer) */}
-        <BlockLibrary
-          collapsed={libraryCollapsed}
-          onToggle={() => setLibraryCollapsed(!libraryCollapsed)}
-        />
-
-        {/* Center Canvas + Right Code / Challenge Panels */}
-        <div className="flex flex-col flex-1 overflow-hidden">
-          <div className="flex flex-1 overflow-hidden">
-            <Canvas />
-
-            {/* Challenge & Automated Test Cases Panel with searchParams binding */}
-            {taskPanelOpen && (
-              <ChallengeRunnerPanel
-                key={projectId + "_" + (challengeParam || currentProject?.learningState?.challengeId || "main")}
-                project={currentProject}
-                onClose={() => setTaskPanelOpen(false)}
-              />
-            )}
-
-            {/* Live Python Code Panel */}
-            {layoutMode === "split" && !taskPanelOpen && (
-              <CodePanel
-                collapsed={codeCollapsed}
-                onToggle={() => setCodeCollapsed(!codeCollapsed)}
-              />
-            )}
-          </div>
-
-          {/* Terminal Output Panel */}
-          <OutputPanel
-            expanded={outputExpanded}
-            onToggle={() => setOutputExpanded((v) => !v)}
+      <ReactFlowMobileWarning>
+        {/* Workspace columns */}
+        <div className="flex flex-1 overflow-hidden">
+          {/* Block Library (Left Tool Drawer) */}
+          <BlockLibrary
+            collapsed={libraryCollapsed}
+            onToggle={() => setLibraryCollapsed(!libraryCollapsed)}
           />
-        </div>
-      </div>
 
-      {/* Interactive Program Input Dialog */}
-      <InputDialog />
+          {/* Center Canvas + Right Code / Challenge Panels */}
+          <div className="flex flex-col flex-1 overflow-hidden">
+            <div className="flex flex-1 overflow-hidden">
+              <Canvas />
+
+              {/* Challenge & Automated Test Cases Panel with searchParams binding */}
+              {taskPanelOpen && (
+                <ChallengeRunnerPanel
+                  key={projectId + "_" + (challengeParam || currentProject?.learningState?.challengeId || "main")}
+                  project={currentProject}
+                  onClose={() => setTaskPanelOpen(false)}
+                />
+              )}
+
+              {/* Live Python Code Panel */}
+              {layoutMode === "split" && !taskPanelOpen && (
+                <CodePanel
+                  collapsed={codeCollapsed}
+                  onToggle={() => setCodeCollapsed(!codeCollapsed)}
+                />
+              )}
+            </div>
+
+            {/* Terminal Output Panel */}
+            <OutputPanel
+              expanded={outputExpanded}
+              onToggle={() => setOutputExpanded((v) => !v)}
+            />
+          </div>
+        </div>
+
+        {/* Interactive Program Input Dialog */}
+        <InputDialog />
+      </ReactFlowMobileWarning>
     </div>
   );
 }

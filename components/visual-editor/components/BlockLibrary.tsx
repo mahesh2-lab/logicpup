@@ -9,6 +9,7 @@ import {
 } from "../blocks/definitions";
 import type { BlockDefinition, BlockCategory } from "../ast/types";
 import { useEditorStore } from "../state/editorStore";
+import { useReactFlow } from "@xyflow/react";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Block Library — editorial tool drawer style
@@ -62,16 +63,8 @@ export function BlockLibrary({ collapsed, onToggle }: BlockLibraryProps) {
   if (collapsed) {
     return (
       <div
-        style={{
-          width: 32,
-          flexShrink: 0,
-          borderRight: "1px solid #D8D4CC",
-          background: "#FFFFFF",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          paddingTop: 12,
-        }}
+        className="shrink-0 border-r border-[#D8D4CC] bg-white flex flex-col items-center pt-3"
+        style={{ width: 32, height: "100%" }}
       >
         <button
           onClick={onToggle}
@@ -104,15 +97,7 @@ export function BlockLibrary({ collapsed, onToggle }: BlockLibraryProps) {
 
   return (
     <aside
-      style={{
-        width: 210,
-        flexShrink: 0,
-        background: "#FFFFFF",
-        borderRight: "1px solid #D8D4CC",
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-      }}
+      className="w-full lg:w-[210px] shrink-0 bg-white border-r border-[#D8D4CC] flex flex-col overflow-hidden h-full"
     >
       {/* Header */}
       <div
@@ -306,13 +291,53 @@ function BlockPaletteItem({
   def: BlockDefinition;
   onDragStart: (e: React.DragEvent, def: BlockDefinition) => void;
 }) {
-  const { openHelp } = useEditorStore();
+  const { openHelp, addNode, setLibraryCollapsed } = useEditorStore();
+  const reactFlow = useReactFlow();
   const catColor = CATEGORY_META[def.category]?.color ?? "#555";
+
+  // Tap-to-add for mobile devices where drag-and-drop fails
+  function handleTapToAdd() {
+    const id = `${def.type}-${Date.now()}`;
+    let position = { x: 100, y: 100 };
+
+    if (reactFlow) {
+      const zoom = reactFlow.getZoom();
+      // approximate center placement using viewport
+      const { x: vx, y: vy } = reactFlow.getViewport();
+      const canvasEl = document.querySelector('.react-flow');
+      if (canvasEl) {
+        const bounds = canvasEl.getBoundingClientRect();
+        const centerX = bounds.left + bounds.width / 2;
+        const centerY = bounds.top + bounds.height / 2;
+        position = reactFlow.screenToFlowPosition({ x: centerX, y: centerY });
+      }
+    }
+
+    addNode({
+      id,
+      type: "block",
+      position,
+      data: {
+        blockType: def.type,
+        label: def.label,
+        category: def.category,
+        color: catColor,
+        icon: def.icon,
+        values: def.defaultValues || {},
+      },
+    });
+
+    // Auto-collapse on mobile after adding a block so the user can see the canvas
+    if (window.innerWidth < 1024) {
+      setLibraryCollapsed(true);
+    }
+  }
 
   return (
     <div
       draggable
       onDragStart={(e) => onDragStart(e, def)}
+      onClick={handleTapToAdd}
       style={{
         display: "flex",
         alignItems: "center",

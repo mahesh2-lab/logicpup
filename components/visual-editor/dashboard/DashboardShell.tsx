@@ -16,6 +16,8 @@ import {
   WifiOff,
   RotateCcw,
   CheckCircle2,
+  Menu,
+  X,
 } from "lucide-react";
 import { useProjectsStore } from "../projects/projectStore";
 import { UserAuthMenu } from "../components/UserAuthMenu";
@@ -49,6 +51,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
   } = useProjectsStore();
 
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isCreateProjectOpen, setIsCreateProjectOpen] = useState(false);
   const [isCreateCollectionOpen, setIsCreateCollectionOpen] = useState(false);
 
@@ -126,13 +129,21 @@ export function DashboardShell({ children }: DashboardShellProps) {
   return (
     <div className="h-screen flex flex-col bg-[#F4F1EA] text-[#171717] font-sans">
       {/* ── Top Global Navbar ── */}
-      <header className="flex items-center justify-between px-6 h-12 border-b border-[#D8D4CC] bg-white shrink-0">
+      <header className="flex items-center justify-between px-4 sm:px-6 h-14 border-b border-[#D8D4CC] bg-white shrink-0">
         {/* Left: Brand + Breadcrumbs */}
-        <div className="flex items-center gap-6">
-          <BrandLogo size="sm" href="/dashboard" className="mr-2" />
+        <div className="flex items-center gap-2 sm:gap-6">
+          <button
+            className="lg:hidden p-1.5 -ml-1.5 rounded-sm hover:bg-black/[0.04] text-[#171717] focus:outline-none"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            title="Toggle Menu"
+          >
+            <Menu size={20} />
+          </button>
+          
+          <BrandLogo size="sm" href="/dashboard" className="hidden sm:flex mr-2" />
+          <BrandLogo size="sm" href="/dashboard" showText={false} className="flex sm:hidden" />
 
-          {/* Quick Breadcrumbs */}
-          <div className="flex items-center gap-4 text-xs font-mono text-[#888888]">
+          <div className="hidden sm:flex items-center gap-4 text-xs font-mono text-[#888888]">
             <span>/</span>
             <Link
               href="/dashboard"
@@ -175,7 +186,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
          
 
           {/* Quick Search */}
-          <div className="relative flex items-center">
+          <div className="relative hidden md:flex items-center">
             <Search size={13} className="absolute left-2.5 text-[#888888] pointer-events-none" />
             <input
               type="text"
@@ -187,17 +198,18 @@ export function DashboardShell({ children }: DashboardShellProps) {
                   router.push("/dashboard/projects");
                 }
               }}
-              className="pl-8 pr-3 py-1 text-xs bg-[#FAF9F5] border border-[#D8D4CC] rounded focus:outline-none focus:border-[#F26A3D] transition-colors w-[190px]"
+              className="pl-8 pr-3 py-1.5 text-xs bg-[#FAF9F5] border border-[#D8D4CC] rounded focus:outline-none focus:border-[#F26A3D] transition-colors w-[190px]"
             />
           </div>
 
           <button
             type="button"
             onClick={() => setIsCreateProjectOpen(true)}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold uppercase tracking-wider rounded border-none cursor-pointer transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold uppercase tracking-wider rounded border-none cursor-pointer transition-colors"
           >
-            <Plus size={13} />
-            <span>NEW PROJECT</span>
+            <Plus size={14} />
+            <span className="hidden sm:inline">NEW PROJECT</span>
+            <span className="inline sm:hidden">NEW</span>
           </button>
 
           <UserAuthMenu />
@@ -205,52 +217,76 @@ export function DashboardShell({ children }: DashboardShellProps) {
       </header>
 
       {/* ── Main Body: Left Sidebar + Page Content ── */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden relative">
+        
+        {/* Mobile Sidebar Overlay */}
+        {mobileMenuOpen && (
+          <div 
+            className="lg:hidden fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+        )}
+
         {/* ── Left Sidebar Navigation ── */}
         <aside
-          className="border-r border-[#D8D4CC] bg-white flex flex-col justify-between py-4 shrink-0 transition-[width] duration-180 ease-out"
+          className={`
+            absolute lg:relative z-50 h-full
+            border-r border-[#D8D4CC] bg-white flex flex-col justify-between py-4 shrink-0 transition-all duration-300 ease-out
+            ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          `}
           style={{ width: sidebarCollapsed ? 64 : 220 }}
         >
-          {/* Navigation Links */}
-          <div className="space-y-1 px-2">
-            <div className="px-3 pb-2 text-[10px] font-bold text-[#888888] uppercase tracking-wider">
-              {!sidebarCollapsed && "WORKSPACE"}
+          <div className="flex flex-col">
+            {/* Mobile header (Logo + Close) */}
+            <div className="lg:hidden px-4 flex items-center justify-between mb-6">
+              <BrandLogo size="sm" href="/dashboard" />
+              <button onClick={() => setMobileMenuOpen(false)} className="p-1 -mr-1 text-[#888888] hover:text-[#171717]">
+                <X size={20} />
+              </button>
             </div>
+            
+            {/* Navigation Links */}
+            <div className="space-y-1 px-2">
+              <div className="px-3 pb-2 text-[10px] font-bold text-[#888888] uppercase tracking-wider">
+                {!sidebarCollapsed && "WORKSPACE"}
+              </div>
 
-            {sidebarNavItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded cursor-pointer transition-colors no-underline ${
-                  item.isActive
-                    ? "bg-[#F4F1EA] text-[#F26A3D] font-bold border-l-3 border-[#F26A3D]"
-                    : "text-[#555555] hover:bg-[#FAF9F5] hover:text-[#171717]"
-                }`}
-                title={item.label}
-              >
-                <div className="flex items-center gap-3">
-                  <span className={item.isActive ? "text-[#F26A3D]" : "text-[#888888]"}>
-                    {item.icon}
-                  </span>
-                  {!sidebarCollapsed && <span>{item.label}</span>}
-                </div>
+              {sidebarNavItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 lg:py-2 text-xs font-semibold rounded cursor-pointer transition-colors no-underline ${
+                    item.isActive
+                      ? "bg-[#F4F1EA] text-[#F26A3D] font-bold border-l-3 border-[#F26A3D]"
+                      : "text-[#555555] hover:bg-[#FAF9F5] hover:text-[#171717]"
+                  }`}
+                  title={item.label}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className={item.isActive ? "text-[#F26A3D]" : "text-[#888888]"}>
+                      {item.icon}
+                    </span>
+                    {!sidebarCollapsed && <span>{item.label}</span>}
+                  </div>
 
-                {!sidebarCollapsed && (
-                  <>
-                    {item.count && (
-                      <span className="text-[10px] font-mono bg-[#E5E2DA] px-1.5 py-0.2 rounded text-[#555]">
-                        {item.count}
-                      </span>
-                    )}
-                    {item.badge && (
-                      <span className="text-[9px] font-bold bg-[#F26A3D]/10 text-[#F26A3D] px-1.5 py-0.2 rounded">
-                        {item.badge}
-                      </span>
-                    )}
-                  </>
-                )}
-              </Link>
-            ))}
+                  {!sidebarCollapsed && (
+                    <div className="flex items-center gap-1.5">
+                      {item.count && (
+                        <span className="text-[10px] font-mono bg-[#E5E2DA] px-1.5 py-0.5 rounded text-[#555]">
+                          {item.count}
+                        </span>
+                      )}
+                      {item.badge && (
+                        <span className="text-[9px] font-bold bg-[#F26A3D]/10 text-[#F26A3D] px-1.5 py-0.5 rounded">
+                          {item.badge}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </Link>
+              ))}
+            </div>
           </div>
 
           {/* Bottom Help & Collapse Button */}
@@ -279,7 +315,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
         </aside>
 
         {/* ── Page Content Container ── */}
-        <main className="flex-1 overflow-auto p-8">
+        <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8">
           {children}
         </main>
       </div>

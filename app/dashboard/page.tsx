@@ -16,7 +16,10 @@ import {
   CheckCircle2,
   Lock,
 } from "lucide-react";
-import { useProjectsStore, PROJECT_TEMPLATES } from "@/components/visual-editor/projects/projectStore";
+import {
+  useProjectsStore,
+  PROJECT_TEMPLATES,
+} from "@/components/visual-editor/projects/projectStore";
 import { CODING_LEVELS } from "@/components/visual-editor/learning/levelsData";
 import { IconRenderer } from "@/components/visual-editor/components/IconRenderer";
 import { useMounted } from "@/lib/useMounted";
@@ -39,13 +42,15 @@ export default function HomePage() {
         (p) =>
           p.status !== "archived" &&
           p.id !== "challenge-sandbox" &&
-          !p.learningState?.challengeId
+          !p.learningState?.challengeId,
       )
     : [];
   const recentProject = mounted ? activeProjects[0] : undefined;
   const totalPoints = mounted ? getTotalEarnedPoints() : 0;
   const currentActiveLevel = mounted
-    ? (CODING_LEVELS.find((l) => isLevelUnlocked(l.levelNumber) && !isLevelMastered(l.id)) || CODING_LEVELS[0])
+    ? CODING_LEVELS.find(
+        (l) => isLevelUnlocked(l.levelNumber) && !isLevelMastered(l.id),
+      ) || CODING_LEVELS[0]
     : CODING_LEVELS[0];
 
   function handleCreateFromTemplate(templateId: string) {
@@ -57,7 +62,9 @@ export default function HomePage() {
   function formatTimeAgo(isoString: string) {
     if (!mounted) return "Recently";
     try {
-      const diffSec = Math.floor((Date.now() - new Date(isoString).getTime()) / 1000);
+      const diffSec = Math.floor(
+        (Date.now() - new Date(isoString).getTime()) / 1000,
+      );
       if (diffSec < 60) return "Just now";
       if (diffSec < 3600) return `${Math.floor(diffSec / 60)}m ago`;
       if (diffSec < 86400) return `${Math.floor(diffSec / 3600)}h ago`;
@@ -68,18 +75,20 @@ export default function HomePage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-8 py-6">
       {/* ── Featured Announcement Banner ── */}
-      <div className="bg-[#FFFFFF] border border-[#D8D4CC] p-6 shadow-sm flex items-center justify-between gap-6 rounded">
+      <div className="bg-[#FFFFFF] border border-[#D8D4CC] p-6 shadow-sm flex flex-col md:flex-row md:items-center items-start justify-between gap-6 rounded">
         <div className="max-w-xl">
           <span className="text-[10px] font-bold tracking-wider uppercase text-[#F26A3D]">
-            TEACHFLOW PLATFORM
+            LOGICPUP PLATFORM 🐾
           </span>
           <h1 className="text-xl font-bold uppercase tracking-tight mt-1 mb-2">
             Visual Python Programming & Coding Levels
           </h1>
-          <p className="text-xs text-[#555555] leading-relaxed">
-            Master variables, logic, loops, math algorithms, and games through 10 progressive coding levels with automated interactive challenges.
+          <p className="text-xs text-[#555555] leading-relaxed hidden md:block">
+            Master variables, logic, loops, math algorithms, and games through
+            progressive coding levels with automated interactive challenges. No
+            syntax bites!
           </p>
         </div>
 
@@ -95,96 +104,98 @@ export default function HomePage() {
       </div>
 
       {/* ── Quick Stats Grid ── */}
-      <div className="grid grid-cols-4 gap-4">
-        <div className="bg-[#FFFFFF] border border-[#D8D4CC] p-4 rounded flex items-center justify-between">
-          <div>
-            <div className="text-[10px] font-bold text-[#888888] uppercase tracking-wider">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="bg-[#FFFFFF] border border-[#D8D4CC] p-3 sm:p-4 rounded flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+          <div className="min-w-0 w-full">
+            <div className="text-[9px] sm:text-[10px] font-bold text-[#888888] uppercase tracking-wider truncate">
               My Projects
             </div>
-            <div className="text-2xl font-bold font-mono mt-1">
+            <div className="text-lg sm:text-2xl font-bold font-mono mt-0.5 sm:mt-1 truncate">
               {mounted ? (
                 activeProjects.length
               ) : (
-                <span className="w-8 h-6 bg-[#E5E2DA] rounded animate-pulse inline-block" />
+                <span className="w-8 h-5 sm:h-6 bg-[#E5E2DA] rounded animate-pulse inline-block" />
               )}
             </div>
           </div>
-          <div className="w-10 h-10 rounded bg-[#FAF9F5] border border-[#E5E2DA] flex items-center justify-center text-[#F26A3D]">
+          <div className="hidden sm:flex w-10 h-10 rounded bg-[#FAF9F5] border border-[#E5E2DA] items-center justify-center text-[#F26A3D] shrink-0">
             <FolderCode size={20} />
           </div>
         </div>
 
-        <div className="bg-[#FFFFFF] border border-[#D8D4CC] p-4 rounded flex items-center justify-between">
-          <div>
-            <div className="text-[10px] font-bold text-[#888888] uppercase tracking-wider">
-              Earned XP Points
+        <div className="bg-[#FFFFFF] border border-[#D8D4CC] p-3 sm:p-4 rounded flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+          <div className="min-w-0 w-full">
+            <div className="text-[9px] sm:text-[10px] font-bold text-[#888888] uppercase tracking-wider truncate">
+              Earned XP
             </div>
-            <div className="text-2xl font-bold font-mono mt-1 text-[#F26A3D]">
+            <div className="text-lg sm:text-2xl font-bold font-mono mt-0.5 sm:mt-1 text-[#F26A3D] truncate">
               {mounted ? (
                 `⭐ ${totalPoints}`
               ) : (
-                <span className="w-12 h-6 bg-[#E5E2DA] rounded animate-pulse inline-block" />
+                <span className="w-12 h-5 sm:h-6 bg-[#E5E2DA] rounded animate-pulse inline-block" />
               )}
             </div>
           </div>
-          <div className="w-10 h-10 rounded bg-[#FAF9F5] border border-[#E5E2DA] flex items-center justify-center text-[#F26A3D]">
+          <div className="hidden sm:flex w-10 h-10 rounded bg-[#FAF9F5] border border-[#E5E2DA] items-center justify-center text-[#F26A3D] shrink-0">
             <Zap size={20} />
           </div>
         </div>
 
-        <div className="bg-[#FFFFFF] border border-[#D8D4CC] p-4 rounded flex items-center justify-between">
-          <div>
-            <div className="text-[10px] font-bold text-[#888888] uppercase tracking-wider">
-              Challenges Solved
+        <div className="bg-[#FFFFFF] border border-[#D8D4CC] p-3 sm:p-4 rounded flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+          <div className="min-w-0 w-full">
+            <div className="text-[9px] sm:text-[10px] font-bold text-[#888888] uppercase tracking-wider truncate">
+              Challenges
             </div>
-            <div className="text-2xl font-bold font-mono mt-1 text-[#287A52]">
+            <div className="text-lg sm:text-2xl font-bold font-mono mt-0.5 sm:mt-1 text-[#287A52] truncate">
               {mounted ? (
                 completedChallengeIds.length
               ) : (
-                <span className="w-8 h-6 bg-[#E5E2DA] rounded animate-pulse inline-block" />
+                <span className="w-8 h-5 sm:h-6 bg-[#E5E2DA] rounded animate-pulse inline-block" />
               )}
             </div>
           </div>
-          <div className="w-10 h-10 rounded bg-[#FAF9F5] border border-[#E5E2DA] flex items-center justify-center text-[#287A52]">
+          <div className="hidden sm:flex w-10 h-10 rounded bg-[#FAF9F5] border border-[#E5E2DA] items-center justify-center text-[#287A52] shrink-0">
             <Trophy size={20} />
           </div>
         </div>
 
-        <div className="bg-[#FFFFFF] border border-[#D8D4CC] p-4 rounded flex items-center justify-between">
-          <div>
-            <div className="text-[10px] font-bold text-[#888888] uppercase tracking-wider">
+        <div className="bg-[#FFFFFF] border border-[#D8D4CC] p-3 sm:p-4 rounded flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+          <div className="min-w-0 w-full">
+            <div className="text-[9px] sm:text-[10px] font-bold text-[#888888] uppercase tracking-wider truncate">
               Current Level
             </div>
-            <div className="text-sm font-bold uppercase mt-1 truncate max-w-35">
+            <div className="text-xs sm:text-sm font-bold uppercase mt-0.5 sm:mt-1 truncate">
               {mounted ? (
                 `Lvl ${currentActiveLevel.levelNumber}: ${currentActiveLevel.badge}`
               ) : (
-                <span className="w-20 h-4 bg-[#E5E2DA] rounded animate-pulse inline-block" />
+                <span className="w-16 sm:w-20 h-4 sm:h-5 bg-[#E5E2DA] rounded animate-pulse inline-block" />
               )}
             </div>
           </div>
-          <div className="w-10 h-10 rounded bg-[#FAF9F5] border border-[#E5E2DA] flex items-center justify-center text-[#356A9A]">
+          <div className="hidden sm:flex w-10 h-10 rounded bg-[#FAF9F5] border border-[#E5E2DA] items-center justify-center text-[#356A9A] shrink-0">
             <IconRenderer name={currentActiveLevel.icon} size={20} />
           </div>
         </div>
       </div>
 
       {/* ── Active Level Highlight & Recent Project ── */}
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Current Recommended Level Challenge Card */}
-        <div className="col-span-2 bg-[#FFFFFF] border border-[#D8D4CC] p-6 rounded flex flex-col justify-between">
+        <div className="md:col-span-2 bg-[#FFFFFF] border border-[#D8D4CC] p-6 rounded flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 bg-[#FAF9F5] border border-[#D8D4CC] rounded text-[#F26A3D]">
+              <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 bg-[#FAF9F5] border border-[#D8D4CC] rounded text-[#F26A3D] line-clamp-1 mr-2">
                 RECOMMENDED CODING LEVEL
               </span>
-              <span className="text-xs font-mono text-[#888]">
+              <span className="text-[10px] sm:text-xs font-mono text-[#888] shrink-0">
                 LEVEL {currentActiveLevel.levelNumber} OF 10
               </span>
             </div>
 
-            <h2 className="text-lg font-bold uppercase mb-2 flex items-center gap-2">
-              <IconRenderer name={currentActiveLevel.icon} size={20} />
+            <h2 className="text-base sm:text-lg font-bold uppercase mb-2 flex items-start sm:items-center gap-2">
+              <span className="shrink-0 pt-0.5 sm:pt-0">
+                <IconRenderer name={currentActiveLevel.icon} size={20} />
+              </span>
               <span>{currentActiveLevel.title}</span>
             </h2>
             <p className="text-xs text-[#555555] mb-4 leading-relaxed">
@@ -195,9 +206,10 @@ export default function HomePage() {
               <div className="text-[10px] font-bold uppercase text-[#888]">
                 Level Challenges & Progress:
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {currentActiveLevel.challenges.slice(0, 4).map((ch) => {
-                  const isDone = mounted && completedChallengeIds.includes(ch.id);
+                  const isDone =
+                    mounted && completedChallengeIds.includes(ch.id);
                   return (
                     <div
                       key={ch.id}
@@ -207,14 +219,17 @@ export default function HomePage() {
                           : "bg-[#FAF9F5] border-[#D8D4CC] text-[#171717]"
                       }`}
                     >
-                      <div className="truncate pr-2">
-                        <div className="font-bold truncate">{ch.title}</div>
+                      <div className="pr-2 min-w-0">
+                        <div className="font-bold line-clamp-2">{ch.title}</div>
                         <div className="text-[10px] font-mono opacity-80 uppercase">
                           {ch.difficulty} • {ch.points} pts
                         </div>
                       </div>
                       {isDone ? (
-                        <CheckCircle2 size={14} className="shrink-0 text-[#287A52]" />
+                        <CheckCircle2
+                          size={14}
+                          className="shrink-0 text-[#287A52]"
+                        />
                       ) : (
                         <span className="text-[10px] font-mono px-1 bg-white border border-[#D8D4CC] rounded">
                           START
@@ -229,10 +244,11 @@ export default function HomePage() {
 
           <div className="pt-4 border-t border-[#E5E2DA] flex items-center justify-between">
             <span className="text-xs font-mono text-[#888]">
-              {mounted ? getLevelMasteryPercent(currentActiveLevel.id) : 0}% Mastered
+              {mounted ? getLevelMasteryPercent(currentActiveLevel.id) : 0}%
+              Mastered
             </span>
             <Link
-              href={`/learn/${currentActiveLevel.id}`}
+              href={`/dashboard/learn/${currentActiveLevel.id}`}
               className="px-4 py-2 bg-[#171717] hover:bg-[#F26A3D] text-white text-xs font-bold uppercase rounded no-underline flex items-center gap-1.5 transition-colors"
             >
               <span>Continue Level {currentActiveLevel.levelNumber}</span>
@@ -257,7 +273,7 @@ export default function HomePage() {
 
             {recentProject ? (
               <div>
-                <h3 className="text-sm font-bold uppercase mb-1 truncate">
+                <h3 className="text-sm font-bold uppercase mb-1 line-clamp-2 break-words">
                   {recentProject.name}
                 </h3>
                 <p className="text-xs text-[#666666] line-clamp-3 mb-4">
@@ -265,7 +281,9 @@ export default function HomePage() {
                 </p>
                 <div className="text-[10px] font-mono text-[#888] space-y-1">
                   <div>Language: Python</div>
-                  <div>Blocks: {recentProject.visualProgram?.nodes?.length || 0}</div>
+                  <div>
+                    Blocks: {recentProject.visualProgram?.nodes?.length || 0}
+                  </div>
                   <div>Runs logged: {recentProject.runs?.length || 0}</div>
                 </div>
               </div>
@@ -318,7 +336,7 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {PROJECT_TEMPLATES.map((tmpl) => (
             <div
               key={tmpl.id}
@@ -336,12 +354,18 @@ export default function HomePage() {
                     className="text-[#888] group-hover:text-[#F26A3D] transition-colors"
                   />
                 </div>
-                <h4 className="text-xs font-bold uppercase mb-1">{tmpl.name}</h4>
-                <p className="text-xs text-[#666666] line-clamp-2">{tmpl.description}</p>
+                <h4 className="text-xs font-bold uppercase mb-1">
+                  {tmpl.name}
+                </h4>
+                <p className="text-xs text-[#666666] line-clamp-2">
+                  {tmpl.description}
+                </p>
               </div>
               <div className="pt-3 border-t border-[#E5E2DA] mt-3 text-[10px] font-mono text-[#888] flex items-center justify-between">
                 <span>{tmpl.starterNodes.length} Blocks</span>
-                <span className="text-[#F26A3D] font-bold group-hover:underline">Use Template</span>
+                <span className="text-[#F26A3D] font-bold group-hover:underline">
+                  Use Template
+                </span>
               </div>
             </div>
           ))}

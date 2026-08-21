@@ -3,7 +3,7 @@ import { CustomNodeData } from './types';
 
 export function generatePythonFromFlow(nodes: Node<CustomNodeData>[], edges: Edge[]): string {
   if (nodes.length === 0) {
-    return '# TeachFlow Visual Python Flowchart\n# Drag and connect nodes to generate Python 3 code.\n';
+    return '# LogicPup Visual Python Flowchart 🐾\n# Drag and connect nodes to generate Python 3 code.\n';
   }
 
   // Check if we have the "Number Guessing Game" pattern

@@ -116,7 +116,7 @@ export default function ProjectsPage() {
       onClick={() => setActiveMenuId(null)}
     >
       {/* Header Strip */}
-      <div className="flex items-center justify-between pb-4 border-b border-[#D8D4CC]">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#D8D4CC]">
         <div>
           <div className="flex items-center gap-2">
             <FolderCode size={20} color="#F26A3D" />
@@ -137,10 +137,10 @@ export default function ProjectsPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
           <button
             onClick={() => setIsCreateModalOpen(true)}
-            className="px-4 py-2 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold uppercase rounded border-none cursor-pointer flex items-center gap-1.5 shadow-xs transition-colors"
+            className="w-full sm:w-auto px-4 py-2 bg-[#F26A3D] hover:bg-[#E0592C] text-white text-xs font-bold uppercase rounded border-none cursor-pointer flex items-center justify-center gap-1.5 shadow-xs transition-colors"
           >
             <Plus size={13} />
             <span>New Project</span>
@@ -203,7 +203,7 @@ export default function ProjectsPage() {
 
       {/* Projects Grid */}
       {!mounted ? (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[1, 2, 3].map((n) => (
             <div
               key={n}
@@ -227,7 +227,7 @@ export default function ProjectsPage() {
           ))}
         </div>
       ) : activeProjects.length > 0 ? (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {activeProjects.map((project) => {
             const nodeCount = project.visualProgram?.nodes?.length || 0;
             const isMenuOpen = activeMenuId === project.id;

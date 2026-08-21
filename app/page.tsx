@@ -74,7 +74,7 @@ export default function App() {
 
   return (
     <div
-      id="teachflow-app-root"
+      id="logicpup-app-root"
       className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${
         idePreferences.theme === 'dark-slate'
           ? 'bg-[#0F172A] text-[#F8FAFC]'
@@ -89,7 +89,7 @@ export default function App() {
       {/* Toast Notification Banner */}
       {toastMessage && (
         <div
-          id="teachflow-toast-notification"
+          id="logicpup-toast-notification"
           className="fixed bottom-6 right-6 z-50 bg-[#121212] text-white px-4 py-3 rounded-sm border border-white/15 shadow-xl flex items-center gap-2.5 font-mono text-xs animate-in slide-in-from-bottom-5 duration-200"
         >
           <Sparkles className="w-4 h-4 text-[#F26A3D]" />

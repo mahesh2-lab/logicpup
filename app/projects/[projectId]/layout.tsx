@@ -8,6 +8,7 @@ import { useProjectsStore } from "@/components/visual-editor/projects/projectSto
 import { ProjectHeader } from "@/components/visual-editor/projects/ProjectHeader";
 import { BlockExplanationModal } from "@/components/visual-editor/components/BlockExplanationModal";
 import { useEditorStore } from "@/components/visual-editor/state/editorStore";
+import { useMounted } from "@/lib/useMounted";
 
 export default function ProjectLayout({
   children,
@@ -19,6 +20,7 @@ export default function ProjectLayout({
 
   const { getProject, setActiveProjectId, hydrateFromDatabase, startLevelChallenge } = useProjectsStore();
   const { loadProjectProgram, activeProjectId } = useEditorStore();
+  const mounted = useMounted();
 
   useEffect(() => {
     hydrateFromDatabase();
@@ -40,6 +42,15 @@ export default function ProjectLayout({
       );
     }
   }, [project, activeProjectId, setActiveProjectId, loadProjectProgram]);
+
+  if (!mounted) {
+    return (
+      <div
+        className="min-h-screen flex flex-col items-center justify-center p-6"
+        style={{ background: "#F4F1EA", color: "#171717", fontFamily: "var(--font-sans)" }}
+      />
+    );
+  }
 
   if (!project) {
     return (

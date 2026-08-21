@@ -64,7 +64,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   return (
     <section
       ref={heroRef}
-      id="teachflow-hero-section"
+      id="logicpup-hero-section"
       className="relative pt-6 pb-16 md:pt-12 md:pb-24 overflow-hidden"
     >
       {/* Ambient Parallax Gradient Orbs */}
@@ -83,9 +83,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         className="hidden xl:flex absolute left-8 top-32 z-0 items-center gap-2 px-3 py-2 rounded-sm bg-white/90 backdrop-blur-md border border-[#D8D4CC] shadow-xs text-xs font-mono text-[#171717] pointer-events-none"
       >
         <span className="w-2 h-2 rounded-sm bg-[#F26A3D]" />
-        <span className="text-[#806A55]">if guess == secret_number:</span>
+        <span className="text-[#806A55]">if pup_knows_python == True:</span>
         <span className="text-[10px] text-[#287A52] font-semibold bg-[#287A52]/10 px-1.5 py-0.5 rounded-sm">
-          Python 3.12
+          Python 3.12 🐾
         </span>
       </motion.div>
 
@@ -94,8 +94,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         className="hidden xl:flex absolute right-8 top-40 z-0 items-center gap-2 px-3 py-2 rounded-sm bg-white/90 backdrop-blur-md border border-[#D8D4CC] shadow-xs text-xs font-mono text-[#171717] pointer-events-none"
       >
         <Code2 className="w-3.5 h-3.5 text-[#356A9A]" />
-        <span className="text-[#555555]">Python Flow Engine:</span>
-        <span className="font-semibold text-[#171717]">AST_SYNCHRONIZED</span>
+        <span className="text-[#555555]">LogicPup Engine:</span>
+        <span className="font-semibold text-[#171717]">FETCH_CODE_SUCCESS</span>
       </motion.div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-8">
@@ -108,7 +108,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           >
             <Workflow className="w-3.5 h-3.5 text-[#F26A3D]" />
             <span>Visual Flowchart Coding for Python</span>
-            <span className="text-[#806A55] font-mono">• Variables, Loops & If/Else</span>
+            <span className="hidden sm:inline text-[#806A55] font-mono">• No Leash, No Syntax Bites 🐶</span>
           </motion.div>
 
           {/* Primary Heading with Magnetic Cursor Drift Effect */}
@@ -123,8 +123,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               enableTilt={true}
               className="cursor-default"
             >
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#171717] tracking-tight leading-[1.08] select-none transition-colors">
-                Learn Python Code <br className="hidden sm:inline" />
+              <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold text-[#171717] tracking-tight leading-[1.15] sm:leading-[1.08] select-none transition-colors">
+                Teach Yourself Python <br className="hidden sm:inline" />
                 <span className="text-[#F26A3D] relative inline-block">
                   Through Visual Flowcharts.
                   <span className="absolute -bottom-1 left-0 w-full h-1 bg-[#F26A3D]/20 rounded-sm" />
@@ -136,15 +136,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Subheadline with Parallax */}
           <motion.p
             style={{ y: subheadlineY }}
-            className="text-base sm:text-xl text-[#555555] leading-relaxed max-w-2xl mx-auto"
+            className="text-sm sm:text-xl text-[#555555] leading-relaxed max-w-2xl mx-auto pt-3 sm:pt-0"
           >
-            Connect statements, branch decision paths, and watch your Python algorithms execute block by block. Instantly see your flowchart convert into clean Python 3 code with interactive live memory inspection.
+            Connect blocks, branch decisions, and let LogicPup fetch real executable Python 3 code in real-time. Because chasing bugs should feel like a fun game of fetch — not barking up the wrong tree.
           </motion.p>
 
           {/* Primary Action Buttons with Magnetic Cursor Drift & Parallax */}
           <motion.div
             style={{ y: buttonsY }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2"
           >
             {/* Magnetic Primary Call to Action */}
             <MagneticWrapper
@@ -152,14 +152,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               strength={0.38}
               radius={180}
               enableTilt={true}
-              className="w-full sm:w-auto"
+              className="w-auto"
             >
               <button
                 id="hero-start-learning-cta"
                 onClick={() => { window.location.href = "/login?mode=signup"; }}
-                className="w-full sm:w-auto px-6 py-3.5 bg-[#F26A3D] hover:bg-[#D9552A] active:scale-98 text-white font-semibold text-sm sm:text-base rounded-sm shadow-[0_4px_14px_rgba(242,106,61,0.25)] hover:shadow-[0_6px_20px_rgba(242,106,61,0.35)] transition-all duration-150 flex items-center justify-center gap-2.5 cursor-pointer group"
+                className="w-auto px-5 py-2.5 sm:px-6 sm:py-3.5 bg-[#F26A3D] hover:bg-[#D9552A] active:scale-98 text-white font-semibold text-sm sm:text-base rounded-sm shadow-[0_4px_14px_rgba(242,106,61,0.25)] hover:shadow-[0_6px_20px_rgba(242,106,61,0.35)] transition-all duration-150 flex items-center justify-center gap-2.5 cursor-pointer group"
               >
-                <span>Start Learning Python for Free</span>
+                <span>Start Learning <span className="hidden sm:inline">Python </span>(Free<span className="hidden sm:inline"> Forever</span>)</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-200" />
               </button>
             </MagneticWrapper>
@@ -170,15 +170,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               strength={0.25}
               radius={150}
               enableTilt={false}
-              className="w-full sm:w-auto"
+              className="w-auto"
             >
               <button
                 id="hero-view-demo-cta"
                 onClick={onExploreDemo}
-                className="w-full sm:w-auto px-6 py-3.5 bg-white hover:bg-[#F4F1EA] text-[#171717] font-semibold text-sm sm:text-base rounded-sm border border-[#D8D4CC] shadow-xs hover:border-[#806A55]/40 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-auto px-5 py-2.5 sm:px-6 sm:py-3.5 bg-white hover:bg-[#F4F1EA] text-[#171717] font-semibold text-sm sm:text-base rounded-sm border border-[#D8D4CC] shadow-xs hover:border-[#806A55]/40 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Terminal className="w-4 h-4 text-[#356A9A]" />
-                <span>Try Python Flowchart Playground</span>
+                <span>Try <span className="hidden sm:inline">Flowchart </span>Playground 🐾</span>
               </button>
             </MagneticWrapper>
           </motion.div>
@@ -186,7 +186,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Minimal Key Feature Badges with Parallax */}
           <motion.div
             style={{ y: badgesY }}
-            className="pt-1 flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-[#555555]"
+            className="hidden sm:flex pt-1 flex-wrap items-center justify-center gap-6 text-xs font-mono text-[#555555]"
           >
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-[#287A52]" /> 4-Port Connecting Blocks (Top/Bottom/Left/Right)
@@ -195,7 +195,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <Activity className="w-3.5 h-3.5 text-[#287A52]" /> Real-Time Python 3.12 Code Generation
             </span>
             <span className="flex items-center gap-1.5">
-              <Shield className="w-3.5 h-3.5 text-[#287A52]" /> Step-by-Step Logic Execution & Variables Watch
+              <Shield className="w-3.5 h-3.5 text-[#287A52]" /> Step-by-Step Logic & Live Variable Sniffing
             </span>
           </motion.div>
         </div>
