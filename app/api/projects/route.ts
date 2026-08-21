@@ -16,11 +16,11 @@ const projectSchema = z.object({
   language: z.string().optional().default("python"),
   templateId: z.string().optional().default("empty"),
   visualProgram: visualProgramSchema.optional().nullable(),
-  files: z.array(z.record(z.any())).optional(),
-  settings: z.record(z.any()).optional(),
+  files: z.array(z.record(z.string(), z.any())).optional(),
+  settings: z.record(z.string(), z.any()).optional(),
   progress: z.number().optional().default(0),
   status: z.string().optional().default("active"),
-  learningState: z.record(z.any()).optional(),
+  learningState: z.record(z.string(), z.any()).optional(),
 });
 
 export async function GET(request: NextRequest) {

@@ -13,12 +13,12 @@ const putProjectSchema = z.object({
   name: z.string().min(1).max(150).optional(),
   description: z.string().optional(),
   visualProgram: visualProgramSchema.optional().nullable(),
-  settings: z.record(z.any()).optional(),
+  settings: z.record(z.string(), z.any()).optional(),
   progress: z.number().optional(),
   status: z.string().optional(),
-  files: z.array(z.record(z.any())).optional(),
-  run: z.record(z.any()).optional(),
-  activity: z.record(z.any()).optional(),
+  files: z.array(z.record(z.string(), z.any())).optional(),
+  run: z.record(z.string(), z.any()).optional(),
+  activity: z.record(z.string(), z.any()).optional(),
 });
 interface RouteParams {
   params: Promise<{
