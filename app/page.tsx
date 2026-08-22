@@ -11,27 +11,40 @@ import { GoogleAuthInfoSection } from '@/components/landing/GoogleAuthInfoSectio
 import { LandingClientWrapper } from '@/components/landing/LandingClientWrapper';
 
 export const metadata: Metadata = {
-  title: "LogicPup",
-  description: "LogicPup is an educational platform that teaches Python programming through an interactive, visual interface.",
+  title: "LogicPup — Visual Python Flowchart IDE",
+  description: "Learn Python programming through an interactive, drag-and-drop flowchart interface. LogicPup eliminates syntax errors so beginners can focus on building logic and real coding skills.",
   alternates: {
     canonical: process.env.NEXT_PUBLIC_APP_URL,
   },
+  openGraph: {
+    title: "LogicPup — Visual Python Flowchart IDE",
+    description: "Learn Python programming through an interactive, drag-and-drop flowchart interface. LogicPup eliminates syntax errors so beginners can focus on building logic and real coding skills.",
+    siteName: "LogicPup",
+  }
 };
 
 export default function Page() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "LogicPup",
-    operatingSystem: "Web",
-    applicationCategory: "EducationalApplication",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: "LogicPup",
+      operatingSystem: "Web",
+      applicationCategory: "EducationalApplication",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      description: "The leash-free visual Python programming environment.",
     },
-    description: "The leash-free visual Python programming environment.",
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "LogicPup",
+      url: process.env.NEXT_PUBLIC_APP_URL,
+    }
+  ];
 
   return (
     <>
