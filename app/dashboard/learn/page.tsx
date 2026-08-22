@@ -14,6 +14,7 @@ import { useProjectsStore } from "@/components/visual-editor/projects/projectSto
 import { CODING_LEVELS } from "@/components/visual-editor/learning/levelsData";
 import { IconRenderer } from "@/components/visual-editor/components/IconRenderer";
 import { useMounted } from "@/lib/useMounted";
+import { useEPStore } from "@/lib/ep-store";
 
 export default function LearnHubPage() {
   const mounted = useMounted();
@@ -25,7 +26,13 @@ export default function LearnHubPage() {
     getTotalEarnedPoints,
   } = useProjectsStore();
 
-  const totalPoints = mounted ? getTotalEarnedPoints() : 0;
+  const { ep, loadState } = useEPStore();
+  
+  React.useEffect(() => {
+    loadState();
+  }, [loadState]);
+
+  const totalPoints = mounted ? getTotalEarnedPoints() + (ep || 0) : 0;
   const masteredLevelsCount = mounted ? CODING_LEVELS.filter((l) => isLevelMastered(l.id)).length : 0;
 
   return (

@@ -165,6 +165,13 @@ CREATE TABLE IF NOT EXISTS "user_challenge" (
   UNIQUE ("userId", "challengeId")
 );
 
+CREATE TABLE IF NOT EXISTS "user_arcade" (
+  "userId" TEXT NOT NULL PRIMARY KEY REFERENCES "user"("id") ON DELETE CASCADE,
+  "ep" INTEGER NOT NULL DEFAULT 0,
+  "unlockedGames" JSONB NOT NULL DEFAULT '{"racing": true}',
+  "updatedAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Indices
 CREATE INDEX IF NOT EXISTS "idx_session_userId" ON "session"("userId");
 CREATE INDEX IF NOT EXISTS "idx_account_userId" ON "account"("userId");

@@ -1,0 +1,80 @@
+{
+  "name": "Teachflow Design System",
+  "version": "1.0.0",
+  "theme": {
+    "colors": {
+      "brand": {
+        "value": "#F26A3D",
+        "type": "color",
+        "description": "Primary brand color"
+      },
+      "ink": {
+        "value": "#171717",
+        "type": "color",
+        "description": "Primary text color"
+      },
+      "inkSecondary": {
+        "value": "#555555",
+        "type": "color",
+        "description": "Secondary text color"
+      },
+      "paper": {
+        "value": "#F4F1EA",
+        "type": "color",
+        "description": "Application background color"
+      },
+      "surface": {
+        "value": "#FFFFFF",
+        "type": "color",
+        "description": "Card and element surface color"
+      },
+      "border": {
+        "value": "#D8D4CC",
+        "type": "color",
+        "description": "Divider and border color"
+      },
+      "blue": {
+        "value": "#356A9A",
+        "type": "color"
+      },
+      "green": {
+        "value": "#287A52",
+        "type": "color"
+      },
+      "brown": {
+        "value": "#806A55",
+        "type": "color"
+      },
+      "error": {
+        "value": "#C94A45",
+        "type": "color"
+      }
+    },
+    "typography": {
+      "fontFamilies": {
+        "sans": {
+          "value": "\"IBM Plex Sans\", system-ui, sans-serif",
+          "type": "fontFamily"
+        },
+        "mono": {
+          "value": "\"IBM Plex Mono\", \"Cascadia Code\", monospace",
+          "type": "fontFamily"
+        }
+      }
+    },
+    "radii": {
+      "sm": {
+        "value": "4px",
+        "type": "borderRadius"
+      },
+      "md": {
+        "value": "6px",
+        "type": "borderRadius"
+      },
+      "lg": {
+        "value": "8px",
+        "type": "borderRadius"
+      }
+    }
+  }
+}

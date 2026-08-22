@@ -24,6 +24,7 @@ import { CODING_LEVELS } from "@/components/visual-editor/learning/levelsData";
 import { IconRenderer } from "@/components/visual-editor/components/IconRenderer";
 import { useMounted } from "@/lib/useMounted";
 import posthog from "posthog-js";
+import { useEPStore } from "@/lib/ep-store";
 
 export default function HomePage() {
   const router = useRouter();
@@ -37,6 +38,11 @@ export default function HomePage() {
     getLevelMasteryPercent,
     getTotalEarnedPoints,
   } = useProjectsStore();
+  const { ep, loadState } = useEPStore();
+
+  useEffect(() => {
+    loadState();
+  }, [loadState]);
 
   const activeProjects = mounted
     ? projects.filter(
@@ -47,7 +53,7 @@ export default function HomePage() {
       )
     : [];
   const recentProject = mounted ? activeProjects[0] : undefined;
-  const totalPoints = mounted ? getTotalEarnedPoints() : 0;
+  const totalPoints = mounted ? getTotalEarnedPoints() + (ep || 0) : 0;
   const currentActiveLevel = mounted
     ? CODING_LEVELS.find(
         (l) => isLevelUnlocked(l.levelNumber) && !isLevelMastered(l.id),

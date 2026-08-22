@@ -18,6 +18,7 @@ import {
   CheckCircle2,
   Menu,
   X,
+  Gamepad2,
 } from "lucide-react";
 import { useProjectsStore } from "../projects/projectStore";
 import { UserAuthMenu } from "../components/UserAuthMenu";
@@ -117,6 +118,12 @@ export function DashboardShell({ children }: DashboardShellProps) {
       icon: <FolderArchive size={15} />,
       count: mounted ? String(collectionsCount) : undefined,
       isActive: pathname.startsWith("/dashboard/collections"),
+    },
+    {
+      href: "/games",
+      label: "Arcade",
+      icon: <Gamepad2 size={15} />,
+      isActive: pathname.startsWith("/games"),
     },
     {
       href: "/dashboard/tutorials",
