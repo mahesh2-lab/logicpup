@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
 import {
@@ -11,15 +12,7 @@ import {
 } from 'lucide-react';
 import { CurriculumLevel } from '../../types/landing';
 
-interface CurriculumProgressionProps {
-  onSelectLevel?: (levelNumber: number) => void;
-  onStartLearning: () => void;
-}
-
-export const CurriculumProgression: React.FC<CurriculumProgressionProps> = ({
-  onSelectLevel,
-  onStartLearning,
-}) => {
+export const CurriculumProgression: React.FC = () => {
   const [selectedLevelId, setSelectedLevelId] = useState<number>(1);
 
   const curriculumLevels: CurriculumLevel[] = [

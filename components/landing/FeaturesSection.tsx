@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
 import {
@@ -14,15 +15,8 @@ import {
 } from 'lucide-react';
 import { FeatureItem } from '../../types/landing';
 
-interface FeaturesSectionProps {
-  onOpenIdePreferences: () => void;
-  onStartLearning: () => void;
-}
 
-export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
-  onOpenIdePreferences,
-  onStartLearning,
-}) => {
+export const FeaturesSection: React.FC = () => {
   const [selectedFeature, setSelectedFeature] = useState<string>('node-editor');
   const [demoAutoSave, setDemoAutoSave] = useState<boolean>(true);
   const [demoFormatOnSave, setDemoFormatOnSave] = useState<boolean>(true);

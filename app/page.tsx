@@ -1,5 +1,14 @@
 import type { Metadata } from "next";
-import ClientPage from "./page.client";
+import { Header } from '@/components/landing/Header';
+import { HeroSection } from '@/components/landing/HeroSection';
+import { InteractiveEditorDemo } from '@/components/landing/InteractiveEditorDemo';
+import { FeaturesSection } from '@/components/landing/FeaturesSection';
+import { HowItWorksSection } from '@/components/landing/HowItWorksSection';
+import { CurriculumProgression } from '@/components/landing/CurriculumProgression';
+import { CtaSection } from '@/components/landing/CtaSection';
+import { Footer } from '@/components/landing/Footer';
+import { GoogleAuthInfoSection } from '@/components/landing/GoogleAuthInfoSection';
+import { LandingClientWrapper } from '@/components/landing/LandingClientWrapper';
 
 export const metadata: Metadata = {
   title: "LogicPup",
@@ -30,7 +39,19 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ClientPage />
+      <LandingClientWrapper>
+        <Header />
+        <main className="flex-1">
+          <HeroSection />
+          <InteractiveEditorDemo />
+          <HowItWorksSection />
+          <FeaturesSection />
+          <CurriculumProgression />
+          <GoogleAuthInfoSection />
+          <CtaSection />
+        </main>
+        <Footer />
+      </LandingClientWrapper>
     </>
   );
 }

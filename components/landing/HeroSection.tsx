@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -20,15 +21,9 @@ import {
 import { HeroFlowCanvas } from './HeroFlowCanvas';
 import { MagneticWrapper } from './MagneticWrapper';
 
-interface HeroSectionProps {
-  onStartLearning: () => void;
-  onExploreDemo: () => void;
-}
 
-export const HeroSection: React.FC<HeroSectionProps> = ({
-  onStartLearning,
-  onExploreDemo,
-}) => {
+
+export const HeroSection: React.FC = () => {
   const router = useRouter();
   const heroRef = useRef<HTMLElement>(null);
 
@@ -176,7 +171,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             >
               <button
                 id="hero-view-demo-cta"
-                onClick={onExploreDemo}
+                onClick={() => document.getElementById('interactive-demo-playground')?.scrollIntoView({ behavior: 'smooth' })}
                 className="w-auto px-5 py-2.5 sm:px-6 sm:py-3.5 bg-white hover:bg-[#F4F1EA] text-[#171717] font-semibold text-sm sm:text-base rounded-sm border border-[#D8D4CC] shadow-xs hover:border-[#806A55]/40 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Terminal className="w-4 h-4 text-[#356A9A]" />

@@ -88,7 +88,7 @@ export default function MemoryGame() {
           </div>
           
           <div className="flex gap-3 h-12">
-            <div className="bg-[#FAF9F5] border border-[#E5E2DA] px-4 rounded-[3px] flex flex-col items-center justify-center min-w-[80px]">
+            <div className="bg-[#FAF9F5] border border-[#E5E2DA] px-4 rounded-[3px] flex flex-col items-center justify-center min-w-20">
               <span className="text-[9px] font-bold text-[#888] tracking-wider uppercase block">Moves</span>
               <span className="text-base font-mono font-bold leading-none">{moves}</span>
             </div>
@@ -105,7 +105,7 @@ export default function MemoryGame() {
         {/* Game Board */}
         <section className="bg-white border border-[#D8D4CC] p-4 rounded-[3px] shadow-sm">
           <div className="bg-[#FAF9F5] p-4 sm:p-6 rounded-[3px] border border-[#E5E2DA]">
-            <div className="grid grid-cols-4 gap-2 sm:gap-3 max-w-[420px] mx-auto">
+            <div className="grid grid-cols-4 gap-2 sm:gap-3 max-w-105 mx-auto">
               {deck.map((card, i) => {
                 const isFlipped = flipped.includes(i) || matched.includes(i);
                 const isMatched = matched.includes(i);
@@ -119,7 +119,7 @@ export default function MemoryGame() {
                     <div className={`relative w-full h-full transition-transform duration-500 transform-style-3d ${isFlipped ? 'rotate-y-180' : 'group-hover:scale-[1.02]'}`}>
                       
                       {/* Back of card */}
-                      <div className="absolute w-full h-full backface-hidden bg-[#171717] rounded-[3px] border-b-[4px] sm:border-b-[6px] border-black shadow-sm flex items-center justify-center">
+                      <div className="absolute w-full h-full backface-hidden bg-[#171717] rounded-[3px] border-b-4 sm:border-b-[6px] border-black shadow-sm flex items-center justify-center">
                         <Cpu size={28} className="text-[#F26A3D] opacity-80" />
                       </div>
                       

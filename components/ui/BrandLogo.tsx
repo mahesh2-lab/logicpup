@@ -50,6 +50,8 @@ export function BrandLogo({
           alt="LogicPup Logo"
           width={isLarge ? 36 : isSmall ? 24 : 32}
           height={isLarge ? 36 : isSmall ? 24 : 32}
+          sizes="(max-width: 768px) 36px, 36px"
+          priority={true}
           className="w-full h-full object-cover "
         />
       </div>

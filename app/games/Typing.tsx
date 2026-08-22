@@ -174,11 +174,11 @@ export default function TypingGame() {
         </div>
         
         <div className="flex gap-3 h-12">
-          <div className="bg-[#FAF9F5] border border-[#E5E2DA] px-4 rounded-[3px] flex flex-col items-center justify-center min-w-[80px]">
+          <div className="bg-[#FAF9F5] border border-[#E5E2DA] px-4 rounded-[3px] flex flex-col items-center justify-center min-w-20">
             <span className="text-[9px] font-bold text-[#888] tracking-wider uppercase flex items-center gap-1"><Timer size={10}/> WPM</span>
             <span className="text-base font-mono font-bold leading-none text-[#F26A3D]">{liveWpm}</span>
           </div>
-          <div className="bg-[#FAF9F5] border border-[#E5E2DA] px-4 rounded-[3px] flex flex-col items-center justify-center min-w-[80px]">
+          <div className="bg-[#FAF9F5] border border-[#E5E2DA] px-4 rounded-[3px] flex flex-col items-center justify-center min-w-20">
             <span className="text-[9px] font-bold text-[#888] tracking-wider uppercase flex items-center gap-1"><Crosshair size={10}/> ACC</span>
             <span className={`text-base font-mono font-bold leading-none ${accuracy < 90 ? 'text-[#EF4444]' : 'text-[#10B981]'}`}>{accuracy}%</span>
           </div>

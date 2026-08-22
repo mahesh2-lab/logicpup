@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import {
@@ -9,15 +10,8 @@ import {
   Code2,
 } from "lucide-react";
 import { FlickeringGrid } from "@/components/ui/flickering-grid";
-interface CtaSectionProps {
-  onStartLearning: () => void;
-  onExploreDemo: () => void;
-}
 
-export const CtaSection: React.FC<CtaSectionProps> = ({
-  onStartLearning,
-  onExploreDemo,
-}) => {
+export const CtaSection: React.FC = () => {
   return (
     <section
       id="logicpup-final-cta"
@@ -77,7 +71,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
 
               <button
                 id="cta-open-playground-btn"
-                onClick={onExploreDemo}
+                onClick={() => document.getElementById('interactive-demo-playground')?.scrollIntoView({ behavior: 'smooth' })}
                 className="w-full sm:w-auto px-6 py-3.5 bg-[#F4F1EA] hover:bg-[#EAE5D9] text-[#171717] font-bold text-base rounded-sm border border-[#D8D4CC] transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Code2 className="w-4 h-4 text-[#60A5FA]" />

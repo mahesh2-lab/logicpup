@@ -11,7 +11,9 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { NavItem } from '../../types/landing';
-import { UserAuthMenu } from '../visual-editor/components/UserAuthMenu';
+import dynamic from 'next/dynamic';
+
+const UserAuthMenu = dynamic(() => import('../visual-editor/components/UserAuthMenu').then(mod => mod.UserAuthMenu), { ssr: false });
 import { BrandLogo } from '@/components/ui/BrandLogo';
 
 interface HeaderProps {

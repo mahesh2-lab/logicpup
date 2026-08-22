@@ -19,6 +19,7 @@ export const Footer: React.FC = () => {
                   alt="LogicPup Logo"
                   width={32}
                   height={32}
+                  sizes="32px"
                   className="w-full h-full object-cover"
                 />
               </div>
