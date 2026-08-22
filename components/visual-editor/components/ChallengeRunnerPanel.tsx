@@ -29,6 +29,7 @@ import {
 } from "../learning/levelsData";
 import type { Project, LevelChallenge, TestCase } from "../projects/types";
 import posthog from "posthog-js";
+import confetti from 'canvas-confetti';
 
 export interface TestCaseResult {
   testCaseId: string;
@@ -286,6 +287,12 @@ function matchOutput(actualOutputs: string[], expectedOutputs: string[]): boolea
     });
     setSubmitted(true);
     setShowCelebration(true);
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#F26A3D', '#356A9A', '#F4D454', '#171717']
+    });
   }
 
   // Check if there is a next challenge WITHIN the current level
