@@ -1,8 +1,7 @@
 
 
-#![LogicPup Hero Banner](./public/logo.png) LogicPup
+# LogicPup
 
-> An interactive logic simulator and circuit builder designed for intuitive learning, real-time signal propagation, and digital logic design.
 
 ![LogicPup Hero Banner](./public/hero.png) <!-- Replace path if assets are located elsewhere, e.g., ./docs/hero.png -->
 
@@ -59,9 +58,9 @@ Ensure you have the following installed on your system:
 ### Installation
 
 1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/mahesh2-lab/logicpup.git](https://github.com/mahesh2-lab/logicpup.git)
-   cd logicpup
+ ```bash
+ git clone [https://github.com/mahesh2-lab/logicpup.git](https://github.com/mahesh2-lab/logicpup.git)
+ cd logicpup
 
 ```
 
@@ -127,6 +126,3 @@ Contributions, bug reports, and feature requests are welcome!
 
 Distributed under the **MIT License**. See `LICENSE` for more information.
 
-```
-
-```
