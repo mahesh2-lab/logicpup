@@ -1,6 +1,5 @@
 
 
-```markdown
 # 🐶 LogicPup
 
 > An interactive logic simulator and circuit builder designed for intuitive learning, real-time signal propagation, and digital logic design.
