@@ -1,10 +1,10 @@
 
 
-# 🐶 LogicPup
+#![LogicPup Hero Banner](./public/icon.png) LogicPup
 
 > An interactive logic simulator and circuit builder designed for intuitive learning, real-time signal propagation, and digital logic design.
 
-![LogicPup Hero Banner](./assets/hero.png) <!-- Replace path if assets are located elsewhere, e.g., ./docs/hero.png -->
+![LogicPup Hero Banner](./public/hero.png) <!-- Replace path if assets are located elsewhere, e.g., ./docs/hero.png -->
 
 ---
 
