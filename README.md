@@ -30,9 +30,8 @@
 
 | Canvas & Wiring | Component Palette & State |
 | :---: | :---: |
-| ![Canvas & Wiring](./assets/canvas-preview.png) | ![Component State](./assets/components-preview.png) |
+| ![Canvas & Wiring](./public/img2.png) | ![Component State](./public/image.png) |
 
-> *Note: Update the relative paths above (`./assets/...` or `./public/...`) to match the exact folder where your images reside in the repository.*
 
 ---
 
