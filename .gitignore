@@ -9,6 +9,7 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+.next
 
 # testing
 /coverage
@@ -35,7 +36,16 @@ yarn-error.log*
 
 # vercel
 .vercel
+.env.local
+.env.local.example
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.claude
+.agents
+.ai
