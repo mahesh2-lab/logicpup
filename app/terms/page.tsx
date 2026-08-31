@@ -7,7 +7,11 @@ export const metadata: Metadata = {
   title: "Terms of Service",
   description: "LogicPup Terms of Service",
   alternates: {
-    canonical: "/terms",
+    canonical: "https://logicpup.heymahesh.in/terms",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

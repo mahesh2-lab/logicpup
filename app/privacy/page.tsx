@@ -7,7 +7,11 @@ export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "LogicPup Privacy Policy",
   alternates: {
-    canonical: "/privacy",
+    canonical: "https://logicpup.heymahesh.in/privacy",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

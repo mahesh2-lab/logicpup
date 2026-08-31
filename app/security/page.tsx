@@ -7,7 +7,11 @@ export const metadata: Metadata = {
   title: "Security",
   description: "LogicPup Security Information",
   alternates: {
-    canonical: "/security",
+    canonical: "https://logicpup.heymahesh.in/security",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

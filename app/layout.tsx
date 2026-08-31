@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { JsonLd } from "@/components/seo/JsonLd";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
 
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
   description:
     "The leash-free visual Python programming environment where logic meets fun. Connect flowchart blocks, fetch real Python 3 code, and chase zero bugs without getting tangled in syntax.",
   applicationName: "LogicPup",
-  authors: [{ name: "LogicPup Team", url: siteUrl }],
+  authors: [{ name: "Mahesh", url: siteUrl }],
   generator: "Next.js",
   keywords: [
     "visual python editor",
@@ -53,11 +54,13 @@ export const metadata: Metadata = {
   referrer: "origin-when-cross-origin",
   creator: "LogicPup Inc.",
   publisher: "LogicPup Inc.",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   category: "education",
   classification: "Educational Technology & Programming",
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     title: "LogicPup — Visual Python Flowchart IDE & Learning Playground",
     description:
@@ -110,11 +113,24 @@ export default function RootLayout({
       className={`h-full scroll-smooth ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
     >
       <head>
+        <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE_HERE" />
       </head>
       <body
         suppressHydrationWarning
         className="min-h-full flex flex-col font-sans antialiased"
       >
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "LogicPup",
+            url: siteUrl,
+            logo: `${siteUrl}/logo.png`,
+            sameAs: [
+              "https://twitter.com/logicpup",
+            ],
+          }}
+        />
         {children}
            <Analytics />
       </body>
