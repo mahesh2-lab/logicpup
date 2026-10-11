@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: any }): Promise<Metadata> {
   const p = await params;
-  let canonicalPath = "/projects/[projectId]/settings";
-  // Very simplistic replacement for demo purposes, you'd replace params properly in a real app
-  for (const key of Object.keys(p)) {
-    canonicalPath = canonicalPath.replace(`[${key}]`, p[key]);
-  }
-  
+  const projectId = p.projectId;
+
   return {
-    title: "Projects Settings",
-    description: "View details for this projects settings in LogicPup.",
+    title: `Project ${projectId} Settings`,
+    description: `Configure project ${projectId} preferences and management options in LogicPup.`,
     alternates: {
-      canonical: canonicalPath,
+      canonical: `/projects/${projectId}/settings`,
+    },
+    robots: {
+      index: false,
+      follow: false,
     },
   };
 }

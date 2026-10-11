@@ -4,8 +4,9 @@ import { DashboardShell } from "@/components/visual-editor/dashboard/DashboardSh
 import { BlockExplanationModal } from "@/components/visual-editor/components/BlockExplanationModal";
 
 export const metadata: Metadata = {
-  title: "Dashboard | LogicPup",
-  description: "Manage your Python flowchart projects and track your curriculum progress.",
+  title: "Dashboard",
+  description:
+    "Access your LogicPup dashboard to manage Python flowchart projects, lessons, and beginner learning progress.",
   robots: {
     index: false,
     follow: false,

@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import DashboardClientPage from "./page.client";
 
 export const metadata: Metadata = {
-  title: "Dashboard",
-  description: "View your LogicPup learning dashboard.",
+  title: "Dashboard Home",
+  description:
+    "See your LogicPup learning snapshot, recent visual Python activity, and next beginner milestones.",
   alternates: {
     canonical: "/dashboard",
   },
@@ -12,4 +13,3 @@ export const metadata: Metadata = {
 export default function DashboardPage() {
   return <DashboardClientPage />;
 }
-

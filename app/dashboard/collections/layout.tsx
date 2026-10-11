@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Dashboard Collections",
-  description: "View your dashboard collections in the LogicPup platform.",
+  description:
+    "Organize your LogicPup project collections and quickly reopen visual Python workflows.",
   alternates: {
     canonical: "/dashboard/collections",
   },

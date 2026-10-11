@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Log In | LogicPup",
-  description: "Log in or sign up to LogicPup to save your Python flowchart projects, progress, and certificates.",
+  title: "Log In",
+  description:
+    "Log in to LogicPup to save visual Python projects, continue lessons, and track beginner coding progress.",
   alternates: {
     canonical: "https://logicpup.heymahesh.in/login",
   },

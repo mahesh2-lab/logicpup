@@ -19,7 +19,7 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_APP_URL as string;
+const siteUrl = "https://logicpup.heymahesh.in";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -35,7 +35,10 @@ export const metadata: Metadata = {
     template: "%s | LogicPup",
   },
   description:
-    "The leash-free visual Python programming environment where logic meets fun. Connect flowchart blocks, fetch real Python 3 code, and chase zero bugs without getting tangled in syntax.",
+    "LogicPup is a visual drag-and-drop Python flowchart IDE for beginners. Build logic with blocks and generate real Python code without syntax fear.",
+  alternates: {
+    canonical: "/",
+  },
   applicationName: "LogicPup",
   authors: [{ name: "Mahesh", url: siteUrl }],
   generator: "Next.js",
@@ -53,8 +56,8 @@ export const metadata: Metadata = {
     "logic pup",
   ],
   referrer: "origin-when-cross-origin",
-  creator: "LogicPup Inc.",
-  publisher: "LogicPup Inc.",
+  creator: "LogicPup",
+  publisher: "LogicPup",
   formatDetection: {
     email: false,
     address: false,

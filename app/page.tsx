@@ -11,14 +11,16 @@ import { GoogleAuthInfoSection } from '@/components/landing/GoogleAuthInfoSectio
 import { LandingClientWrapper } from '@/components/landing/LandingClientWrapper';
 
 export const metadata: Metadata = {
-  title: "LogicPup — Visual Python Flowchart IDE",
-  description: "Learn Python programming through an interactive, drag-and-drop flowchart interface. LogicPup eliminates syntax errors so beginners can focus on building logic and real coding skills.",
+  title: "Visual Python Flowchart IDE for Beginners",
+  description:
+    "Learn Python visually with LogicPup's drag-and-drop flowchart IDE. Turn beginner-friendly blocks into real Python code and build coding confidence.",
   alternates: {
     canonical: "https://logicpup.heymahesh.in/",
   },
   openGraph: {
-    title: "LogicPup — Visual Python Flowchart IDE",
-    description: "Learn Python programming through an interactive, drag-and-drop flowchart interface. LogicPup eliminates syntax errors so beginners can focus on building logic and real coding skills.",
+    title: "Visual Python Flowchart IDE for Beginners",
+    description:
+      "Learn Python visually with LogicPup's drag-and-drop flowchart IDE and generate real code without syntax overwhelm.",
     siteName: "LogicPup",
     url: "https://logicpup.heymahesh.in/",
     type: "website",
@@ -26,8 +28,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "LogicPup — Visual Python Flowchart IDE",
-    description: "Learn Python programming through an interactive, drag-and-drop flowchart interface.",
+    title: "Visual Python Flowchart IDE for Beginners",
+    description:
+      "Learn Python visually with drag-and-drop flowcharts and real generated code.",
   },
 };
 

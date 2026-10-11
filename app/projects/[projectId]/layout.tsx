@@ -5,9 +5,13 @@ export async function generateMetadata({ params }: { params: any }): Promise<Met
   const p = await params;
   return {
     title: `Project ${p.projectId}`,
-    description: `View project ${p.projectId} in LogicPup.`,
+    description: `Open LogicPup project ${p.projectId} and continue building Python logic visually.`,
     alternates: {
       canonical: `/projects/${p.projectId}`,
+    },
+    robots: {
+      index: false,
+      follow: false,
     },
   };
 }
@@ -15,4 +19,3 @@ export async function generateMetadata({ params }: { params: any }): Promise<Met
 export default function ProjectLayout({ children }: { children: React.ReactNode }) {
   return <ProjectClientLayout>{children}</ProjectClientLayout>;
 }
-

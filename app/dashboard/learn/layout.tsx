@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Dashboard Learn",
-  description: "View your dashboard learn in the LogicPup platform.",
+  description:
+    "Continue LogicPup lessons and level up Python fundamentals with visual flowchart learning.",
   alternates: {
     canonical: "/dashboard/learn",
   },
