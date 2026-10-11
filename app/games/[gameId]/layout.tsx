@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { GAMES_CATALOG } from "../catalog";
 
-export async function generateMetadata({ params }: { params: any }): Promise<Metadata> {
-  const p = await params;
-  const gameId = p.gameId as string;
+type GameLayoutProps = {
+  params: Promise<{ gameId: string }>;
+};
+
+export async function generateMetadata({ params }: GameLayoutProps): Promise<Metadata> {
+  const { gameId } = await params;
   const game = GAMES_CATALOG.find((item) => item.id === gameId);
   const gameName = game?.name ?? "Game";
 

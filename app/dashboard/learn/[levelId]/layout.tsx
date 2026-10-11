@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: any }): Promise<Metadata> {
-  const p = await params;
-  const levelId = p.levelId;
+type LevelLayoutProps = {
+  params: Promise<{ levelId: string }>;
+};
+
+export async function generateMetadata({ params }: LevelLayoutProps): Promise<Metadata> {
+  const { levelId } = await params;
 
   return {
     title: `Lesson ${levelId}`,

@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: any }): Promise<Metadata> {
-  const p = await params;
-  const projectId = p.projectId;
+type ProjectEditorLayoutProps = {
+  params: Promise<{ projectId: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: ProjectEditorLayoutProps): Promise<Metadata> {
+  const { projectId } = await params;
 
   return {
     title: `Project ${projectId} Editor`,
