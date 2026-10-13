@@ -114,12 +114,11 @@ export default function RootLayout({
       className={`h-full scroll-smooth ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
     >
       <head>
-        <Script
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6591133878918589"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        ></script>
       </head>
       <body
         suppressHydrationWarning
@@ -132,13 +131,11 @@ export default function RootLayout({
             name: "LogicPup",
             url: siteUrl,
             logo: `${siteUrl}/logo.png`,
-            sameAs: [
-              "https://twitter.com/logicpup",
-            ],
+            sameAs: ["https://twitter.com/logicpup"],
           }}
         />
         {children}
-           <Analytics />
+        <Analytics />
       </body>
     </html>
   );
