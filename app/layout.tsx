@@ -19,7 +19,7 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_APP_URL as string;
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "https://logicpup.heymahesh.in";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -62,6 +62,11 @@ export const metadata: Metadata = {
   },
   category: "education",
   classification: "Educational Technology & Programming",
+  appleWebApp: {
+    title: "LogicPup",
+    statusBarStyle: "default",
+    capable: true,
+  },
   openGraph: {
     title: "LogicPup — Visual Python Flowchart IDE & Learning Playground",
     description:
@@ -125,14 +130,35 @@ export default function RootLayout({
         className="min-h-full flex flex-col font-sans antialiased"
       >
         <JsonLd
-          data={{
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "LogicPup",
-            url: siteUrl,
-            logo: `${siteUrl}/logo.png`,
-            sameAs: ["https://twitter.com/logicpup"],
-          }}
+          data={[
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "@id": `${siteUrl}/#website`,
+              name: "LogicPup",
+              alternateName: [
+                "LogicPup IDE",
+                "Logic Pup",
+                "logicpup.heymahesh.in",
+                "LogicPup Visual Python IDE",
+              ],
+              url: siteUrl,
+              description:
+                "Visual Python Flowchart IDE & Learning Playground.",
+              publisher: {
+                "@id": `${siteUrl}/#organization`,
+              },
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "@id": `${siteUrl}/#organization`,
+              name: "LogicPup",
+              url: siteUrl,
+              logo: `${siteUrl}/logo.png`,
+              sameAs: ["https://twitter.com/logicpup"],
+            },
+          ]}
         />
         {children}
         <Analytics />

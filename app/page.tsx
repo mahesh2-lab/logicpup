@@ -16,6 +16,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://logicpup.heymahesh.in/",
   },
+  applicationName: "LogicPup",
+  appleWebApp: {
+    title: "LogicPup",
+    statusBarStyle: "default",
+    capable: true,
+  },
   openGraph: {
     title: "LogicPup — Visual Python Flowchart IDE",
     description: "Learn Python programming through an interactive, drag-and-drop flowchart interface. LogicPup eliminates syntax errors so beginners can focus on building logic and real coding skills.",
@@ -50,14 +56,17 @@ export default function Page() {
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
+      "@id": "https://logicpup.heymahesh.in/#website",
       name: "LogicPup",
+      alternateName: [
+        "LogicPup IDE",
+        "Logic Pup",
+        "logicpup.heymahesh.in",
+        "LogicPup Visual Python IDE",
+      ],
       url: "https://logicpup.heymahesh.in/",
-      potentialAction: {
-        "@type": "SearchAction",
-        target: "https://logicpup.heymahesh.in/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
+      description: "Visual Python Flowchart IDE & Learning Playground.",
+    },
   ];
 
   return (
