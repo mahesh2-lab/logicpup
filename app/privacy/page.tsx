@@ -4,8 +4,9 @@ import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "LogicPup Privacy Policy",
+  title: "Privacy Policy | LogicPup — Visual Python Flowchart IDE",
+  description:
+    "LogicPup Privacy Policy detailing data collection, Google OAuth 2.0 user data compliance, and data protection practices.",
   alternates: {
     canonical: "https://logicpup.heymahesh.in/privacy",
   },
@@ -20,82 +21,179 @@ export default function PrivacyPage() {
     <div className="min-h-screen flex flex-col font-sans bg-[#F4F1EA] text-[#171717]">
       <Header />
       <main className="flex-1 max-w-4xl mx-auto px-6 py-20">
-        <h1 className="text-4xl font-bold mb-4 uppercase tracking-tight">Privacy Policy</h1>
-        <p className="text-sm text-[#888] font-mono mb-12">Last Updated: August 21, 2026</p>
-        
-        <div className="space-y-10 text-base text-[#444] leading-relaxed">
-          <section>
-            <h2 className="text-xl font-bold text-[#171717] mb-4 uppercase">1. Introduction</h2>
+        <div className="border-b border-[#D8D4CC] pb-8 mb-10">
+          <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[#F26A3D] bg-[#F26A3D]/10 px-2.5 py-1 rounded-sm">
+            Legal & Compliance
+          </span>
+          <h1 className="text-3xl sm:text-5xl font-extrabold mt-4 mb-2 tracking-tight">
+            LogicPup Privacy Policy
+          </h1>
+          <p className="text-sm text-[#777] font-mono">
+            Last Updated: October 13, 2026 • Effective Date: October 13, 2026
+          </p>
+        </div>
+
+        <div className="space-y-12 text-base text-[#333] leading-relaxed">
+          {/* Section 1 */}
+          <section className="space-y-3">
+            <h2 className="text-xl font-bold text-[#171717] tracking-tight">
+              1. About LogicPup & Application Purpose
+            </h2>
             <p>
-              Welcome to LogicPup. We respect your privacy and are committed to protecting your personal data. 
-              This Privacy Policy explains how we collect, use, disclose, and safeguard your information when 
-              you visit our website and use our visual Python learning platform. By using LogicPup, you agree to the collection and use of information in accordance with this policy.
+              Welcome to <strong>LogicPup</strong> (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;). LogicPup is an educational web-based visual programming environment and flowchart IDE designed to teach Python programming to students, educators, and beginners.
+            </p>
+            <p>
+              This Privacy Policy explains how LogicPup collects, uses, protects, and discloses personal information when you access our website (
+              <a href="https://logicpup.heymahesh.in" className="text-[#F26A3D] underline">
+                https://logicpup.heymahesh.in
+              </a>
+              ) and use our visual flowchart code editor and educational curriculum.
             </p>
           </section>
 
-          <section>
-            <h2 className="text-xl font-bold text-[#171717] mb-4 uppercase">2. Information We Collect</h2>
-            <p className="mb-3">We may collect information about you in a variety of ways, including:</p>
+          {/* Section 2 */}
+          <section className="space-y-4">
+            <h2 className="text-xl font-bold text-[#171717] tracking-tight">
+              2. Google OAuth 2.0 & Google User Data Policy
+            </h2>
+            <p>
+              LogicPup offers sign-in via <strong>Google OAuth 2.0</strong> to provide a secure and seamless authentication experience without requiring you to create and remember a separate password.
+            </p>
+
+            <div className="p-5 rounded-sm bg-white border border-[#D8D4CC] space-y-3 shadow-xs">
+              <h3 className="font-bold text-[#171717] text-sm uppercase tracking-wide text-[#F26A3D]">
+                A. Google Data We Access
+              </h3>
+              <p className="text-sm text-[#555]">
+                When you sign in using Google, we request access only to basic profile information:
+              </p>
+              <ul className="list-disc pl-6 space-y-1 text-sm text-[#444]">
+                <li><strong>Your Email Address:</strong> Used as your unique account identifier and to contact you with essential service notifications.</li>
+                <li><strong>Your Name:</strong> Used to personalize your LogicPup workspace and dashboard.</li>
+                <li><strong>Your Profile Picture URL:</strong> Used solely to display your avatar in the application navigation header.</li>
+              </ul>
+            </div>
+
+            <div className="p-5 rounded-sm bg-white border border-[#D8D4CC] space-y-3 shadow-xs">
+              <h3 className="font-bold text-[#171717] text-sm uppercase tracking-wide text-[#F26A3D]">
+                B. How We Use Google User Data
+              </h3>
+              <p className="text-sm text-[#444]">
+                Google user data is used exclusively to:
+              </p>
+              <ul className="list-disc pl-6 space-y-1 text-sm text-[#444]">
+                <li>Create, authenticate, and manage your LogicPup user session.</li>
+                <li>Associate your saved flowchart projects, Python scripts, and curriculum progress with your account.</li>
+                <li>Ensure account security and prevent unauthorized access.</li>
+              </ul>
+            </div>
+
+            <div className="p-5 rounded-sm bg-white border border-[#D8D4CC] space-y-3 shadow-xs">
+              <h3 className="font-bold text-[#171717] text-sm uppercase tracking-wide text-[#F26A3D]">
+                C. Google API Limited Use Disclosure
+              </h3>
+              <p className="text-sm text-[#222] font-medium leading-relaxed">
+                LogicPup&rsquo;s use and transfer to any other app of information received from Google APIs adheres to the{" "}
+                <a
+                  href="https://developers.google.com/terms/api-services-user-data-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#F26A3D] underline font-semibold"
+                >
+                  Google API Services User Data Policy
+                </a>
+                , including the Limited Use requirements.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-sm bg-white border border-[#D8D4CC] space-y-2 shadow-xs">
+              <h3 className="font-bold text-[#171717] text-sm uppercase tracking-wide text-[#F26A3D]">
+                D. No Selling, Sharing, or Advertising Use
+              </h3>
+              <ul className="list-disc pl-6 space-y-1 text-sm text-[#444]">
+                <li>We <strong>do not sell</strong> or license Google user data to any third parties or data brokers.</li>
+                <li>We <strong>do not use</strong> Google user data to serve personalized advertisements or retargeting campaigns.</li>
+                <li>We <strong>do not use</strong> Google user data to train generalized AI or machine learning foundation models.</li>
+                <li>We <strong>do not transfer</strong> Google user data to third parties, except as strictly necessary to provide the LogicPup service (e.g., secure database storage).</li>
+              </ul>
+            </div>
+          </section>
+
+          {/* Section 3 */}
+          <section className="space-y-3">
+            <h2 className="text-xl font-bold text-[#171717] tracking-tight">
+              3. Other Information We Collect
+            </h2>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Personal Data:</strong> Personally identifiable information, such as your name and email address, that you voluntarily give to us when you register for an account.</li>
-              <li><strong>Authentication Data:</strong> Information from third-party OAuth providers (like Google or GitHub) if you choose to sign in using their services, including your profile picture and email.</li>
-              <li><strong>Usage Data:</strong> Information about your activity on our platform, such as your progress in coding challenges, saved workspaces, and project data.</li>
-              <li><strong>Log Data:</strong> Information that your browser sends whenever you visit our platform, such as your computer's Internet Protocol (IP) address, browser type, and diagnostic data.</li>
+              <li>
+                <strong>Project & Workspace Data:</strong> Flowchart nodes, block connections, Python code snippets, and challenge completion states that you create inside the LogicPup editor.
+              </li>
+              <li>
+                <strong>Log & Diagnostic Data:</strong> Browser type, operating system, and diagnostic error reports used to maintain and optimize the interactive IDE.
+              </li>
             </ul>
           </section>
 
-          <section>
-            <h2 className="text-xl font-bold text-[#171717] mb-4 uppercase">3. How We Use Your Information</h2>
-            <p className="mb-3">We use the information we collect to:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Create and manage your account securely.</li>
-              <li>Save your learning progress and visual Python projects.</li>
-              <li>Improve our educational content, algorithms, and user experience.</li>
-              <li>Communicate with you regarding updates, security alerts, and support messages.</li>
-              <li>Monitor the usage of our platform and detect technical issues.</li>
-            </ul>
+          {/* Section 4 */}
+          <section className="space-y-3">
+            <h2 className="text-xl font-bold text-[#171717] tracking-tight">
+              4. Data Retention, Account Deletion & Revocation
+            </h2>
+            <p>
+              We retain your account data and saved projects only for as long as your account remains active.
+            </p>
+            <div className="space-y-2">
+              <p>
+                <strong>How to Request Data Deletion:</strong> You may request full deletion of your account and all associated projects at any time by emailing us at{" "}
+                <a href="mailto:maheshchopade133@gmail.com" className="text-[#F26A3D] underline font-semibold">
+                  maheshchopade133@gmail.com
+                </a>
+                . Upon receiving your verified request, all personal information and projects will be permanently deleted from our primary databases within 30 days.
+              </p>
+              <p>
+                <strong>Revoking Google Access:</strong> You can revoke LogicPup&rsquo;s access to your Google account at any time by visiting your{" "}
+                <a
+                  href="https://myaccount.google.com/permissions"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#F26A3D] underline font-semibold"
+                >
+                  Google Account Permissions Page
+                </a>
+                .
+              </p>
+            </div>
           </section>
 
-          <section>
-            <h2 className="text-xl font-bold text-[#171717] mb-4 uppercase">4. Data Security</h2>
+          {/* Section 5 */}
+          <section className="space-y-3">
+            <h2 className="text-xl font-bold text-[#171717] tracking-tight">
+              5. Data Security
+            </h2>
             <p>
-              We implement a variety of security measures to maintain the safety of your personal information. 
-              Your password and authentication tokens are encrypted and handled securely.
-              However, please be aware that no security measures are perfect or impenetrable, and no method of 
-              data transmission over the Internet can be guaranteed to be 100% secure. We strive to use commercially acceptable means to protect your Personal Data, but we cannot guarantee its absolute security.
+              We apply industry-standard technical and organizational security controls to protect your personal data. All data transmitted between your browser and LogicPup is encrypted using Transport Layer Security (TLS/HTTPS). User sessions and authentication credentials are encrypted and stored in secure infrastructure.
             </p>
           </section>
 
-          <section>
-            <h2 className="text-xl font-bold text-[#171717] mb-4 uppercase">5. Third-Party Services</h2>
+          {/* Section 6 */}
+          <section className="space-y-3">
+            <h2 className="text-xl font-bold text-[#171717] tracking-tight">
+              6. Developer & Contact Information
+            </h2>
             <p>
-              We may share your information with third-party vendors, service providers, and contractors who perform 
-              services for us, such as database hosting, data analysis, and email delivery. These third parties have access to your Personal Data only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose.
+              If you have any questions, concerns, or requests regarding this Privacy Policy or your data, please contact the developer:
             </p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-[#171717] mb-4 uppercase">6. Your Rights</h2>
-            <p>
-              Depending on your location, you may have the right to access, update, or delete the personal information we have on you. 
-              You can manage most of your data directly from your account dashboard. If you need assistance, please contact us.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-[#171717] mb-4 uppercase">7. Changes to This Privacy Policy</h2>
-            <p>
-              We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date. You are advised to review this Privacy Policy periodically for any changes.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-[#171717] mb-4 uppercase">8. Contact Us</h2>
-            <p>
-              If you have any questions or comments about this Privacy Policy, please contact us at: 
-              <br />
-              <strong className="text-[#F26A3D]">privacy@logicpup.com</strong>
-            </p>
+            <div className="p-4 rounded-sm bg-white border border-[#D8D4CC] space-y-1 text-sm font-mono shadow-xs">
+              <p><strong>Application:</strong> LogicPup</p>
+              <p><strong>Website:</strong> https://logicpup.heymahesh.in</p>
+              <p><strong>Developer:</strong> Mahesh</p>
+              <p>
+                <strong>Email:</strong>{" "}
+                <a href="mailto:maheshchopade133@gmail.com" className="text-[#F26A3D] underline">
+                  maheshchopade133@gmail.com
+                </a>
+              </p>
+            </div>
           </section>
         </div>
       </main>

@@ -104,8 +104,9 @@ export const HeroSection: React.FC = () => {
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-sm bg-white/90 backdrop-blur-md border border-[#D8D4CC] text-xs font-semibold text-[#171717] shadow-xs"
           >
             <Workflow className="w-3.5 h-3.5 text-[#F26A3D]" />
-            <span>Visual Flowchart Coding for Python</span>
-            <span className="hidden sm:inline text-[#806A55] font-mono">• No Leash, No Syntax Bites </span>
+            <span className="font-bold text-[#F26A3D]">LogicPup</span>
+            <span>• Visual Flowchart Coding for Python</span>
+            <span className="hidden sm:inline text-[#806A55] font-mono">• No Syntax Bites 🐾</span>
           </motion.div>
 
           {/* The giant hero text that slightly follows their mouse! */}
@@ -121,6 +122,9 @@ export const HeroSection: React.FC = () => {
               className="cursor-default"
             >
               <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold text-[#171717] tracking-tight leading-[1.15] sm:leading-[1.08] select-none transition-colors">
+                <span className="block text-2xl sm:text-4xl lg:text-5xl font-black text-[#F26A3D] tracking-tight mb-2">
+                  LogicPup
+                </span>
                 Teach Yourself Python <br className="hidden sm:inline" />
                 <span className="text-[#F26A3D] relative inline-block">
                   Through Visual Flowcharts.
@@ -135,7 +139,7 @@ export const HeroSection: React.FC = () => {
             style={{ y: subheadlineY }}
             className="text-sm sm:text-xl text-[#555555] leading-relaxed max-w-2xl mx-auto pt-3 sm:pt-0"
           >
-            Connect blocks, branch decisions, and let LogicPup fetch real executable Python 3 code in real-time. Because chasing bugs should feel like a fun game of fetch — not barking up the wrong tree.
+            LogicPup is an interactive visual Python IDE and educational coding platform for learners and developers. Connect logic blocks, visualize programmatic flow, and compile directly into real executable Python 3 code in real-time.
           </motion.p>
 
           {/* The buttons they absolutely need to click */}

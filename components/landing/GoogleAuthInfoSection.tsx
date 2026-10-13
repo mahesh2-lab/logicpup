@@ -18,13 +18,13 @@ export const GoogleAuthInfoSection: React.FC = () => {
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-[#FAF9F5] border border-black/6 text-xs font-mono font-semibold text-[#121212] shadow-xs">
             <ShieldCheck size={14} className="text-[#F26A3D]" />
-            <span>SECURE AUTHENTICATION</span>
+            <span>AUTHENTICATION & COMPLIANCE</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#121212] tracking-tight">
-            Why we use Google
+            LogicPup Application Purpose & Google Sign-In
           </h2>
           <p className="text-base sm:text-lg text-[#666666]">
-            We use Google Sign-In so you can create an account and save your progress across coding levels without creating a separate password.
+            LogicPup is an interactive educational visual programming platform that enables users to learn Python by connecting flowchart blocks. We use Google Sign-In strictly to authenticate your account and persist your flowchart projects.
           </p>
         </motion.div>
 
@@ -40,12 +40,12 @@ export const GoogleAuthInfoSection: React.FC = () => {
               <UserCircle size={24} />
             </div>
             <h3 className="text-xl font-extrabold text-[#121212] mb-3 tracking-tight">
-              Scopes Requested
+              Minimal Scopes Requested
             </h3>
             <ul className="space-y-3 text-sm sm:text-base text-[#666666] leading-relaxed">
               <li className="flex gap-2">
                 <span className="text-[#F26A3D] font-bold">•</span>
-                <span><strong>openid, email, profile</strong> — to identify you and create your LogicPup account.</span>
+                <span><strong>openid, email, profile</strong> — only used to authenticate your session and personalize your LogicPup workspace. We never request access to Google Drive, Gmail, or sensitive APIs.</span>
               </li>
             </ul>
           </motion.div>
@@ -61,10 +61,10 @@ export const GoogleAuthInfoSection: React.FC = () => {
               <Database size={24} />
             </div>
             <h3 className="text-xl font-extrabold text-[#121212] mb-3 tracking-tight">
-              Data Privacy
+              User Data Policy Compliance
             </h3>
             <p className="text-sm sm:text-base text-[#666666] leading-relaxed mb-4">
-              Your data is stored securely and is strictly used to maintain your project states, coding level progression, and account identification.
+              LogicPup adheres to the Google API Services User Data Policy, including Limited Use requirements. We never sell, transfer, or use Google user data for advertisements.
             </p>
             <Link href="/privacy" className="inline-flex items-center text-sm font-bold text-[#F26A3D] hover:text-[#171717] transition-colors underline decoration-[#F26A3D]/30 underline-offset-4">
               Read our full Privacy Policy &rarr;
